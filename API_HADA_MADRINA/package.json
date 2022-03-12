@@ -1,0 +1,18 @@
+{
+  "name": "madrina",
+  "version": "1.0.0",
+  "description": "Hada_Madrina",
+  "main": "database_conection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node database_conection.js",
+    "nodemon": "nodemon  database_conection.js"
+  },
+  "author": "Aránzazu Perdomo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
