@@ -1,15 +1,15 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+require('dotenv').config();
 const PORT = 3001;
 
 // create connection
 
-
 const connection = mysql.createConnection({
-  host: "localhost",  
-  user: "root",
-  password: ""
+  host: process.env.HOST,  
+  user: process.env.USER,
+  password: process.env.PASSWORD
 });
 
 connection.connect(function(error){
@@ -33,4 +33,4 @@ const createDatabase = () =>{
  
 
 
-app.listen(PORT, () => console.log('server started on port', PORT));
+app.listen(process.env.PORT, () => console.log('server started on port', process.env.PORT));
