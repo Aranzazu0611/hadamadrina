@@ -5,6 +5,11 @@ const created_table =  "Created table => "
 const name_table_user = "User";
 const name_table_mothers = "Mothers";
 const name_table_children = "Children";
+const name_table_foods = "Foods";
+const name_table_furniture = "Furniture";
+const name_table_hygiene = "Hygiene";
+const name_table_clothing = "Clothing";
+
 
 
 module.exports = { 
@@ -14,5 +19,9 @@ module.exports = {
     created_table,
     name_table_user,
     name_table_mothers,
-    name_table_children
+    name_table_children,
+    name_table_foods,
+    name_table_furniture,
+    name_table_hygiene,
+    name_table_clothing
   }
