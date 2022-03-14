@@ -2,10 +2,13 @@ const express = require('express');
 require('dotenv').config();
 const mysql = require('mysql');
 const app = express();
-const {createDatabase, createTable, select_database} = require('./models/index.js')
+const {operation_Database} = require('./models/index.js')
 const {  user_table} = require('./models/user_table')
 const {  create_database_query, use_database} = require('./models/querys.js')
 const name_database = "hada_madrina";
+const created_database = "Created database => ";
+const selected_database = "Selected database => ";
+const created_table =  "Created table => "
 const name_table_user = "User";
 
 
@@ -22,9 +25,9 @@ connection.connect(function(error){
   }
  else{
         console.log("¡¡Se ha conetacto con éxito!!");
-        createDatabase(connection, create_database_query, name_database);    
-        select_database(connection,use_database, name_database);
-        createTable(connection, user_table, name_table_user);
+        operation_Database(connection, create_database_query, created_database, name_database);
+        operation_Database(connection, use_database, selected_database, name_database);
+        operation_Database(connection, user_table, created_table, name_table_user);
     }
 }); 
 
