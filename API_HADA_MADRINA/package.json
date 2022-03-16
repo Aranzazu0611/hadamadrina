@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node database_conection.js",
-    "nodemon": "nodemon  database_conection.js"
+    "nodemon": "nodemon create_database_and_table.js"
   },
   "author": "Aránzazu Perdomo",
   "license": "ISC",
