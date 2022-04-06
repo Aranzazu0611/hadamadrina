@@ -2,11 +2,9 @@
   "name": "madrina",
   "version": "1.0.0",
   "description": "Hada_Madrina",
-  "main": "database_conection.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node database_conection.js",
-    "nodemon": "nodemon create_database_and_table.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "Aránzazu Perdomo",
   "license": "ISC",
