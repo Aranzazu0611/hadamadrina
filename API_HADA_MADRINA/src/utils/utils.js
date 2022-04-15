@@ -1,8 +1,8 @@
 const name_database = "hada_madrina";
 const created_database = "Created database => ";
 const selected_database = "Selected database => ";
-const selected_all= "Selected All => ";
-const created_table =  "Created table => "
+const selected_all = "Selected All => ";
+const created_table = "Created table => "
 const name_table_user = "User";
 const name_table_mothers = "Mothers";
 const name_table_children = "Children";
@@ -12,14 +12,16 @@ const name_table_hygiene = "Hygiene";
 const name_table_clothing = "Clothing";
 const user_saved = 'User Saved'
 const user_deleted = 'User Deleted'
+const message_delete_not_exist = " not exist"
+const message_delete_error = "Error to delete"
 const user_updated = "User Updated";
-const mother_deleted ='Mother Deleted';
+const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
 const mother_update = 'Mother Updated'
 
 
 
-module.exports = { 
+module.exports = {
     name_database,
     created_database,
     selected_database,
@@ -34,8 +36,10 @@ module.exports = {
     selected_all,
     user_saved,
     user_deleted,
+    message_delete_error,
+    message_delete_not_exist,
     user_updated,
     mother_deleted,
     mother_saved,
     mother_update
-  }
+}
