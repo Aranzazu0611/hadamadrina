@@ -58,7 +58,7 @@ const operation_insert = (connection, query, param, name_operation, res) => {
             res
             .status(400)
             .json({ message: "No se ha podido insertar" }) :
-            res.status(200).json({ message: "insert" }) :
+            res.status(200).json({ message: name_operation }) :
             res.status(400).json({ message: "Error" });
 
     });
