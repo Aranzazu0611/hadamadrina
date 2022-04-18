@@ -54,7 +54,7 @@ router.post("/api/user/register", async(req, res) => {
     const info = req.body
 
     try {
-        // await stringValidation(info)
+        await stringValidation(info)
 
         await operation_insert(mysqlConnection, insert_user_query, info, user_saved, res)
 
