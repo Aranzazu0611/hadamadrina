@@ -11,7 +11,7 @@ const router = express.Router();
 const mysqlConnection = require("../database.js");
 const { mother_saved, name_table_mothers, message_delete_not_exist, message_delete_error } = require("../utils/utils.js");
 
-// GET all Mothers //falla
+// GET all Mothers 
 router.get("/api/mothers/", async(req, res) => {
   message_delete_not_exist
   try {

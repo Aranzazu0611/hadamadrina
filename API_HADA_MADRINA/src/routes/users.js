@@ -17,7 +17,7 @@ const { stringValidation } = require("../utils/validations");
 // GET all User
 router.get("/api/user/", async(req, res) => {
     try {
-        await operation_get_All(mysqlConnection, select_all_user_query, res);
+        await operation_get_All(mysqlConnection, select_all_user_query,name_table_user, message_delete_not_exist, res);
     } catch (error) {
         return res.status(400).json({ error: error.toString() });
     }
@@ -27,7 +27,7 @@ router.get("/api/user/", async(req, res) => {
 router.get("/api/user/:id", async(req, res) => {
     const { id } = req.params;
     try {
-        await operation_get_By_Id(mysqlConnection, select_an_user_query, id, res);
+        await operation_get_By_Id(mysqlConnection, select_an_user_query, id,name_table_user, message_delete_not_exist, res);
     } catch (error) {
         return res.status(400).json({ error: error.toString() });
     }
@@ -54,7 +54,7 @@ router.post("/api/user/register", async(req, res) => {
     const info = req.body
 
     try {
-        await stringValidation(info)
+        // await stringValidation(info)
 
         await operation_insert(mysqlConnection, insert_user_query, info, user_saved, res)
 

@@ -9,9 +9,10 @@ const { message_delete_not_exist, message_delete_error } = require("../utils/uti
 
 // GET all clothing
 router.get("/api/clothing/", async(req, res) => {
+  name_table_clothing
 
   try {
-    await operation_get_All(mysqlConnection, select_all_clothing_query, res);
+    await operation_get_All(mysqlConnection, select_all_clothing_query, name_table_clothing, message_delete_not_exist, res);
 } catch (error) {
     return res.status(400).json({ error: error.toString() });
 }
@@ -21,12 +22,12 @@ router.get("/api/clothing/", async(req, res) => {
 // GET A clothing
 router.get("/api/clothing/:id", async(req, res) => {
   const { id } = req.params; 
-
+  name_table_clothing
   try {
-    await operation_get_By_Id(mysqlConnection, select_a_clothing_query, id, res);
+    await operation_get_By_Id(mysqlConnection, select_a_clothing_query, id,  name_table_clothing,message_delete_not_exist,res);
 } catch (error) {
     return res.status(400).json({ error: error.toString() });
-}  
+}
 });
 
 // DELETE A clothing
@@ -47,8 +48,7 @@ router.delete("/api/clothing/delete/:id",async(req, res) => {
 // INSERT An clothing
 router.post("/api/clothing/register",async(req, res) => {
   const info = req.body
-  insert_clothing_query
-  clothing_saved
+ 
 
     try {
         // await stringValidation(info)

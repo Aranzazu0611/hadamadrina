@@ -17,7 +17,7 @@ router.get("/api/furniture/", async(req, res) => {
 }  
 });
 
-// GET An User
+// GET An Furniture
 router.get('/api/furniture/:id',async (req, res) => {
   const { id } = req.params; 
  

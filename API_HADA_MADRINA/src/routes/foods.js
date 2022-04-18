@@ -4,14 +4,14 @@ const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
 
 const mysqlConnection  = require('../database.js');
-const { name_table_foods, message_delete_error, message_delete_not_exist, food_saved } = require('../utils/utils.js');
+const { name_table_foods, message_delete_error, message_delete_not_exist, food_saved, name_table_children } = require('../utils/utils.js');
 
 
 // GET all foods
 router.get("/api/foods/", async(req, res) => {
 
   try {
-    await operation_get_All(mysqlConnection, select_all_foods_query, res);
+    await operation_get_All(mysqlConnection, select_all_foods_query,name_table_foods,message_delete_not_exist, res);
 } catch (error) {
     return res.status(400).json({ error: error.toString() });
 }
@@ -22,7 +22,7 @@ router.get("/api/foods/:id", async(req, res) => {
   const { id } = req.params;  
 
   try {
-    await operation_get_By_Id(mysqlConnection, select_a_food_query, id, res);
+    await operation_get_By_Id(mysqlConnection, select_a_food_query, id, name_table_children,message_delete_not_exist, res);
 } catch (error) {
     return res.status(400).json({ error: error.toString() });
 }
