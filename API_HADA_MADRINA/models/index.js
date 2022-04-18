@@ -7,21 +7,21 @@ const operation_Database = (connection, query, operation, name_database) => {
 
 };
 
-const operation_get_All = (connection, query, res) => {
+const operation_get_All = (connection, query, name_table,message_delete_not_exist, res) => {
     connection.query(query, (error, results) => {
-
+        
         !error
             ?
             results.length === 0 ?
             res
             .status(400)
-            .json({ message: "Users" + " no existe" }) :
+            .json({ message: name_table + message_delete_not_exist }) :
             res.status(200).json(results) :
             res.status(400).json({ message: "Error" });
     });
 }
 
-const operation_get_By_Id = (connection, query, param, res) => {
+const operation_get_By_Id = (connection, query, param, name_table,message_delete_not_exist, res) => {
     connection.query(query, [param], (error, results) => {
 
         !error
@@ -29,14 +29,14 @@ const operation_get_By_Id = (connection, query, param, res) => {
             results.length === 0 ?
             res
             .status(400)
-            .json({ message: "User" + " no existe" }) :
+            .json({ message: name_table + message_delete_not_exist }) :
             res.status(200).json(results[0]) :
             res.status(400).json({ message: "Error" });
     });
 }
 
-const operation_delete_By_Id = (connection, query, param, res, name_table, message_delete_not_exist, message_delete_error) => {
-    connection.query(query, param, (error, results) => {
+const operation_delete_By_Id = async (connection, query, param, res, name_table, message_delete_not_exist, message_delete_error) => {
+    await connection.query(query, param, (error, results) => {
         !error
             ?
             results.affectedRows === 0 ?

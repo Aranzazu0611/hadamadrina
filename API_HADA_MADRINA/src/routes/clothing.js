@@ -1,73 +1,65 @@
 const express = require('express');
+const { select_all_clothing_query, select_a_clothing_query, delete_clothing_query, insert_clothing_query } = require('../../models/querys.js');
 const router = express.Router();
-
 const mysqlConnection  = require('../database.js');
+const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
+const { name_table_clothing, clothing_saved } = require('../utils/utils.js');
+const { message_delete_not_exist, message_delete_error } = require("../utils/utils");
 
 
 // GET all clothing
-router.get("/api/clothing/", (req, res) => {
-  mysqlConnection.query('SELECT * FROM `clothing`', (err, rows, fields) => {
-    if(!err) {
-      res.json(rows);
-    } else {
-      console.log(err);
-    }
-  });  
+router.get("/api/clothing/", async(req, res) => {
+
+  try {
+    await operation_get_All(mysqlConnection, select_all_clothing_query, res);
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+}
+ 
 });
 
 // GET A clothing
-router.get("/api/clothing/:id", (req, res) => {
+router.get("/api/clothing/:id", async(req, res) => {
   const { id } = req.params; 
-  mysqlConnection.query('SELECT * FROM `clothing` WHERE id = ?', [id], (err, rows, fields) => {
-    if (!err) {
-      res.json(rows[0]);
-    } else {
-      console.log(err);
-    }
-  });
+
+  try {
+    await operation_get_By_Id(mysqlConnection, select_a_clothing_query, id, res);
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+}  
 });
 
 // DELETE A clothing
-router.delete("/api/clothing/delete/:id", (req, res) => {
+router.delete("/api/clothing/delete/:id",async(req, res) => {
   const { id } = req.params;
-  mysqlConnection.query('DELETE FROM  `clothing` WHERE id = ?', [id], (err) => {
-    if(!err) {
-      res.json({status: 'Clothing Deleted'});
-    } else {
-      console.log(err);
-    }
-  });
+  try {
+    await operation_delete_By_Id(mysqlConnection, delete_clothing_query, id, res, name_table_clothing, message_delete_not_exist, message_delete_error)
+
+
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+
+}
+
+ 
 });
 
 // INSERT An clothing
-router.post("/api/clothing/register", (req, res) => {
+router.post("/api/clothing/register",async(req, res) => {
+  const info = req.body
+  insert_clothing_query
+  clothing_saved
+
+    try {
+        // await stringValidation(info)
+
+        await operation_insert(mysqlConnection, insert_clothing_query , info, clothing_saved, res)
+
+
+    } catch (error) {
+        return res.status(400).json({ error: error.toString() });
+    } 
   
-  const input = JSON.parse(JSON.stringify(req.body));
-       
-      var data = {
-          
-        clothing_category    : input.clothing_category,
-        description : input.description,
-        colour   : input.colour,
-        size   : input.size,
-        gender  : input.gender ,
-        age   : input.age,
-        clothing_entry_date : input.clothing_entry_date,
-        clothing_departure_date : input.clothing_departure_date               
-      
-      };        
-  
- 
-  const query ="INSERT INTO `clothing` SET ?" 
-  
-  
-  mysqlConnection.query(query, [data], (err, rows, fields) => {
-    if(!err) {
-      res.json({status: 'Clothing Saved'});
-    } else {
-      console.log(err);
-    }
-  });
 
 });
 

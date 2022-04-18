@@ -9,7 +9,7 @@ const {
 const { user_saved, name_table_user, user_updated, message_delete_not_exist, message_delete_error } = require("../utils/utils");
 const router = express.Router();
 const mysqlConnection = require("../database.js");
-const { operation_delete_By_Id, operation_get_All, operation_get_By_Id, isEmail, validateStringField, operation_insert } = require("../../models");
+const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
 const { stringValidation } = require("../utils/validations");
 
 

@@ -1,4 +1,5 @@
 const stringValidation = (data) => {
+    const errores = [];
     const name_Regex = new RegExp("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]{1,20}$")
     const surname_Regex = new RegExp("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]{1,50}$")
     const emailRegex = new RegExp("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")
@@ -11,13 +12,17 @@ const stringValidation = (data) => {
 
 
     if (!name_Regex.test(name) || !name) {
+  
 
-        throw new Error("El nombre  debe tener solo letras y menos de 20 letras");
-
-
+        const error_name = "Name:El nombre  debe tener solo letras y menos de 20 letras";
+        errores.push(error_name);
+        throw new Error(error_name);
+      
     }
 
     if (!surname_Regex.test(surnames) || !surnames) {
+
+        errores.push(error_name);
         throw new Error("El apellido  debe tener solo letras y menos de 50 letras");
 
     }

@@ -10,14 +10,29 @@ const name_table_foods = "Foods";
 const name_table_furniture = "Furniture";
 const name_table_hygiene = "Hygiene";
 const name_table_clothing = "Clothing";
-const user_saved = 'User Saved'
+const user_saved = 'User Saved';
 const user_deleted = 'User Deleted'
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
 const user_updated = "User Updated";
 const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
-const mother_update = 'Mother Updated'
+const mother_update = 'Mother Updated';
+const clothing_deleted = 'Clothing Deleted';
+const clothing_saved = 'Clothing Saved';
+const clothing_update = 'Clothing Updated';
+const food_deleted = 'Food Deleted';
+const food_saved = 'Food Saved';
+const food_update = 'Food Updated';
+const furniture_deleted = 'Furniture Deleted';
+const furniture_saved = 'Furniture Saved';
+const furniture_update = 'Furniture Updated'
+const hygiene_deleted = 'Hygiene Deleted';
+const hygiene_saved = 'Hygiene Saved';
+const hygiene_update = 'Hygiene Updated';
+const children_deleted = 'Children Deleted';
+const children_saved = 'Children Saved';
+const children_update = 'Children Updated'
 
 
 
@@ -41,5 +56,23 @@ module.exports = {
     user_updated,
     mother_deleted,
     mother_saved,
-    mother_update
+    mother_update,
+    clothing_deleted,
+    clothing_saved,
+    clothing_update,
+    food_deleted,
+    food_saved,
+    food_update,
+    furniture_update,
+    furniture_saved,
+    furniture_deleted,
+    hygiene_deleted,
+    hygiene_saved,
+    hygiene_update,
+    children_deleted,
+    children_saved,
+    children_update
+
+
+
 }
