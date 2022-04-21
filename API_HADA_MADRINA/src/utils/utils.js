@@ -11,7 +11,9 @@ const name_table_furniture = "Furniture";
 const name_table_hygiene = "Hygiene";
 const name_table_clothing = "Clothing";
 const user_saved = 'User Saved';
-const user_deleted = 'User Deleted'
+const user_login = 'User logged ';
+const user_deleted = 'User Deleted';
+const user_not_found = 'User not found'
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
 const user_updated = "User Updated";
@@ -50,10 +52,12 @@ module.exports = {
     name_table_clothing,
     selected_all,
     user_saved,
+    user_login,
     user_deleted,
     message_delete_error,
     message_delete_not_exist,
     user_updated,
+    user_not_found,
     mother_deleted,
     mother_saved,
     mother_update,

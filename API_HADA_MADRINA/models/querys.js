@@ -14,6 +14,7 @@ const select_all_hygiene_query = 'SELECT * FROM `hygiene`';
 ////SELECT BY ID////
 const select_a_children_query = 'SELECT * FROM `children` WHERE id = ?';
 const select_an_user_query = 'SELECT * FROM user WHERE id = ?';
+const select_an_user_whith_param_query = 'SELECT * FROM user WHERE email = ? AND password = ? AND volunteers_rol = ?';
 const select_a_mother_query = 'SELECT * FROM `mothers` WHERE id = ?'
 const select_a_clothing_query = 'SELECT * FROM `clothing` WHERE id = ?';
 const select_a_food_query = 'SELECT * FROM `foods` WHERE id = ?';
@@ -60,6 +61,7 @@ module.exports = {
     select_all_furniture_query,
     select_all_hygiene_query,
     select_an_user_query,
+    select_an_user_whith_param_query,
     select_a_children_query,
     select_a_food_query,
     select_a_clothing_query,

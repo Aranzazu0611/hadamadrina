@@ -49,7 +49,7 @@ const operation_delete_By_Id = async (connection, query, param, res, name_table,
 
 }
 
-const operation_insert = (connection, query, param, name_operation, res) => {
+const operation_insert = (connection, query, param, name_operation,message_not_found, res) => {
 
     connection.query(query, param, (error, results) => {
 
@@ -57,7 +57,7 @@ const operation_insert = (connection, query, param, name_operation, res) => {
             results.length === 0 ?
             res
             .status(400)
-            .json({ message: "No se ha podido insertar" }) :
+            .json({ message: message_not_found }) :
             res.status(200).json({ message: name_operation }) :
             res.status(400).json({ message: "Error" });
 
