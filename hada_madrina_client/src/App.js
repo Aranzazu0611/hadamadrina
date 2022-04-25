@@ -10,16 +10,16 @@ import Mother from "./components/Mother/mothers";
 import Register from "./components/Register/register";
 import Login from "./components/Login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
+
 
 function App() {
   return (
     
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LandingPage></LandingPage>} />
+            
             <Route path="/register" element={<Register></Register>} />
-            <Route path="/login" element={<Login></Login>} />
+            <Route path="/" element={<Login></Login>} />
             <Route path="/user" element={<User></User>} />
             <Route path="/mother" element={<Mother></Mother>} />
             <Route path="/clothing" element={<Clothing></Clothing>} />

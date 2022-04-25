@@ -32,7 +32,7 @@ const  User = () =>{
       <div className="row">
       <Link to="/register">
 
-        <button className="col-1 btn btn-primary d-inline ">        
+        <button className="col-2 btn btn-primary d-inline ">        
           Añadir User
         </button></Link>
       </div>
@@ -45,6 +45,8 @@ const  User = () =>{
               <th> Nombre</th>
               <th> Apellido</th>
               <th> Email </th>
+              <th> Teléfono </th>
+              <th> Dirección </th>
               <th> Role</th>
               <th> Action</th>
             </tr>
@@ -56,6 +58,8 @@ const  User = () =>{
                 <td>{user.name}</td>
                 <td>{user.surnames}</td>
                 <td> {user.email}</td>
+                <td> {user.phone}</td>
+                <td> {user.address}</td>
                 <td> {user.volunteers_rol}</td>
 
                 <td>

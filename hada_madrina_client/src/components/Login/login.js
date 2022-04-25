@@ -3,13 +3,18 @@ import "../../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 class Login extends Component {
+  
+
+
+
   render() {
     return (
-      <div className="App">
+      <div className="App">        
         <div className="App-header">
+                 
         <div className="container w-75 ">
           <form className="baby-login form-signin container_color rounded shadow">
-            <h1 className="title-login">Login</h1>
+            <h1 className="title-login">ONG Hada Madrina - Login</h1>
             <label >Email</label>
             <input
               type="email"
@@ -32,6 +37,7 @@ class Login extends Component {
             </button>
           </form>
         </div>
+        <a href="/register">Si no estas regisrado, haz click</a>
       </div>
        </div>
      
