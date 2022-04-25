@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+  background-image: url('../public/imagenes-ciguenas-bebes-L-7XTdls.jpeg')
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.trans{
+  margin-bottom: 2vw;
+  
+  
+}
+body {
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  background-color: #c424c1;
+  margin: auto;
+}
+
+.babyboom-login.form-signin {
+  margin-top: 277px;
+}
+
+.title-login {
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+}
+
+.form-signin input.form-control {
+  margin: 20px 0;
+}
+
+.App-header {
+ 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.login{
+  background-color: #c424c1;
+}
+.margin-boton{
+  margin-right: 150px;
+}
+.container-button{
+  margin-top: 100px;
+}
+.container-home{
+  background-color: #c424c1;
+  border-radius: 3%;
+  padding: 15px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
