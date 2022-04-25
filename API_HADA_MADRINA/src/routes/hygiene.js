@@ -4,7 +4,7 @@ const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operati
 const { select_all_hygiene_query, select_a_hygiene_query, delete_hygiene_query, insert_hygiene_query } = require('../../models/querys');
 
 const mysqlConnection  = require('../database.js');
-const { name_table_hygiene, message_delete_not_exist, message_delete_error, hygiene_saved } = require('../utils/utils');
+const { name_table_hygiene, message_delete_not_exist, message_delete_error, hygiene_saved, hygiene_not_found } = require('../utils/utils');
 
 // GET all hygiene
 router.get("/api/hygiene/", async(req, res) => {
@@ -52,9 +52,9 @@ router.post("/api/hygiene/register", async(req, res) => {
 
 
   try {
-    // await stringValidation(info)
+    
   
-    await operation_insert(mysqlConnection, insert_hygiene_query, info, hygiene_saved, res)
+    await operation_insert(mysqlConnection, insert_hygiene_query, info, hygiene_saved,hygiene_not_found, res)
   
   
   } catch (error) {

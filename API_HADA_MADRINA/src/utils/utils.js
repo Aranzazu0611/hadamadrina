@@ -20,21 +20,27 @@ const user_updated = "User Updated";
 const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
 const mother_update = 'Mother Updated';
+const mother_not_found = 'Mother not found'
 const clothing_deleted = 'Clothing Deleted';
 const clothing_saved = 'Clothing Saved';
 const clothing_update = 'Clothing Updated';
+const clothing_not_found = 'Clothing not found'
 const food_deleted = 'Food Deleted';
 const food_saved = 'Food Saved';
 const food_update = 'Food Updated';
+const food_not_found = 'Food not found'
 const furniture_deleted = 'Furniture Deleted';
 const furniture_saved = 'Furniture Saved';
 const furniture_update = 'Furniture Updated'
+const furniture_not_found = 'Furniture not found';
 const hygiene_deleted = 'Hygiene Deleted';
 const hygiene_saved = 'Hygiene Saved';
 const hygiene_update = 'Hygiene Updated';
+const hygiene_not_found = 'Hygiene not found';
 const children_deleted = 'Children Deleted';
 const children_saved = 'Children Saved';
 const children_update = 'Children Updated'
+const children_not_found = 'Hygiene not found';
 
 
 
@@ -61,21 +67,27 @@ module.exports = {
     mother_deleted,
     mother_saved,
     mother_update,
+    mother_not_found,
     clothing_deleted,
     clothing_saved,
     clothing_update,
+    clothing_not_found,
     food_deleted,
     food_saved,
     food_update,
+    food_not_found,
     furniture_update,
     furniture_saved,
     furniture_deleted,
+    furniture_not_found,
     hygiene_deleted,
     hygiene_saved,
     hygiene_update,
+    hygiene_not_found,    
     children_deleted,
     children_saved,
-    children_update
+    children_update,
+    children_not_found
 
 
 

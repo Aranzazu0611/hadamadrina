@@ -24,7 +24,7 @@ function stringValidation(data) {
 
     isPassword(password)
 
-    isVolunteer(volunteers_rol)
+    // isVolunteer(volunteers_rol)
 
 
 

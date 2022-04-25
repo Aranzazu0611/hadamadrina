@@ -6,30 +6,17 @@ const session = require("express-session");
 const app = express();
 
 // Settings
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3003);
 
 // Middlewares
 app.use(express.json());
-app.use(
-    cors({
-      origin: ["http://localhost:3000"],
-      methods: ["GET", "POST"],
-      credentials: true,
-    })
-  );
-  
-app.use(
-    session({
-      key: "userId",
-      secret: "subscribe",
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        expires: 60 * 60 * 24,
-      },
-    })
-  );
-
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});
 
 
 // Routes

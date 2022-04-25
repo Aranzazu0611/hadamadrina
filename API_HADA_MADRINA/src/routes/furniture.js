@@ -5,7 +5,7 @@ const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operati
 
 
 const mysqlConnection  = require('../database.js');
-const { name_table_furniture, message_delete_error, message_delete_not_exist, furniture_saved } = require('../utils/utils.js');
+const { name_table_furniture, message_delete_error, message_delete_not_exist, furniture_saved, furniture_not_found } = require('../utils/utils.js');
 
 // GET all User
 router.get("/api/furniture/", async(req, res) => {
@@ -50,10 +50,9 @@ router.post('/api/furniture/register', async(req, res) => {
  
   const info = req.body
   
- try {
-  // await stringValidation(info)
+ try { 
 
-  await operation_insert(mysqlConnection, insert_furniture_query, info, furniture_saved, res)
+  await operation_insert(mysqlConnection, insert_furniture_query, info, furniture_saved,furniture_not_found, res)
 
 
 } catch (error) {

@@ -4,7 +4,7 @@ const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
 
 const mysqlConnection  = require('../database.js');
-const { name_table_foods, message_delete_error, message_delete_not_exist, food_saved, name_table_children } = require('../utils/utils.js');
+const { name_table_foods, message_delete_error, message_delete_not_exist, food_saved, name_table_children, food_not_found } = require('../utils/utils.js');
 
 
 // GET all foods
@@ -52,9 +52,9 @@ router.delete("/api/foods/delete/:id", async(req, res) => {
 router.post("/api/foods/register", async(req, res) => {
   const info = req.body
   try {
-    // await stringValidation(info)
+   food_not_found
 
-    await operation_insert(mysqlConnection, insert_food_query, info, food_saved, res)
+    await operation_insert(mysqlConnection, insert_food_query, info, food_saved, food_not_found, res)
 
 
 } catch (error) {

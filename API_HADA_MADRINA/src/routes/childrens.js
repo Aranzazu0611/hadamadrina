@@ -4,7 +4,7 @@ const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operati
 const { select_a_children_query, delete_children_query, insert_children_query, select_all_children_query } = require('../../models/querys');
 
 const mysqlConnection  = require('../database.js');
-const { name_table_children, message_delete_not_exist, message_delete_error, children_saved } = require('../utils/utils');
+const { name_table_children, message_delete_not_exist, message_delete_error, children_saved, children_deleted, children_not_found } = require('../utils/utils');
 
 
 // GET all childrens
@@ -48,9 +48,8 @@ router.post("/api/childrens/register", async(req, res) => {
   insert_children_query
   children_saved
  try {
-  // await stringValidation(info)
-
-  await operation_insert(mysqlConnection, insert_children_query, info, children_saved, res)
+  
+  await operation_insert(mysqlConnection, insert_children_query, info, children_saved,children_not_found, res)
 
 
 } catch (error) {
@@ -59,7 +58,7 @@ router.post("/api/childrens/register", async(req, res) => {
 
 });
 
-//UPDATE AN Children  //falla
+//UPDATE AN Children  
 router.put("/api/children/edit/:id", (req, res) => {
   
   const input = JSON.parse(JSON.stringify(req.body));
