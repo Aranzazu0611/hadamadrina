@@ -12,7 +12,7 @@ const  Mother = () =>{
     await fetch("http://localhost:3003/api/mothers/")
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)
+        
         setMothers(result.reverse());
       });
   };
