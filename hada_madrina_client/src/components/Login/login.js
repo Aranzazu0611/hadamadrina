@@ -1,36 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-class Login extends Component {
+
+const Login = () => {
+  async function loginUser(credentials) {
+    return fetch('http://localhost:3003/api/user/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   }
+  
+ 
+    
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [user, setUser] = useState();
+  
+    const handleSubmit = async e => {
+      e.preventDefault();
+      try {
+       await loginUser({
+          email,
+          password
+        }).then((value) => {
+                  
+            localStorage.setItem('user', JSON.stringify(value));
+           
+            window.location.href = "/user";
+          });
+      } catch (error) {
+       
+      }
+      
+      
+    }
   
 
-
-
-  render() {
-    return (
-      <div className="App">        
-        <div className="App-header">
-                 
+  return (
+    <div className="App">
+      <div className="App-header">
         <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow">
+          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
             <h1 className="title-login">ONG Hada Madrina - Login</h1>
-            <label >Email</label>
+           
             <input
               type="email"
               id="inputEmail"
               className="form-control"
               placeholder="Email"
-              required=""
-              autoFocus=""
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}            
             />
-            <label>Password</label>
+          
             <input
               type="password"
               id="inputPassword"
               className="form-control"
               placeholder="Password"
-              required=""
+              required
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
             <button className="btn btn-primary" type="submit">
               Sign in
@@ -39,10 +74,8 @@ class Login extends Component {
         </div>
         <a href="/register">Si no estas regisrado, haz click</a>
       </div>
-       </div>
-     
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Login;

@@ -7,32 +7,41 @@ export default function Register() {
         <div className="container w-75 ">
           <form className="baby-login form-signin container_color rounded shadow">
             <h1 className="title-register">Register</h1>
-            <label>Name</label>
+            <label>Nombre</label>
             <input
               type="text"
-              id="inputName"
+              id="Name"
               className="form-control"
-              placeholder="Insert Name here"
-              required=""
-              autoFocus=""
+              placeholder="Inserte su nombre"
+              required
+              
             />
-            <label>Surname</label>
+            <label>Apellidos</label>
             <input
               type="text"
-              id="inputName"
+              id="Surnames"
               className="form-control"
-              placeholder="Insert Name here"
-              required=""
-              autoFocus=""
+              placeholder="Inserte sus apellidos"
+              required
+              
             />
             <label>Email</label>
             <input
               type="email"
-              id="inputEmail"
+              id="Email"
               className="form-control"
               placeholder="Email"
-              required=""
-              autoFocus=""
+              required
+              
+            />
+             <label>Email</label>
+            <input
+              type="email"
+              id="Email"
+              className="form-control"
+              placeholder="Email"
+              required
+              
             />
             <label>Password</label>
             <input
@@ -42,6 +51,15 @@ export default function Register() {
               placeholder="Insert Password here"
               required=""
             />
+            <div class="form-group">
+              <label for="sel1">Select list:</label>
+              <select class="form-control" id="sel1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
             <button className="btn btn-primary" type="submit">
               Sign in
             </button>
