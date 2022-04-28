@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Funiture = () => {
   const [furniture, setFurniture] = useState([]);
+  
   useEffect(() => {
     getFunitures();
   }, []);
@@ -17,14 +19,23 @@ const Funiture = () => {
   const deleteFunitures = async (id) => {
     await fetch("http://localhost:3003/api/furniture/delete/" + id, {
       method: "DELETE",
-    }).then((res) => getFunitures());
+    }).then(() => getFunitures());
   };
+
+  const formatDate = (date) =>{
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString([],options);
+}
 
   return (
     <div className="container">
-      <h2 className="text-center">Childrens List</h2>
+      <h2 className="text-center">Furniture List</h2>
       <div className="row">
-        <button className="col-2 btn btn-primary d-inline ">Añadir Niño</button>
+        <Link to="/Register/Food">
+          <button className="col-2 btn btn-primary d-inline ">
+            Añadir item
+          </button>
+        </Link>
       </div>
       <br></br>
       <div className="row">
@@ -47,8 +58,9 @@ const Funiture = () => {
                 <td>{item.furniture_category}</td>
                 <td>{item.description}</td>
                 <td> {item.state}</td>
-                <td> {item.furniture_entry_date}</td>
-                <td> {item.furniture_departure_date}</td>
+                <td> {formatDate(item.furniture_entry_date)}</td>
+                <td> {formatDate(item.furniture_departure_date)}</td>
+
 
                 <td>
                   <button className="btn btn-info">Update </button>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
 
 
 const  Clothing = () =>{
@@ -30,11 +31,13 @@ const  Clothing = () =>{
   return (
     <div className="container">
       <h2 className="text-center">
-          Clothing List</h2>
+          Almacén de Ropa</h2>
       <div className="row">
-        <button className="col-2 btn btn-primary d-inline ">        
+      <Link to="/Register/Clothing">
+        <button className="col-2 btn btn-primary d-inline ">           
           Añadir Ropa
         </button>
+      </Link>   
       </div>
       <br></br>
       <div className="row">

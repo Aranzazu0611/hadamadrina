@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
 
 const Hygiene = () => {
   const [hygiene, setHygiene] = useState([]);
@@ -10,7 +11,7 @@ const Hygiene = () => {
     await fetch("http://localhost:3003/api/hygiene/")
       .then((res) => res.json())
       .then((result) => {
-          console.log(result)
+        console.log(result);
         setHygiene(result.reverse());
       });
   };
@@ -25,7 +26,11 @@ const Hygiene = () => {
     <div className="container">
       <h2 className="text-center">Hygiene List</h2>
       <div className="row">
-        <button className="col-2 btn btn-primary d-inline ">Añadir Niño</button>
+        <Link to="/Register/hygiene">
+          <button className="col-2 btn btn-primary d-inline ">
+            Añadir item
+          </button>
+        </Link>
       </div>
       <br></br>
       <div className="row">
