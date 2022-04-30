@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-
-const  Mother = () =>{
+const Mother = () => {
   const [mothers, setMothers] = useState([]);
   useEffect(() => {
     getMothers();
   }, []);
-  
 
   const getMothers = async () => {
     await fetch("http://localhost:3003/api/mothers/")
@@ -16,25 +15,22 @@ const  Mother = () =>{
         setMothers(result.reverse());
       });
   };
-  
+
   const deleteMothers = async (id) => {
     await fetch("http://localhost:3003/api/mother/delete/" + id, {
       method: "DELETE",
-    })
-      .then((res) => getMothers()) 
-      
+    }).then((res) => getMothers());
   };
-
- 
 
   return (
     <div className="container">
       <h2 className="text-center">Mother List</h2>
       <div className="row">
-        <button className="col-2 btn btn-primary d-inline ">
-        
-          Añadir Madre
-        </button>
+        <Link to="/Register/Mother">
+          <button className="col-2 btn btn-primary d-inline ">
+            Añadir Madre
+          </button>
+        </Link>
       </div>
       <br></br>
       <div className="row">
@@ -65,7 +61,7 @@ const  Mother = () =>{
                 <td> {mother.phone}</td>
                 <td> {mother.address}</td>
                 <td> {mother.nationality}</td>
-                <td> {mother.mother_bith}</td>
+                <td> {mother.mother_birth}</td>
                 <td> {mother.civil_status}</td>
 
                 <td>
@@ -77,12 +73,14 @@ const  Mother = () =>{
                   >
                     Delete
                   </button>
-                  <button
-                    style={{ marginLeft: "10px" }}
-                    className="btn btn-info"
-                  >
-                    View
-                  </button>
+                  <Link to={ `/children/${mother.id}`}>
+                    <button
+                      style={{ marginLeft: "10px" }}
+                      className="btn btn-info"
+                    >
+                      View
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}
@@ -91,6 +89,6 @@ const  Mother = () =>{
       </div>
     </div>
   );
-}
+};
 
 export default Mother;

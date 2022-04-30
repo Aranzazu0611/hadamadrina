@@ -1,69 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
+import { Link, useParams } from "react-router-dom";
+import Mother_info from "../Mother/mother_info";
 
-
-const  Children = () =>{
+const Children = () => {
   const [childrens, setChildrens] = useState([]);
-  useEffect(() => {
-    getChildrens();
-  }, []);
+
+  
+  const {id} = useParams();
   
 
-  const  getChildrens = async () => {
-    await fetch("http://localhost:3003/api/childrens/")
+  useEffect(() => {
+    getChildrenById(id);
+   
+  }, [id]);
+
+  const getChildrenById = async (id) => {
+    
+    await fetch(`http://localhost:3003/api/children/${id}`)
       .then((res) => res.json())
       .then((result) => {
-     
-        setChildrens(result.reverse());
-      });
+      
+        setChildrens(result)
+      }).catch ((error)=>{
+        console.log("Url mala");
+      })
   };
+
+  
   
   const deleteChildren = async (id) => {
     await fetch("http://localhost:3003/api/childrens/delete/" + id, {
       method: "DELETE",
-    })
-      .then((res) => getChildrens()) 
-      
+    }).then((res) => getChildrenById(id));
   };
 
- 
-
   return (
-    <div className="container">
-      <h2 className="text-center">
-          Childrens List</h2>
-      <div className="row">
-        <button className="col-2 btn btn-primary d-inline ">        
-          Añadir Niño
-        </button>
-      </div>
-      <br></br>
+    <>
+    <Mother_info id={id}></Mother_info>
+    <div className="container">  
+     
       <div className="row">
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
               <th> Id</th>
               <th> Nombre</th>
-              <th> Apellido</th>              
+              <th> Apellido</th>
               <th> Edad</th>
               <th> Genero</th>
-              <th> Fecha de Nacimiento</th> 
-              <th> Nombre del Padre</th>              
+              <th> Fecha de Nacimiento</th>
+              <th> Nombre del Padre</th>
             </tr>
           </thead>
           <tbody>
-            {childrens.map((children) => (
-              <tr key={children.id}>
+           
+          {childrens.length > 0 ? (
+        <>
+          {childrens.map(children => (
+            <tr key={children.id}>
                 <td>{children.id}</td>
                 <td>{children.name}</td>
-                <td>{children.surnames}</td>                
+                <td>{children.surnames}</td>
                 <td> {children.age}</td>
                 <td> {children.gender}</td>
                 <td> {children.children_birth}</td>
                 <td> {children.father_name}</td>
-                
 
                 <td>
-                  <button className="btn btn-info">Update </button>
+                  <Link
+                    to={`/Update/Children/${children.id}`}
+
+                  >
+                    <button className="btn btn-info">Update </button>
+                  </Link>
                   <button
                     style={{ marginLeft: "10px" }}
                     className="btn btn-danger"
@@ -71,15 +80,20 @@ const  Children = () =>{
                   >
                     Borrar
                   </button>
-                 
                 </td>
               </tr>
-            ))}
+           
+          ))}
+        </>
+      ) : (
+          <h4 className="text-center">No hay niños registrados</h4>
+        )}
           </tbody>
         </table>
       </div>
-    </div>
+    </div></>
+    
   );
-}
+};
 
 export default Children;

@@ -22,7 +22,7 @@ const  Clothing = () =>{
     await fetch("http://localhost:3003/api/clothing/delete/" + id, {
       method: "DELETE",
     })
-      .then((res) => getClothing()) 
+      .then(() => getClothing()) 
       
   };
 

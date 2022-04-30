@@ -14,6 +14,9 @@ import Register from "./components/Register/register";
 import Hygiene_Register from "./components/Hygiene/Hygiene_Register";
 import Login from "./components/Login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Children_Register from "./components/Children/children_register";
+import Mother_Register from "./components/Mother/mother_register";
+import Children_Update from "./components/Children/children_update";
 
 
 function App() {
@@ -29,13 +32,16 @@ function App() {
             <Route path="/mother" element={<Mother></Mother>} />
             <Route path="/clothing" element={<Clothing></Clothing>} />
             <Route path="/foods" element={<Foods></Foods>} />
-            <Route path="/children" element={<Children></Children>} />
+            <Route path="/children/:id" element={<Children></Children>} />
             <Route path="/furniture" element={<Furniture></Furniture>} />
             <Route path="/hygiene" element={<Hygiene></Hygiene>} />
             <Route path="/Register/hygiene" element={<Hygiene_Register></Hygiene_Register>} />
             <Route path="/Register/Furniture" element={<Furniture_Register></Furniture_Register>} />
             <Route path="/Register/Food" element={<Foods_Register></Foods_Register>} />
             <Route path="/Register/Clothing" element={<Clothing_Register></Clothing_Register>} />
+            <Route path="/Register/Children/:id" element={<Children_Register></Children_Register>} />
+            <Route path="/Register/Mother" element={<Mother_Register></Mother_Register>} />
+            <Route path="/Update/Children/:id" element={<Children_Update></Children_Update>} />
             
           </Routes>
         </BrowserRouter>

@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 
-
-
 const Hygiene_Register =() => {
 
   const [hygiene_category, setHygiene_category] = useState();
@@ -26,11 +24,7 @@ const Hygiene_Register =() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(hygiene_category)
-      console.log(description)
-      console.log(brand)
-      console.log(hygiene_entry_date)
-      console.log(hygiene_departure_date)
+      
       await registerHygiene({
         hygiene_category,
         description,        
