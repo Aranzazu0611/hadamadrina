@@ -17,6 +17,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Children_Register from "./components/Children/children_register";
 import Mother_Register from "./components/Mother/mother_register";
 import Children_Update from "./components/Children/children_update";
+import Dasboard from "./components/Dashboard/dashboard";
 
 
 function App() {
@@ -25,10 +26,12 @@ function App() {
     
         <BrowserRouter>
           <Routes>           
+       
             
             <Route path="/register" element={<Register></Register>} />
             <Route path="/" element={<Login></Login>} />
             <Route path="/user" element={<User></User>} />
+            <Route path="/dasboard" element={ <Dasboard></Dasboard>} />
             <Route path="/mother" element={<Mother></Mother>} />
             <Route path="/clothing" element={<Clothing></Clothing>} />
             <Route path="/foods" element={<Foods></Foods>} />

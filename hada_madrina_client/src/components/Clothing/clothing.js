@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
+import Navbar from "../Navbar/navbar";
 
 
 const  Clothing = () =>{
@@ -29,6 +30,9 @@ const  Clothing = () =>{
  
 
   return (
+    <>
+    <Navbar></Navbar>
+    <section className="home-section">
     <div className="container">
       <h2 className="text-center">
           Almacén de Ropa</h2>
@@ -92,6 +96,8 @@ const  Clothing = () =>{
         </table>
       </div>
     </div>
+    </section>
+    </>
   );
 }
 

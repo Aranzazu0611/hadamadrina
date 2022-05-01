@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../Navbar/navbar";
+
 
 const Funiture = () => {
   const [furniture, setFurniture] = useState([]);
@@ -28,6 +30,9 @@ const Funiture = () => {
 }
 
   return (
+    <>
+    <Navbar></Navbar>
+    <section className="home-section">
     <div className="container">
       <h2 className="text-center">Furniture List</h2>
       <div className="row">
@@ -78,6 +83,8 @@ const Funiture = () => {
         </table>
       </div>
     </div>
+    </section>
+    </>
   );
 };
 

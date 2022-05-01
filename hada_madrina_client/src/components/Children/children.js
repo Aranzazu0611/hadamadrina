@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from "react";
 import { Link, useParams } from "react-router-dom";
 import Mother_info from "../Mother/mother_info";
+import Navbar from "../Navbar/navbar";
 
 const Children = () => {
   const [childrens, setChildrens] = useState([]);
@@ -36,7 +37,9 @@ const Children = () => {
 
   return (
     <>
+    <Navbar></Navbar>
     <Mother_info id={id}></Mother_info>
+    <section className="home-section">
     <div className="container">  
      
       <div className="row">
@@ -91,7 +94,9 @@ const Children = () => {
           </tbody>
         </table>
       </div>
-    </div></>
+    </div>
+    </section>
+    </>
     
   );
 };

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
+import Navbar from "../Navbar/navbar";
 
 const Hygiene = () => {
   const [hygiene, setHygiene] = useState([]);
   useEffect(() => {
     getHygiene();
   }, []);
+ 
 
   const getHygiene = async () => {
     await fetch("http://localhost:3003/api/hygiene/")
@@ -23,18 +25,34 @@ const Hygiene = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">Hygiene List</h2>
-      <div className="row">
-        <Link to="/Register/hygiene">
-          <button className="col-2 btn btn-primary d-inline ">
+    <>
+    <Navbar></Navbar>
+    <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Productos de baño:</span>
+      </div>
+     
+      <div >
+      <Link to="/Register/hygiene">
+          <button className="btn btn-primary d-inline ">
             Añadir item
           </button>
         </Link>
+       
+       
       </div>
-      <br></br>
-      <div className="row">
-        <table className="table table-striped table-bordered">
+    </nav>
+
+    <div class="home-content">
+    
+
+      <div class="sales-boxes">
+        <div class="recent-sales box">
+          <div class="title">Productos de higiene:</div>
+          <div class="sales-details">
+          <table className="table table-striped table-bordered">
           <thead>
             <tr>
               <th> Id</th>
@@ -70,8 +88,16 @@ const Hygiene = () => {
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
+        </div>
+        </div>
+        </div>
+        </div>
+       
+       
+        
+  </section>
+  </>
+ 
   );
 };
 
