@@ -4,6 +4,7 @@ import Navbar from "../Navbar/navbar";
 
 const Foods = () => {
   const [foods, setFoods] = useState([]);
+  
   useEffect(() => {
     getFoods();
   }, []);
@@ -58,7 +59,9 @@ const Foods = () => {
                     <td> {food.food_departure_date}</td>
 
                     <td>
-                      <button className="btn btn-info">Update </button>
+                    <Link to={`/Update/Food/${food.id}`}>
+                        <button className="btn btn-info">Actualizar </button>
+                      </Link>
                       <button
                         style={{ marginLeft: "10px" }}
                         className="btn btn-danger"

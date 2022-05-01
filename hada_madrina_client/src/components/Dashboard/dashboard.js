@@ -1,5 +1,6 @@
 import React from "react";
 import "./../../App.css";
+import { Link } from "react-router-dom";
 
 const Dasboard = () => {
   return (
@@ -11,41 +12,42 @@ const Dasboard = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <a href="#" >
+            <Link to={`/mother`}>
               <i className="bx bx-grid-alt"></i>
+
               <span className="links_name">Madres</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={`/clothing`}>
               <i className="bx bx-box"></i>
               <span className="links_name">Ropa</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={`/foods`}>
               <i className="bx bx-list-ul"></i>
               <span className="links_name">Comida</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={`/furniture`}>
               <i className="bx bx-pie-chart-alt-2"></i>
               <span className="links_name">Muebles</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={`/hygiene`}>
               <i className="bx bx-coin-stack"></i>
               <span className="links_name">Higiene</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={`/user`}>
               <i className="bx bx-book-alt"></i>
               <span className="links_name">Voluntarios</span>
-            </a>
-          </li>         
+            </Link>
+          </li>
           <li>
             <a href="#">
               <i className="bx bx-cog"></i>

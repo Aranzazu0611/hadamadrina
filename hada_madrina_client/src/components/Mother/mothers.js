@@ -68,7 +68,10 @@ const Mother = () => {
                 <td> {mother.civil_status}</td>
 
                 <td>
-                  <button className="btn btn-info">Update </button>
+                <Link to={`/Update/Mother/${mother.id}`}>
+                        <button className="btn btn-info">Actualizar </button>
+                </Link>
+                  
                   <button
                     style={{ marginLeft: "10px" }}
                     className="btn btn-danger"
