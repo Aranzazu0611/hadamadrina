@@ -2,6 +2,11 @@ import React, {useState} from "react";
 
 const Mother_Register =() => {
 
+  const tiempoActual = Date.now();
+  const hoy = new Date(tiempoActual)  
+  const mother_entry_date = hoy.toISOString().slice(0, 10)
+ 
+
   const [name, setName] = useState();
   const [surnames, setSurnames] = useState();
   const [age, setAge] = useState();
@@ -11,6 +16,9 @@ const Mother_Register =() => {
   const [nationality, setNationality] = useState();
   const [mother_birth, setMother_birth] = useState();
   const [civil_status, setCivil_status] = useState("soltera");
+  
+  
+
 
   const registerMother = async(credentials) => {
     return await fetch("http://localhost:3003/api/mother/register", {
@@ -27,7 +35,7 @@ const Mother_Register =() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(mother_birth)
+      
       await registerMother({
         name,
         surnames,
@@ -37,10 +45,11 @@ const Mother_Register =() => {
         address,
         nationality,
         mother_birth,
-        civil_status
+        civil_status,
+        mother_entry_date
       }).then(() => {
         
-        window.location.href = "/mother";
+        // window.location.href = "/mother";
         
       });
     } catch (error) {
