@@ -5,6 +5,10 @@ const {
   insert_mother_query,
   delete_mother_query,
   update_mother_query,
+  
+  select_count_mothers_month_query,
+  select_count_mothers_day_query,
+  select_count_mothers_week_query,
 } = require("../../models/querys");
 const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
@@ -14,9 +18,42 @@ const { mother_saved, name_table_mothers, message_delete_not_exist, message_dele
 
 // GET all Mothers 
 router.get("/api/mothers/", async(req, res) => {
-  message_delete_not_exist
+ 
   try {
     await operation_get_All(mysqlConnection, select_all_mothers_query,name_table_mothers,message_delete_not_exist, res);
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+}
+ 
+});
+
+//Count Mothers for month
+router.get("/api/mothers/month", async(req, res) => {
+ 
+  try {
+    await operation_get_All(mysqlConnection, select_count_mothers_month_query,name_table_mothers,message_delete_not_exist, res);
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+}
+ 
+});
+
+//Count Mothers for day
+router.get("/api/mothers/day", async(req, res) => {
+  
+  try {
+    await operation_get_All(mysqlConnection, select_count_mothers_day_query,name_table_mothers,message_delete_not_exist, res);
+} catch (error) {
+    return res.status(400).json({ error: error.toString() });
+}
+ 
+});
+
+//Count Mothers for week
+router.get("/api/mothers/week", async(req, res) => {
+  
+  try {
+    await operation_get_All(mysqlConnection, select_count_mothers_week_query,name_table_mothers,message_delete_not_exist, res);
 } catch (error) {
     return res.status(400).json({ error: error.toString() });
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { select_all_furniture_query, select_a_furniture_query, delete_furniture_query, insert_furniture_query } = require('../../models/querys.js');
+const { select_all_furniture_query, select_a_furniture_query, delete_furniture_query, insert_furniture_query, update_furniture_query } = require('../../models/querys.js');
 const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
 
@@ -62,28 +62,17 @@ router.post('/api/furniture/register', async(req, res) => {
 
 });
 
-//UPDATE AN USER
-router.put('/api/furniture/update/:id', async(req, res) => {
-  const input = JSON.parse(JSON.stringify(req.body));
-  const { id } = req.params;
- 
+//UPDATE AN Fu
+router.put('/api/furniture/edit/:id', async(req, res) => {
+  
+  const { id } = req.params;  
       
-      var data = {
-          
-          name    : input.name,
-          surnames : input.surnames,
-          email   : input.email,
-          phone   : input.phone,
-          address  : input.address ,
-          password   : input.password,
-          volunteers_rol   : input.volunteers_rol          
-      
-      };        
-    const query = "UPDATE user set ? WHERE id = ?";
+  const update_furniture_info = req.body;   
+   
 
-  mysqlConnection.query(query,[data,id],(err, rows, fields) => {
+  mysqlConnection.query( update_furniture_query,[update_furniture_info,id],(err, rows, fields) => {
     if(!err) {
-      res.json({status: 'User Updated'});
+      res.json({status: 'Furniture Updated'});
     } else {
       console.log(err);
     }

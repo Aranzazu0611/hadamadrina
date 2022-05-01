@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
-const { select_all_hygiene_query, select_a_hygiene_query, delete_hygiene_query, insert_hygiene_query } = require('../../models/querys');
+const { select_all_hygiene_query, select_a_hygiene_query, delete_hygiene_query, insert_hygiene_query, update_hygiene_query } = require('../../models/querys');
 
 const mysqlConnection  = require('../database.js');
 const { name_table_hygiene, message_delete_not_exist, message_delete_error, hygiene_saved, hygiene_not_found } = require('../utils/utils');
@@ -66,21 +66,12 @@ router.post("/api/hygiene/register", async(req, res) => {
 //UPDATE A hygiene  //falla
 router.put("/api/hygiene/edit/:id", (req, res) => {
   
-  const input = JSON.parse(JSON.stringify(req.body));
-  const { id } = req.params; 
-      
-  var data = {
-          
-    hygiene_category    : input.hygiene_category,
-    description : input.description,
-    state   : input.state,        
-    hygiene_entry_date : input.hygiene_entry_date,
-    hygiene_departure_date : input.hygiene_departure_date      
+  
+ 
+  const { id } = req.params;   
+  const update_furniture_info = req.body
 
-};       
-    const query = "UPDATE hygiene set ? WHERE id = ?";
-
-  mysqlConnection.query(query,[data,id],(err, rows, fields) => {
+  mysqlConnection.query(update_hygiene_query,[update_furniture_info,id],(err, rows, fields) => {
     if(!err) {
       res.json({status: 'hygiene Updated'});
     } else {

@@ -30,7 +30,7 @@ const operation_get_By_Id = (connection, query, param, name_table,message_delete
             res
             .status(400)
             .json({ message: name_table + message_delete_not_exist }) :
-            res.status(200).json(results[0]) :
+            res.status(200).json(results) :
             res.status(400).json({ message: "Error" });
     });
 }
@@ -63,6 +63,8 @@ const operation_insert = (connection, query, param, name_operation,message_not_f
 
     });
 }
+
+
 
 
 
