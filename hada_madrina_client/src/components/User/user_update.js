@@ -54,7 +54,7 @@ const User_Update =() => {
         password,
         volunteers_rol
       }).then(() => {
-        window.location.href = `/User/Info/${id}`;
+        window.location.href = `/user`;
       });
     } catch (error) {
       console.log(error);

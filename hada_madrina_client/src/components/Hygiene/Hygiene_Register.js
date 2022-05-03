@@ -1,7 +1,9 @@
 import React, {useState} from "react";
+import { useNavigate  } from 'react-router-dom';
 
 const Hygiene_Register =() => {
 
+  const navigate = useNavigate()
   const [hygiene_category, setHygiene_category] = useState();
   const [description, setDescription] = useState();
   const [brand, setBrand] = useState();
@@ -32,8 +34,8 @@ const Hygiene_Register =() => {
         hygiene_entry_date,
         hygiene_departure_date       
       }).then(() => {
-        
-         window.location.href = "/hygiene";
+        navigate('/hygiene')  
+           
         
       });
     } catch (error) {

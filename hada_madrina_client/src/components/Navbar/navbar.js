@@ -21,10 +21,10 @@ const Navbar = () => {
           </Link>
 
           <li className="nav-links">
-            <a href="#">
+            
               <i className="bx bx-log-out"></i>
               <span className="links_name">Log out</span>
-            </a>
+           
           </li>
         </ul>
       </div>

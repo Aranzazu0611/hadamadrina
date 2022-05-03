@@ -49,16 +49,16 @@ const NavbarDashboard = () => {
             </Link>
           </li>
           <li>
-            <a href="#">
+            
               <i className="bx bx-cog"></i>
               <span className="links_name">Setting</span>
-            </a>
+            
           </li>
           <li className="log_out">
-            <a href="#">
+           
               <i className="bx bx-log-out"></i>
               <span className="links_name">Log out</span>
-            </a>
+            
           </li>
         </ul>
       </div>

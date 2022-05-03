@@ -49,7 +49,7 @@ const Mother_Register =() => {
         mother_entry_date
       }).then(() => {
         
-        // window.location.href = "/mother";
+        window.location.href = "/mother";
         
       });
     } catch (error) {
