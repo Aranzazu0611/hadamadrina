@@ -1,10 +1,11 @@
 const express = require('express');
+const { merge } = require('nodemon/lib/utils');
 const router = express.Router();
-const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
-const { select_a_children_query, delete_children_query, insert_children_query, select_all_children_query } = require('../../models/querys');
+const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert, operation_update } = require("../../models");
+const { select_a_children_query, delete_children_query, insert_children_query, select_all_children_query, update_children_query } = require('../../models/querys');
 
 const mysqlConnection  = require('../database.js');
-const { name_table_children, message_delete_not_exist, message_delete_error, children_saved, children_deleted, children_not_found } = require('../utils/utils');
+const { name_table_children, message_delete_not_exist, message_delete_error, children_saved, children_deleted, children_not_found, children_update, message_update_not_exist, message_update_error } = require('../utils/utils');
 
 
 // GET all childrens
@@ -59,30 +60,24 @@ router.post("/api/childrens/register", async(req, res) => {
 });
 
 //UPDATE AN Children  
-router.put("/api/children/edit/:id", (req, res) => {
-  
-  const input = JSON.parse(JSON.stringify(req.body));
-  const { id } = req.params; 
-      
-  var data = {
-          
-    name    : input.name,
-    surnames : input.surnames,
-    age   : input.age,
-    gender   : input.gender,
-    children_birth  : input.children_birth ,
-    father_name   : input.father_name            
+router.put("/api/children/edit/:id", async(req, res) => {
+  const { id } = req.params;
+  const update_children_info = req.body;  
 
-};       
-    const query = "UPDATE children set ? WHERE id = ?";
-
-  mysqlConnection.query(query,[data,id],(err, rows, fields) => {
-    if(!err) {
-      res.json({status: 'Children Updated'});
-    } else {
-      console.log(err);
-    }
-  });
+ try {
+  await operation_update(
+    mysqlConnection,
+    update_children_query,
+    [update_children_info, id],
+    children_update,
+    message_update_not_exist,
+    message_update_error,
+    res
+  );
+   
+ } catch (error) {
+  return res.status(400).json({ error: error.toString() });
+ }
 });
 
 

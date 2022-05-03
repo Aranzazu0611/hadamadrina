@@ -65,6 +65,20 @@ const operation_insert = (connection, query, param, name_operation,message_not_f
     });
 }
 
+const operation_update = (connection, query, param, name_operation,message_not_exist,message_not_update, res) => {
+
+    connection.query(query, param, (error, results) => {
+        !error
+        ?
+        results.affectedRows === 0 ?
+        res
+        .status(400)
+        .json({ message: message_not_exist }) :
+        res.status(200).json({ message: name_operation }) :
+        res.status(400).json({ message: message_not_update });
+
+    });
+}
 
 
 
@@ -73,7 +87,8 @@ module.exports = {
     operation_get_All,
     operation_get_By_Id,
     operation_delete_By_Id,
-    operation_insert
+    operation_insert,
+    operation_update
 
 
 }

@@ -1,5 +1,5 @@
 const create_database_query = 'CREATE DATABASE IF NOT EXISTS hada_madrina';
-const use_database = 'use hada_madrina';
+
 ////SELECT ALL ////
 const select_all_user_query = 'SELECT * FROM hada_madrina.user';
 const select_all_mothers_query = 'SELECT * FROM hada_madrina.mothers'
@@ -85,8 +85,7 @@ const delete_hygiene_query = 'DELETE FROM  hada_madrina.hygiene WHERE id = ?'
 
 
 module.exports = {
-    create_database_query,
-    use_database,
+    create_database_query,  
     select_all_user_query,
     select_all_children_query,
     select_all_clothing_query,

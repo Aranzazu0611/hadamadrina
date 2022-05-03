@@ -17,6 +17,7 @@ const user_not_found = 'User not found'
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
 const message_update_error = "Error to update"
+const message_update_not_exist = "No existe regsistro a modificar"
 const user_updated = "User Updated";
 const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
@@ -89,7 +90,8 @@ module.exports = {
     children_saved,
     children_update,
     children_not_found,
-    message_update_error
+    message_update_error,
+    message_update_not_exist
 
 
 

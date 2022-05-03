@@ -1,11 +1,11 @@
 const express = require('express');
 const { select_all_furniture_query, select_a_furniture_query, delete_furniture_query, insert_furniture_query, update_furniture_query } = require('../../models/querys.js');
 const router = express.Router();
-const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
+const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert, operation_update } = require("../../models");
 
 
 const mysqlConnection  = require('../database.js');
-const { name_table_furniture, message_delete_error, message_delete_not_exist, furniture_saved, furniture_not_found } = require('../utils/utils.js');
+const { name_table_furniture, message_delete_error, message_delete_not_exist, furniture_saved, furniture_not_found, furniture_update, message_update_error, message_update_not_exist } = require('../utils/utils.js');
 
 // GET all User
 router.get("/api/furniture/", async(req, res) => {
@@ -62,21 +62,28 @@ router.post('/api/furniture/register', async(req, res) => {
 
 });
 
-//UPDATE AN Fu
+//UPDATE AN Furniture
 router.put('/api/furniture/edit/:id', async(req, res) => {
   
   const { id } = req.params;  
       
-  const update_furniture_info = req.body;   
+  const update_furniture_info = req.body;  
+  
+  try {
+    await operation_update(mysqlConnection,
+      update_furniture_query,
+      [update_furniture_info, id],
+      furniture_update,
+      message_update_not_exist,
+      message_update_error,
+      res)
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+ 
    
 
-  mysqlConnection.query( update_furniture_query,[update_furniture_info,id],(err, rows, fields) => {
-    if(!err) {
-      res.json({status: 'Furniture Updated'});
-    } else {
-      console.log(err);
-    }
-  });
+  
 });
 
 

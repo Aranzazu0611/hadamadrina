@@ -15,6 +15,8 @@ const {
   message_delete_error,
   user_login,
   user_not_found,
+  message_update_not_exist,
+  message_update_error,
 } = require("../utils/utils");
 const router = express.Router();
 const mysqlConnection = require("../database.js");
@@ -24,6 +26,7 @@ const {
   operation_get_All,
   operation_get_By_Id,
   operation_insert,
+  operation_update,
 } = require("../../models");
 const { stringValidation } = require("../utils/validations");
 
@@ -130,15 +133,23 @@ router.post("/api/user/register", async (req, res) => {
 });
 
 //UPDATE AN USER
-router.put("/api/user/update/:id", (req, res) => {
+router.put("/api/user/update/:id", async(req, res) => {
   const { id } = req.params;
-
-  const update_user_info = req.body;
-
-  mysqlConnection.query(update_user_query, [update_user_info, id], (err) => {
-    !err ? res.json({ status: user_updated }) : console.log(err);
-  });
-  
+  const update_user_info = req.body; 
+ 
+  try {
+    await operation_update(
+      mysqlConnection,
+      update_user_query,
+      [update_user_info, id],
+      user_updated,
+      message_update_not_exist,
+      message_update_error,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
  
 });
 

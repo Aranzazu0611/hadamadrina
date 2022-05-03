@@ -1,9 +1,9 @@
 const express = require('express');
-const { select_all_clothing_query, select_a_clothing_query, delete_clothing_query, insert_clothing_query } = require('../../models/querys.js');
+const { select_all_clothing_query, select_a_clothing_query, delete_clothing_query, insert_clothing_query, update_clothing_query } = require('../../models/querys.js');
 const router = express.Router();
 const mysqlConnection  = require('../database.js');
-const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
-const { name_table_clothing, clothing_saved, clothing_not_found } = require('../utils/utils.js');
+const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert, operation_update } = require("../../models");
+const { name_table_clothing, clothing_saved, clothing_not_found, clothing_update, message_update_not_exist, message_update_error } = require('../utils/utils.js');
 const { message_delete_not_exist, message_delete_error } = require("../utils/utils");
 
 
@@ -63,33 +63,26 @@ router.post("/api/clothing/register",async(req, res) => {
 
 });
 
-//UPDATE A clothing  //falla
-router.put("/api/clothing/edit/:id", (req, res) => {
+
+router.put("/api/clothing/edit/:id", async(req, res) => {
   
-  const input = JSON.parse(JSON.stringify(req.body));
-  const { id } = req.params; 
-      
-  var data = {
-          
-    clothing_category    : input.clothing_category,
-        description : input.description,
-        colour   : input.colour,
-        size   : input.size,
-        gender  : input.gender ,
-        age   : input.age,
-        clothing_entry_date : input.clothing_entry_date,
-        clothing_departure_date : input.clothing_departure_date        
-
-};       
-    const query = "UPDATE clothing set ? WHERE id = ?";
-
-  mysqlConnection.query(query,[data,id],(err, rows, fields) => {
-    if(!err) {
-      res.json({status: 'Clothing Updated'});
-    } else {
-      console.log(err);
-    }
-  });
+  const { id } = req.params;
+  const update_clothing_info = req.body;   
+  
+  try {
+    await operation_update(
+      mysqlConnection,
+      update_clothing_query,
+      [update_clothing_info, id],
+      clothing_update,
+      message_update_not_exist,
+      message_update_error,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+ 
 });
 
 
