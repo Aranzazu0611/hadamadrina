@@ -138,6 +138,10 @@ router.put("/api/user/update/:id", (req, res) => {
   mysqlConnection.query(update_user_query, [update_user_info, id], (err) => {
     !err ? res.json({ status: user_updated }) : console.log(err);
   });
+  
+ 
 });
+
+
 
 module.exports = router;

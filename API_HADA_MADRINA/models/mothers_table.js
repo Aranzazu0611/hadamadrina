@@ -1,4 +1,4 @@
-const mothers_table =`CREATE TABLE IF NOT EXISTS mothers (
+const mothers_table =`CREATE TABLE IF NOT EXISTS hada_madrina.mothers (
     id int NOT NULL AUTO_INCREMENT,    
     name varchar(100) NOT NULL,
     surnames varchar(100) NOT NULL,

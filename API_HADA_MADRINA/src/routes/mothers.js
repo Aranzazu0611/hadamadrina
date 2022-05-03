@@ -14,7 +14,7 @@ const router = express.Router();
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert } = require("../../models");
 
 const mysqlConnection = require("../database.js");
-const { mother_saved, name_table_mothers, message_delete_not_exist, message_delete_error, mother_not_found } = require("../utils/utils.js");
+const { mother_saved, name_table_mothers, message_delete_not_exist, message_delete_error, mother_not_found, mother_update, message_update_error } = require("../utils/utils.js");
 
 // GET all Mothers 
 router.get("/api/mothers/", async(req, res) => {
@@ -96,32 +96,23 @@ router.post("/api/mother/register", async(req, res) => {
 
 
   } catch (error) {
-      return res.status(400).json({ error: error.toString() });
+      return res.status(400).json({ error: error.message });
   }
  
 });
 
-//UPDATE AN USER  //falla
-router.put("/api/mother/edit/:id", (req, res) => {
-  const input = JSON.parse(JSON.stringify(req.body));
-  const { id } = req.params;
-
-  var data = {
-    name: input.name,
-    surnames: input.surnames,
-    age: input.age,
-    email: input.email,
-    phone: input.phone,
-    address: input.address,
-    nationality: input.nationality,
-    mother_birth: input.mother_birth,
-    civil_status: input.civil_status,
-  };
+//UPDATE A Mother
+router.put("/api/mother/edit/:id", async(req, res) => {
+  
+  const { id } = req.params;  
+  const update_mother_info = req.body
  
-
-  mysqlConnection.query(update_mother_query, [data, id], (err) => {
-    !err ? res.json({ status: "Mother Updated" }) : console.log(err);
-  });
+  try {
+    await operation_insert(mysqlConnection, update_mother_query, [update_mother_info, id], mother_update, message_update_error, res)
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+ 
 });
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const furniture_table = `CREATE TABLE IF NOT EXISTS furniture (
+const furniture_table = `CREATE TABLE IF NOT EXISTS hada_madrina.furniture (
     id int NOT NULL AUTO_INCREMENT,    
     furniture_category varchar(250) NOT NULL,
     description varchar(250) NOT NULL,

@@ -1,4 +1,4 @@
-const hygiene_table = `CREATE TABLE IF NOT EXISTS hygiene (
+const hygiene_table = `CREATE TABLE IF NOT EXISTS hada_madrina.hygiene (
     id int NOT NULL AUTO_INCREMENT,    
     hygiene_category varchar(250) NOT NULL,
     description varchar(250) NOT NULL,

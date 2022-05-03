@@ -1,4 +1,5 @@
-const user_table = `CREATE TABLE IF NOT EXISTS user (
+const user_table = `
+CREATE TABLE IF NOT EXISTS hada_madrina.user (
     id int NOT NULL AUTO_INCREMENT,    
     name varchar(20) NOT NULL,
     surnames varchar(50) NOT NULL,

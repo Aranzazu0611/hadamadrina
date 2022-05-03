@@ -22,11 +22,12 @@ const { foods_table } = require("../models/foods_table");
 const { hygiene_table } = require("../models/hygiene_table");
 const { create_database_query, use_database } = require("../models/querys");
 
-const mysqlConnection = mysql.createConnection({
+const mysqlConnection = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
 });
+
 
 const create_database_hada_madrina = operation_Database(
   mysqlConnection,
@@ -35,12 +36,6 @@ const create_database_hada_madrina = operation_Database(
   name_database
 );
 
-const seleccionar_database = operation_Database(
-  mysqlConnection,
-  use_database,
-  selected_database,
-  name_database
-);
 
 const create_user_table = operation_Database(
   mysqlConnection,
@@ -87,21 +82,27 @@ const create_table_furniture = operation_Database(
   name_table_furniture
 );
 
-mysqlConnection.connect(function (error) {
+
+mysqlConnection.getConnection( async(error,connection) => {
   if (error) {
     console.error("error: " + error.message);
   } else {
     console.log("¡¡Se ha conetacto con éxito!!");
-    create_database_hada_madrina
-    seleccionar_database;
-    create_user_table;
-    create_table_mothers;
-    create_table_children;
-    create_table_foods;
-    create_table_hygiene;
-    create_table_clothing;
-    create_table_furniture
+    await create_database_hada_madrina  
+    await create_user_table;
+    await create_table_mothers;
+    await create_table_children;
+    await create_table_foods;
+    await create_table_hygiene;
+    await create_table_clothing;
+    await create_table_furniture
+    connection.release();
   }
+  
+ 
 });
+
+
+
 
 module.exports = mysqlConnection;

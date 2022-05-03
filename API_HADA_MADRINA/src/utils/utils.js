@@ -16,6 +16,7 @@ const user_deleted = 'User Deleted';
 const user_not_found = 'User not found'
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
+const message_update_error = "Error to update"
 const user_updated = "User Updated";
 const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
@@ -87,7 +88,8 @@ module.exports = {
     children_deleted,
     children_saved,
     children_update,
-    children_not_found
+    children_not_found,
+    message_update_error
 
 
 

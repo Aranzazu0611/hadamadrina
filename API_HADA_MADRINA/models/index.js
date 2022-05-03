@@ -1,10 +1,11 @@
 const operation_Database = (connection, query, operation, name_database) => {
 
     connection.query(query, (error) => {
-        (error) ? console.error('error: ' + error.message): console.log(operation + name_database);
-
+        (error) ? console.log('error: ' + error.message): console.log(operation + name_database);
+        
     });
-
+    
+    
 };
 
 const operation_get_All = (connection, query, name_table,message_delete_not_exist, res) => {
@@ -52,18 +53,17 @@ const operation_delete_By_Id = async (connection, query, param, res, name_table,
 const operation_insert = (connection, query, param, name_operation,message_not_found, res) => {
 
     connection.query(query, param, (error, results) => {
-
+        console.log(error)
         !error ?
             results.length === 0 ?
             res
             .status(400)
             .json({ message: message_not_found }) :
             res.status(200).json({ message: name_operation }) :
-            res.status(400).json({ message: "Error" });
+            res.status(400).json({ message: error.message });
 
     });
 }
-
 
 
 
