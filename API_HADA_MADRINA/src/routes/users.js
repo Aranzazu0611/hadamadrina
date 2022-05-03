@@ -13,10 +13,11 @@ const {
   user_updated,
   message_delete_not_exist,
   message_delete_error,
-  user_login,
   user_not_found,
   message_update_not_exist,
   message_update_error,
+  user_login,
+  message_user_bad_credentials,
 } = require("../utils/utils");
 const router = express.Router();
 const mysqlConnection = require("../database.js");
@@ -33,22 +34,22 @@ const { stringValidation } = require("../utils/validations");
 router.post("/api/user/auth", async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  try {
+   await operation_insert(
+      mysqlConnection,
+      select_an_user_whith_param_query,
+      [email, password],
+      user_login,
+      message_user_bad_credentials,
+      res
+    );
+    
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
 
   
-  mysqlConnection.query(
-    select_an_user_whith_param_query,
-    [email, password],
-    (error, result) => {
-      if (error) {
-        res.send({ error: error });
-      }
-      if (result) {
-        res.send(result);
-      } else {
-        res.send({ message: "Mal email or password" });
-      }
-    }
-  );
+  
 });
 
 router.get("/api/user/auth", async (req, res, next) => {
@@ -133,10 +134,10 @@ router.post("/api/user/register", async (req, res) => {
 });
 
 //UPDATE AN USER
-router.put("/api/user/update/:id", async(req, res) => {
+router.put("/api/user/update/:id", async (req, res) => {
   const { id } = req.params;
-  const update_user_info = req.body; 
- 
+  const update_user_info = req.body;
+
   try {
     await operation_update(
       mysqlConnection,
@@ -150,9 +151,6 @@ router.put("/api/user/update/:id", async(req, res) => {
   } catch (error) {
     return res.status(400).json({ error: error.toString() });
   }
- 
 });
-
-
 
 module.exports = router;

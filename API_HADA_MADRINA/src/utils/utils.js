@@ -14,6 +14,7 @@ const user_saved = 'User Saved';
 const user_login = 'User logged ';
 const user_deleted = 'User Deleted';
 const user_not_found = 'User not found'
+const message_user_bad_credentials = "Incorrecto email or password"
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
 const message_update_error = "Error to update"
@@ -91,7 +92,8 @@ module.exports = {
     children_update,
     children_not_found,
     message_update_error,
-    message_update_not_exist
+    message_update_not_exist,
+    message_user_bad_credentials
 
 
 

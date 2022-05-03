@@ -53,7 +53,7 @@ const operation_delete_By_Id = async (connection, query, param, res, name_table,
 const operation_insert = (connection, query, param, name_operation,message_not_found, res) => {
 
     connection.query(query, param, (error, results) => {
-        console.log(error)
+       
         !error ?
             results.length === 0 ?
             res

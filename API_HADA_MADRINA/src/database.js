@@ -3,7 +3,6 @@ const { operation_Database } = require("../models/index");
 const {
   name_database,
   created_database,
-  selected_database,
   created_table,
   name_table_user,
   name_table_mothers,
@@ -20,7 +19,7 @@ const { clothing_table } = require("../models/clothing_table");
 const { furniture_table } = require("../models/furniture_table");
 const { foods_table } = require("../models/foods_table");
 const { hygiene_table } = require("../models/hygiene_table");
-const { create_database_query, use_database } = require("../models/querys");
+const { create_database_query } = require("../models/querys");
 
 const mysqlConnection = mysql.createPool({
   host: "localhost",
@@ -28,14 +27,12 @@ const mysqlConnection = mysql.createPool({
   password: "",
 });
 
-
 const create_database_hada_madrina = operation_Database(
   mysqlConnection,
   create_database_query,
   created_database,
   name_database
 );
-
 
 const create_user_table = operation_Database(
   mysqlConnection,
@@ -65,7 +62,12 @@ const create_table_hygiene = operation_Database(
   name_table_hygiene
 );
 
-const create_table_foods = operation_Database(mysqlConnection, foods_table, created_table, name_table_foods);
+const create_table_foods = operation_Database(
+  mysqlConnection,
+  foods_table,
+  created_table,
+  name_table_foods
+);
 
 const create_table_clothing = operation_Database(
   mysqlConnection,
@@ -74,7 +76,6 @@ const create_table_clothing = operation_Database(
   name_table_clothing
 );
 
-
 const create_table_furniture = operation_Database(
   mysqlConnection,
   furniture_table,
@@ -82,27 +83,21 @@ const create_table_furniture = operation_Database(
   name_table_furniture
 );
 
-
-mysqlConnection.getConnection( async(error,connection) => {
+mysqlConnection.getConnection( (error, connection) => {
   if (error) {
-    console.error("error: " + error.message);
+    throw new Error("error: " + error.message);
   } else {
     console.log("¡¡Se ha conetacto con éxito!!");
-    await create_database_hada_madrina  
-    await create_user_table;
-    await create_table_mothers;
-    await create_table_children;
-    await create_table_foods;
-    await create_table_hygiene;
-    await create_table_clothing;
-    await create_table_furniture
+    create_database_hada_madrina;
+    create_user_table;
+    create_table_mothers;
+    create_table_children;
+    create_table_foods;
+    create_table_hygiene;
+    create_table_clothing;
+    create_table_furniture;
     connection.release();
   }
-  
- 
 });
-
-
-
 
 module.exports = mysqlConnection;
