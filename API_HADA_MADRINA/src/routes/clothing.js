@@ -1,15 +1,112 @@
 const express = require('express');
-const { select_all_clothing_query, select_a_clothing_query, delete_clothing_query, insert_clothing_query, update_clothing_query } = require('../../models/querys.js');
+const { select_all_clothing_query, select_a_clothing_query, delete_clothing_query, insert_clothing_query, update_clothing_query, select_count_clothing_day_query, select_count_clothing_month_query, select_count_clothing_week_query, select_count_departure_clothing_day_query, select_count_departure_clothing_month_query, select_count_departure_clothing_week_query } = require('../../models/querys.js');
 const router = express.Router();
 const mysqlConnection  = require('../database.js');
 const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operation_insert, operation_update } = require("../../models");
 const { name_table_clothing, clothing_saved, clothing_not_found, clothing_update, message_update_not_exist, message_update_error } = require('../utils/utils.js');
 const { message_delete_not_exist, message_delete_error } = require("../utils/utils");
 
+//MONTH clothing
+
+router.get("/api/clothing/entry/month", async (req, res) => {
+  
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_clothing_month_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+
+
+
+//Count entry clothing for day
+router.get("/api/clothing/entry/day", async (req, res) => {
+
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_clothing_day_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count entry clothing for week
+router.get("/api/clothing/entry/week", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_clothing_week_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure clothing for month
+router.get("/api/clothing/departure/month", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_clothing_month_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure clothing for day
+router.get("/api/clothing/departure/day", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_clothing_day_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure clothing for week
+router.get("/api/clothing/departure/week", async (req, res) => {
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_clothing_week_query,
+      name_table_clothing,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
 
 // GET all clothing
-router.get("/api/clothing/", async(req, res) => {
-  name_table_clothing
+router.get("/api/clothing/", async(req, res) => {  
 
   try {
     await operation_get_All(mysqlConnection, select_all_clothing_query, name_table_clothing, message_delete_not_exist, res);

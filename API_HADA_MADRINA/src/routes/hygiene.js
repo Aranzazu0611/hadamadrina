@@ -13,6 +13,12 @@ const {
   delete_hygiene_query,
   insert_hygiene_query,
   update_hygiene_query,
+  select_count_hygiene_day_query,
+  select_count_hygiene_month_query,
+  select_count_hygiene_week_query,
+  select_count_departure_hygiene_day_query,
+  select_count_departure_hygiene_month_query,
+  select_count_departure_hygiene_week_query,
 } = require("../../models/querys");
 
 const mysqlConnection = require("../database.js");
@@ -27,11 +33,108 @@ const {
   message_update_not_exist,
 } = require("../utils/utils");
 
+//MONTH Hygiene
+
+router.get("/api/hygiene/entry/month", async (req, res) => {
+  
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_hygiene_month_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+
+
+
+//Count entry Hygiene for day
+router.get("/api/hygiene/entry/day", async (req, res) => {
+  select_count_hygiene_day_query
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_hygiene_day_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count entry Hygiene for week
+router.get("/api/hygiene/entry/week", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_hygiene_week_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure Hygiene for month
+router.get("/api/hygiene/departure/month", async (req, res) => {
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_hygiene_month_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure Hygiene for day
+router.get("/api/hygiene/departure/day", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_hygiene_day_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
+//Count departure Hygiene for week
+router.get("/api/hygiene/departure/week", async (req, res) => {
+ 
+  try {
+    await operation_get_All(
+      mysqlConnection,
+      select_count_departure_hygiene_week_query,
+      name_table_hygiene,
+      message_delete_not_exist,
+      res
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.toString() });
+  }
+});
+
 // GET all hygiene
 router.get("/api/hygiene/", async (req, res) => {
-  select_all_hygiene_query;
-  name_table_hygiene;
-  message_delete_not_exist;
+ 
 
   try {
     await operation_get_All(

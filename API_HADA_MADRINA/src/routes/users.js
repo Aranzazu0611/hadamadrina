@@ -28,14 +28,16 @@ const {
   operation_get_By_Id,
   operation_insert,
   operation_update,
+  operation_auth,
 } = require("../../models");
 const { stringValidation } = require("../utils/validations");
 
 router.post("/api/user/auth", async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+ 
   try {
-   await operation_insert(
+   await operation_auth(
       mysqlConnection,
       select_an_user_whith_param_query,
       [email, password],

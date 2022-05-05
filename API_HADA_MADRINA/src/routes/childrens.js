@@ -8,6 +8,7 @@ const mysqlConnection  = require('../database.js');
 const { name_table_children, message_delete_not_exist, message_delete_error, children_saved, children_deleted, children_not_found, children_update, message_update_not_exist, message_update_error } = require('../utils/utils');
 
 
+
 // GET all childrens
 router.get("/api/childrens/", async(req, res) => {
   select_all_children_query

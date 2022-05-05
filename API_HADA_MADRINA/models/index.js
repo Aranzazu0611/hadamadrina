@@ -36,8 +36,8 @@ const operation_get_By_Id = (connection, query, param, name_table,message_delete
     });
 }
 
-const operation_delete_By_Id = async (connection, query, param, res, name_table, message_delete_not_exist, message_delete_error) => {
-    await connection.query(query, param, (error, results) => {
+const operation_delete_By_Id = (connection, query, param, res, name_table, message_delete_not_exist, message_delete_error) => {
+     connection.query(query, param, (error, results) => {
         !error
             ?
             results.affectedRows === 0 ?
@@ -80,6 +80,20 @@ const operation_update = (connection, query, param, name_operation,message_not_e
     });
 }
 
+const operation_auth = (connection, query,param, name_table,message_delete_not_exist, res) => {
+    connection.query(query, param, (error, results) => {
+        
+        !error
+            ?
+            results.length === 0 ?
+            res
+            .status(400)
+            .json({ message: name_table + message_delete_not_exist }) :
+            res.status(200).json(results) :
+            res.status(400).json({ message: "Error al autenticar" });
+    });
+}
+
 
 
 module.exports = {
@@ -88,7 +102,8 @@ module.exports = {
     operation_get_By_Id,
     operation_delete_By_Id,
     operation_insert,
-    operation_update
+    operation_update,
+    operation_auth
 
 
 }
