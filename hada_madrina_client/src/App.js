@@ -1,6 +1,6 @@
 import "./App.css";
-import {React, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { React,  } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import User from "./components/User/user";
 import Clothing from "./components/Clothing/clothing";
@@ -26,55 +26,196 @@ import Hygiene_Update from "./components/Hygiene/Hygiene_Update";
 import Mother_Update from "./components/Mother/mother_update";
 import User_Info from "./components/User/user_info";
 import User_Update from "./components/User/user_update";
-
-
+import { PrivateRoute } from "./components/PermissionRoutes/PrivateRoute";
+import { Message_denied } from "./components/Not_Access/Message_denied";
 
 function App() {
- 
-  function isAdministrative(){
-  const a = localStorage.getItem("role")
-  if (a != undefined && a === "Administrativo") {
-    return <Navigate to={"/mother"} />
-  }
-}
- 
-  
 
   
-
   return (
-      
-    
-        <BrowserRouter>
-          <Routes>  
-            <Route path="/register" element={<Register></Register>} />         
-            <Route path="/" element={<Login></Login>} />
-            <Route path="/user" element={<User></User>} />           
-            <Route path="/dashboard" element={<Dasboard></Dasboard>} />
-            <Route path="/mother" element=  {<Mother></Mother> }/>
-            <Route path="/User/Info/:id" element={<User_Info></User_Info>} />
-            <Route path="/Update/User/:id" element={<User_Update></User_Update>} />
-            <Route path="/clothing" element={<Clothing></Clothing>} />
-            <Route path="/foods" element={<Foods></Foods>} />
-            <Route path="/children/:id" element={<Children></Children>} />
-            <Route path="/furniture" element={<Furniture></Furniture>} />
-            <Route path="/hygiene" element={<Hygiene></Hygiene>} />
-            <Route path="/Register/hygiene" element={<Hygiene_Register></Hygiene_Register>} />
-            <Route path="/Update/hygiene/:id" element={ <Hygiene_Update></Hygiene_Update>} />
-            <Route path="/Register/Furniture" element={<Furniture_Register></Furniture_Register>} />
-            <Route path="/Update/Furniture/:id" element={<Furniture_Update></Furniture_Update>} />
-            <Route path="/Register/Food" element={<Foods_Register></Foods_Register>} />
-            <Route path="/Update/Food/:id" element={ <Food_Update></Food_Update>} />
-            <Route path="/Register/Clothing" element={<Clothing_Register></Clothing_Register>} />
-            <Route path="/Update/Clothing/:id" element={<Clothing_Update></Clothing_Update>} />
-            <Route path="/Register/Children/:id" element={<Children_Register></Children_Register>} />
-            <Route path="/Register/Mother" element={<Mother_Register></Mother_Register>} />
-            <Route path="/Update/Mother/:id" element={<Mother_Update></Mother_Update>} />
-            <Route path="/Update/Children/:id" element={<Children_Update></Children_Update>} />
-            
-          </Routes>
-        </BrowserRouter>
-     
+    <BrowserRouter>
+      <Routes>
+        <Route path="/register" element={<Register></Register>} />
+        <Route path="/" element={<Login></Login>} />
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute admin={"Admin"} user={""}>
+              <User></User>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute admin={"Admin"} user={""}>
+              <Dasboard ></Dasboard>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/mother"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Mother></Mother>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/User/Info/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={""}>
+              <User_Info></User_Info>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/User/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={""}>
+              <User_Update></User_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clothing"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
+              <Clothing></Clothing>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/foods"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-comida"}>
+              <Foods></Foods>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/children/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Children></Children>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/furniture"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
+              <Furniture></Furniture>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/hygiene"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
+              <Hygiene></Hygiene>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/hygiene"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
+              <Hygiene_Register></Hygiene_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/hygiene/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
+              <Hygiene_Update></Hygiene_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/Furniture"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
+              <Furniture_Register></Furniture_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/Furniture/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
+              <Furniture_Update></Furniture_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/Food"
+          element={
+            <PrivateRoute admin="Admin" user="Almacén-comida">
+              <Foods_Register></Foods_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/Food/:id"
+          element={
+            <PrivateRoute admin="Admin" user="Almacén-comida">
+              <Food_Update></Food_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/Clothing"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
+              <Clothing_Register></Clothing_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/Clothing/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
+              <Clothing_Update></Clothing_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/Children/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Children_Register></Children_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Register/Mother"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Mother_Register></Mother_Register>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/Mother/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Mother_Update></Mother_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Update/Children/:id"
+          element={
+            <PrivateRoute admin={"Admin"} user={"Administrativo"}>
+              <Children_Update></Children_Update>
+            </PrivateRoute>
+          }
+        />
+        <Route path="/denied" element={<Message_denied></Message_denied>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;

@@ -1,6 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Register =() => {
+
+const Register = () => {
+  const navigate = useNavigate();
 
   const [name, setName] = useState();
   const [surnames, setSurnames] = useState();
@@ -9,23 +12,24 @@ const Register =() => {
   const [address, setAddress] = useState();
   const [password, setPassword] = useState();
   const [volunteers_rol, setVolunteers_rol] = useState();
+  const [error, setError] = useState();
 
-  const registerUser = async(credentials) => {
+  const registerUser = async (credentials) => {
     return await fetch("http://localhost:3003/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    
-    }).then((data) => data.json()
-    );
-  }
+    }).then((response) => response.json())
+    .then((actualData) => console.log(actualData))
+    .catch((err) => {
+     console.log(err);
+  });}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       await registerUser({
         name,
         surnames,
@@ -33,23 +37,24 @@ const Register =() => {
         phone,
         address,
         password,
-        volunteers_rol
-      }).then((data) => {
-        console.log(data)
-        window.location.href = "/";
-        
-      });
+        volunteers_rol,
+      })
+    
+      
     } catch (error) {
-      console.log(error);
+      setError(error)
+      console.log(error)
     }
   };
-  
- 
+
   return (
     <div className="App">
       <div className="App-header">
         <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
+          <form
+            className="baby-login form-signin container_color rounded shadow"
+            onSubmit={handleSubmit}
+          >
             <h1 className="title-register">Register</h1>
             <label>Nombre</label>
             <input
@@ -60,8 +65,8 @@ const Register =() => {
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
-              
             />
+            <div>{error}</div>
             <label>Apellidos</label>
             <input
               type="text"
@@ -71,8 +76,8 @@ const Register =() => {
               value={surnames}
               required
               onChange={(e) => setSurnames(e.target.value)}
-              
             />
+           
             <label>Email</label>
             <input
               type="email"
@@ -82,9 +87,8 @@ const Register =() => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              
             />
-             <label>Teléfono</label>
+            <label>Teléfono</label>
             <input
               type="tel"
               id="phone"
@@ -93,18 +97,16 @@ const Register =() => {
               value={phone}
               required
               onChange={(e) => setPhone(e.target.value)}
-              
             />
-             <label>Dirección</label>
+            <label>Dirección</label>
             <input
               type="text"
               id="Address"
               className="form-control"
-              placeholder="Dirección"             
+              placeholder="Dirección"
               value={address}
               required
               onChange={(e) => setAddress(e.target.value)}
-              
             />
             <label>Password</label>
             <input
@@ -118,22 +120,27 @@ const Register =() => {
             />
             <div class="form-group">
               <label for="role">Select Role:</label>
-              <select class="form-control" id="role" value={volunteers_rol}  onChange={(e) => setVolunteers_rol(e.target.value)}>
+              <select
+                class="form-control"
+                id="role"
+                value={volunteers_rol}
+                onChange={(e) => setVolunteers_rol(e.target.value)}
+              >
                 <option>Administrativo</option>
                 <option>Almacén-ropa</option>
                 <option>Almacén-muebles</option>
                 <option>Almacén-higiene y utensilios</option>
-                <option>Almacén-comida</option>                
+                <option>Almacén-comida</option>
               </select>
             </div>
             <button className="btn btn-primary" type="submit">
-              Sign in
+              Registrar
             </button>
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Register;

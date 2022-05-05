@@ -28,7 +28,7 @@ const Login = () => {
       }).then((data) => {       
        
         if (data.length !== 0) {
-          
+          localStorage.setItem("id", data[0].id);
           localStorage.setItem("role", data[0].volunteers_rol);                  
           isRole() 
           

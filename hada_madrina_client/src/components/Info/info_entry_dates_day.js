@@ -56,6 +56,7 @@ const Info_Entry_Dates_Day = () => {
 
   return (
     <>
+    
       <div className="home-content">
         <div className="sales-boxes">
           <div className="top-sales box">
@@ -92,6 +93,7 @@ const Info_Entry_Dates_Day = () => {
          <Info_Entry_Dates_Month></Info_Entry_Dates_Month>
         </div>
       </div>
+    
     </>
   );
 };

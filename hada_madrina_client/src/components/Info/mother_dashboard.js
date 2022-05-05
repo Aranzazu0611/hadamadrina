@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./../../App.css";
+import Info_Deparuture_Dates from "./info_deparutere._dates";
+import Info_Entry_Dates_Day from "./info_entry_dates_day";
 
 
 const Mother_Dasboard = () => {
@@ -48,8 +50,7 @@ const Mother_Dasboard = () => {
 
   return (
     <>
-    
-     
+     <section className="home-section">
         <div className="home-content">
           <div className="overview-boxes">
             <div className="box">
@@ -86,6 +87,9 @@ const Mother_Dasboard = () => {
           </div>
 
           </div>
+          <Info_Entry_Dates_Day></Info_Entry_Dates_Day>
+          <Info_Deparuture_Dates></Info_Deparuture_Dates>
+          </section>
 
           
             

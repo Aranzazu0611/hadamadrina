@@ -1,8 +1,16 @@
 import React from "react";
 import "./../../App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavbarDashboard = () => {
+
+  const navigate = useNavigate();
+  const id = localStorage.getItem("id")
+
+  const logout = () => {
+    localStorage.clear()
+    navigate("/")
+  }
   return (
     <>
        <div className="sidebar">
@@ -51,15 +59,15 @@ const NavbarDashboard = () => {
             </Link>
           </li>
           <li>
-            <a href="#">
+          <Link to={`/User/Info/${id}`}>
               <i className="bx bx-cog"></i>
               <span className="links_name">Setting</span>
-            </a>
+          </Link>
           </li>
           <li className="log_out">
             <a href="#">
               <i className="bx bx-log-out"></i>
-              <span className="links_name">Log out</span>
+              <span className="links_name" onClick={() =>logout()}>Log out</span>
             </a>
           </li>
         </ul>
