@@ -1,4 +1,6 @@
 import "./App.css";
+import {React, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import User from "./components/User/user";
 import Clothing from "./components/Clothing/clothing";
@@ -13,7 +15,6 @@ import Mother from "./components/Mother/mothers";
 import Register from "./components/Register/register";
 import Hygiene_Register from "./components/Hygiene/Hygiene_Register";
 import Login from "./components/Login/login";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Children_Register from "./components/Children/children_register";
 import Mother_Register from "./components/Mother/mother_register";
 import Children_Update from "./components/Children/children_update";
@@ -27,18 +28,30 @@ import User_Info from "./components/User/user_info";
 import User_Update from "./components/User/user_update";
 
 
+
 function App() {
+ 
+  function isAdministrative(){
+  const a = localStorage.getItem("role")
+  if (a != undefined && a === "Administrativo") {
+    return <Navigate to={"/mother"} />
+  }
+}
+ 
+  
+
+  
+
   return (
-    
+      
     
         <BrowserRouter>
-          <Routes>         
-          
-            <Route path="/register" element={<Register></Register>} />
+          <Routes>  
+            <Route path="/register" element={<Register></Register>} />         
             <Route path="/" element={<Login></Login>} />
-            <Route path="/user" element={<User></User>} />
-            <Route path="/dasboard" element={ <Dasboard></Dasboard>} />
-            <Route path="/mother" element={<Mother></Mother>} />
+            <Route path="/user" element={<User></User>} />           
+            <Route path="/dashboard" element={<Dasboard></Dasboard>} />
+            <Route path="/mother" element=  {<Mother></Mother> }/>
             <Route path="/User/Info/:id" element={<User_Info></User_Info>} />
             <Route path="/Update/User/:id" element={<User_Update></User_Update>} />
             <Route path="/clothing" element={<Clothing></Clothing>} />

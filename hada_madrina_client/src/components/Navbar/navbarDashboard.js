@@ -8,7 +8,9 @@ const NavbarDashboard = () => {
        <div className="sidebar">
         <div className="logo-details">
           <i className="bx bxl-c-plus-plus"></i>
+          <Link to={`/dasboard`}>
           <span className="logo_name">Hada Madrina</span>
+          </Link>
         </div>
         <ul className="nav-links">
           <li>
@@ -49,16 +51,16 @@ const NavbarDashboard = () => {
             </Link>
           </li>
           <li>
-            
+            <a href="#">
               <i className="bx bx-cog"></i>
               <span className="links_name">Setting</span>
-            
+            </a>
           </li>
           <li className="log_out">
-           
+            <a href="#">
               <i className="bx bx-log-out"></i>
               <span className="links_name">Log out</span>
-            
+            </a>
           </li>
         </ul>
       </div>

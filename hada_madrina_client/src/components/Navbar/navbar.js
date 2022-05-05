@@ -8,6 +8,7 @@ const Navbar = () => {
       <div className="sidebar">
         <div className="logo-details">
           <i className="bx bxl-c-plus-plus"></i>
+
           <span className="logo_name">Hada Madrina</span>
         </div>
         <ul className="nav-links">
@@ -21,10 +22,10 @@ const Navbar = () => {
           </Link>
 
           <li className="nav-links">
-            
+            <a href="#">
               <i className="bx bx-log-out"></i>
               <span className="links_name">Log out</span>
-           
+            </a>
           </li>
         </ul>
       </div>

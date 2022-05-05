@@ -49,7 +49,7 @@ const Mother_Dasboard = () => {
   return (
     <>
     
-      <section className="home-section">
+     
         <div className="home-content">
           <div className="overview-boxes">
             <div className="box">
@@ -89,7 +89,7 @@ const Mother_Dasboard = () => {
 
           
             
-      </section>
+     
     </>
   );
 };

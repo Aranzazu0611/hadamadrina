@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
   const loginUser = async(credentials) => {
     return await fetch("http://localhost:3003/api/user/auth", {
       method: "POST",
@@ -15,19 +17,20 @@ const Login = () => {
     }).then((data) => data.json());
   }
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await loginUser({
         email,
         password,
-      }).then((data) => {
+      }).then((data) => {       
        
         if (data.length !== 0) {
-          localStorage.setItem("name", JSON.stringify(data[0].name));
-          localStorage.setItem("email", JSON.stringify(data[0].email));
-          localStorage.setItem("volunteer", JSON.stringify(data[0].volunteer_role));
-          window.location.href = "/user";
+          
+          localStorage.setItem("role", data[0].volunteers_rol);                  
+          isRole() 
           
         }else{
           alert("Credenciales incorrectas")
@@ -38,6 +41,30 @@ const Login = () => {
     }
   };
 
+  function isRole(){
+    const role = localStorage.getItem("role")
+    if (role === "Administrativo") {
+      return navigate("/mother") 
+    }
+    if (role === "Admin") {
+      return navigate("/dashboard") 
+    }
+    if (role === "Almacén-ropa") {
+      return navigate("/clothing") 
+    }
+    if (role === "Almacén-muebles") {
+      return navigate("/furniture") 
+    }
+    if (role === "Almacén-higiene y utensilios") {
+      return navigate("/hygiene") 
+    }
+    if (role === "Almacén-comida") {
+      return navigate("/foods") 
+    }
+    
+  }
+ 
+  
   return (    
     <div className="App">
       <div className="App-header">

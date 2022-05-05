@@ -23,7 +23,7 @@ const Mother = () => {
   const deleteMothers = async (id) => {
     await fetch("http://localhost:3003/api/mother/delete/" + id, {
       method: "DELETE",
-    }).then((res) => navigate(0));
+    }).then(() => navigate(0));
   };
 
   return (
