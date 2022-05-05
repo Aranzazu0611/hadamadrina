@@ -122,6 +122,7 @@ router.post("/api/user/register", async (req, res) => {
   const info = req.body;
 
   try {
+    stringValidation(info)
     await operation_insert(
       mysqlConnection,
       insert_user_query,
@@ -130,8 +131,10 @@ router.post("/api/user/register", async (req, res) => {
       user_not_found,
       res
     );
-  } catch (error) {
-    return res.status(400).json({ error: error.toString() });
+  } catch (error) {   
+   console.log(error)
+    return res.status(400).send({message:error})   
+    
   }
 });
 
