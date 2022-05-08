@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const NavbarDashboard = () => {
 
   const navigate = useNavigate();
-  const id = localStorage.getItem("id")
+ 
 
   const logout = () => {
     localStorage.clear()
@@ -59,10 +59,7 @@ const NavbarDashboard = () => {
             </Link>
           </li>
           <li>
-          <Link to={`/User/Info/${id}`}>
-              <i className="bx bx-cog"></i>
-              <span className="links_name">Setting</span>
-          </Link>
+          
           </li>
           <li className="log_out">
             <a href="#">

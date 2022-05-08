@@ -1,32 +1,35 @@
-import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { format_date } from "../../format_date";
+import ErrorNotRegister from "../Errors/error_not_register";
 
-const Hygiene_Update =() => {
-
-  const [hygiene_category, setHygiene_category] = useState();
-  const [description, setDescription] = useState();
-  const [brand, setBrand] = useState();
-  const [hygiene_entry_date, setHygiene_entry_date] = useState();
-  const [hygiene_departure_date, setHygiene_departure_date] = useState();
-
-  const {id} = useParams()
-
-  useEffect(() => {
-    getHygieneByID(id);
-  }, [id]);
+const Hygiene_Update = () => {
+  const navigate = useNavigate();
+  const [hygiene_category, setHygiene_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
+  const [hygiene_entry_date, setHygiene_entry_date] = useState("");
+  const [hygiene_departure_date, setHygiene_departure_date] = useState("");
+  const [error, setError] = useState("");
+  const { id } = useParams();
 
   const getHygieneByID = async (id) => {
     await fetch(`http://localhost:3003/api/hygiene/${id}`)
       .then((res) => res.json())
       .then((result) => {
-          console.log(result[0])
-          setHygiene_category(result[0].hygiene_category)
-          setDescription(result[0].description)        
-          setBrand(result[0].brand)
-          setHygiene_entry_date(result[0].hygiene_entry_date)
-          setHygiene_departure_date(result[0].hygiene_departure_date)
+        setHygiene_category(result[0].hygiene_category);
+        setDescription(result[0].description);
+        setBrand(result[0].brand);
+        setHygiene_entry_date(format_date(result[0].hygiene_entry_date));
+        setHygiene_departure_date(
+          format_date(result[0].hygiene_departure_date)
+        );
       });
   };
+
+  useEffect(() => {
+    getHygieneByID(id);
+  });
 
   const updateHygiene = async (credentials) => {
     return await fetch(`http://localhost:3003/api/hygiene/edit/${id}`, {
@@ -35,7 +38,12 @@ const Hygiene_Update =() => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    }).then((data) => console.log(data));
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/hygiene");
+      }
+      return response.json();
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -43,90 +51,87 @@ const Hygiene_Update =() => {
     try {
       await updateHygiene({
         hygiene_category,
-        description,        
+        description,
         brand,
         hygiene_entry_date,
-        hygiene_departure_date    
-      }).then(() => {
-        window.location.href = `/hygiene`;
-      });
+        hygiene_departure_date,
+      }).then((result) => setError(result.error));
     } catch (error) {
-      console.log(error);
+      return error;
     }
-  }; 
+  };
 
-  
- 
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
-            <h1 className="title-register">Actualizar Hygiene</h1>
-            <label>Categoria:</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Higiene</h1>
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
+          <div className="inputContainer">
             <input
               type="text"
-              id="category"
-              className="form-control"
-              placeholder="Categoria"
+              className="input"
+              placeholder="a"
               value={hygiene_category}
               required
               onChange={(e) => setHygiene_category(e.target.value)}
-              
             />
-            <label>Descripción:</label>
+            <label className="label">Categoria:</label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="description"
-              className="form-control"
-              placeholder="Descripción"
+              className="input"
+              placeholder="a"
               value={description}
               required
               onChange={(e) => setDescription(e.target.value)}
-              
             />
-            <label>Marca:</label>
+            <label className="label">Descripción:</label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="brand"
-              className="form-control"
+              className="input"
               placeholder="Brand"
               value={brand}
               required
               onChange={(e) => setBrand(e.target.value)}
-              
             />
-             <label>Fecha de entrada:</label>
+            <label className="label">Marca:</label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="date"
-              id="hygiene_entry_date"
-              className="form-control"
-              placeholder="Fecha de entrada"
+              className="input"
+              placeholder="a"
               value={hygiene_entry_date}
               required
               onChange={(e) => setHygiene_entry_date(e.target.value)}
-              
             />
-             <label>Fecha de salida:</label>
+            <label className="label">Fecha de entrada:</label>
+          </div>
+          <div className="inputContainer">
             <input
               type="date"
-              id="hygiene_departure_date"
-              className="form-control"
-              placeholder="Dirección"             
+              className="input"
+              placeholder="a"
               value={hygiene_departure_date}
+              min={hygiene_entry_date}
               required
               onChange={(e) => setHygiene_departure_date(e.target.value)}
-              
             />
-            
-            <button className="btn btn-primary" type="submit">
-              Actualizar
-            </button>
-          </form>
-        </div>
+            <label className="label">Fecha de salida:</label>
+          </div>
+
+          <input type="submit" className="submitBtn" value="Actualizar" />
+        </form>
       </div>
     </div>
   );
-}
+};
 
 export default Hygiene_Update;

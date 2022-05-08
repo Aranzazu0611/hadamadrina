@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { format_date } from "../../format_date";
+import Error_Not_Register from "../Errors/error_not_register";
 
 const Mother_Update = () => {
-  const [name, setName] = useState();
-  const [surnames, setSurnames] = useState();
-  const [age, setAge] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
-  const [nationality, setNationality] = useState();
-  const [mother_birth, setMother_birth] = useState();
-  const [civil_status, setCivil_status] = useState("soltera");
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [surnames, setSurnames] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [mother_birth, setMother_birth] = useState("");
+  const [civil_status, setCivil_status] = useState("");
+  const [error, setError] = useState();
 
   const { id } = useParams();
-
+ 
   useEffect(() => {
     getMotherByID(id);
   }, [id]);
@@ -29,7 +33,7 @@ const Mother_Update = () => {
         setPhone(result[0].phone);
         setAddress(result[0].address);
         setNationality(result[0].nationality);
-        setMother_birth(result[0].mother_birth);
+        setMother_birth(format_date(result[0].mother_birth));
         setCivil_status(result[0].civil_status);
       });
   };
@@ -41,7 +45,12 @@ const Mother_Update = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    }).then((data) => console.log(data));
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/mother");
+      }
+      return response.json();
+    })
   };
 
   const handleSubmit = async (e) => {
@@ -56,123 +65,131 @@ const Mother_Update = () => {
         address,
         nationality,
         mother_birth,
-        civil_status
-       
-      }).then(() => {
-        window.location.href = `/mother`;
-      });
+        civil_status,
+      }).then((result) =>  setError(result.error))
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form
-            className="baby-login form-signin container_color rounded shadow"
-            onSubmit={handleSubmit}
-          >
-            <h1 className="title-register">Actualizar</h1>
-            <label>Nombre</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form className="form" onSubmit={handleSubmit}>
+          <h1 className="title-register">Actualizar</h1>
+          {error && <Error_Not_Register message={error}></Error_Not_Register>}
+          <div className="inputContainer">
             <input
               type="text"
-              id="Name"
-              className="form-control"
-              placeholder="Nombre"
+              className="input"
+              placeholder="a"
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
             />
-            <label>Apellidos</label>
+            <label className="label">Nombre</label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
               id="Surnames"
-              className="form-control"
+              className="input"
               placeholder="Apellidos"
               value={surnames}
               required
               onChange={(e) => setSurnames(e.target.value)}
             />
+            <label className="label">Apellidos</label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="age"
-              className="form-control"
-              placeholder="Edad"
+              className="input"
+              placeholder="a"
               value={age}
               required
               onChange={(e) => setAge(e.target.value)}
             />
-            <label>Email</label>
+            <label  className="label">
+              Edad:
+            </label>
+          </div>
+          <div className="inputContainer">
             <input
               type="email"
-              id="Email"
-              className="form-control"
-              placeholder="Email"
+              className="input"
+              placeholder="a"
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label>Teléfono</label>
+            <label className="label">Email</label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="tel"
-              id="phone"
-              className="form-control"
+              className="input"
               placeholder="Teléfono"
               value={phone}
               required
               onChange={(e) => setPhone(e.target.value)}
             />
-            <label>Dirección</label>
+            <label className="label">Teléfono</label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
-              id="Address"
-              className="form-control"
+              className="input"
               placeholder="Dirección"
               value={address}
               required
               onChange={(e) => setAddress(e.target.value)}
             />
-            <label>Nacionalidad:</label>
+            <label className="label">Dirección</label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
-              id="nationality"
-              className="form-control"
-              placeholder="Nacionalidad"
+              className="input"
               value={nationality}
-              required
+              placeholder="a"
               onChange={(e) => setNationality(e.target.value)}
             />
-            <label>Fecha de Nacimiento:</label>
+            <label  className="label">
+              Nacionalidad:
+            </label>
+          </div>
+          <div className="inputContainer">
+            
             <input
               type="date"
-              id="birth"
-              className="form-control"
+              id="hygiene_departure_date"
+              className="input"
+              placeholder="a"
               value={mother_birth}
               required
               onChange={(e) => setMother_birth(e.target.value)}
             />
-            <div class="form-group">
-              <label for="role">Seleccina estado civil:</label>
-              <select
-                class="form-control"
-                id="role"
-                value={civil_status}
-                onChange={(e) => setCivil_status(e.target.value)}
-              >
-                <option>Soltera</option>
-                <option>Casada</option>
-                <option>Viuda</option>
-                <option>Divorciada</option>
-              </select>
+            <label className="label">Fecha de nacimiento:</label>
+          </div>
+          
+          <div className="inputContainer">
+            
+            <select className="input" id="role" value={civil_status}  onChange={(e) => setCivil_status(e.target.value)}>
+                  <option>Soltera</option>
+                  <option>Casada</option>
+                  <option>Viuda</option>
+                  <option>Divorciada</option>                                
+                </select>
+              <label className="label">Estado civil:</label>
             </div>
 
-            <button className="btn btn-primary" type="submit">
-              Actualizar
-            </button>
-          </form>
-        </div>
+          <button className="btn btn-primary" type="submit">
+            Actualizar
+          </button>
+        </form>
       </div>
     </div>
   );

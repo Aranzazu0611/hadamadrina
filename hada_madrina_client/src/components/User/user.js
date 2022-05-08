@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
+import { Link, useNavigate } from "react-router-dom";
+import { message_not_register } from "../../format_date";
+import ErrorNotRegister from "../Errors/error_not_register";
+
 import Navbar from "../Navbar/navbar";
 
 const User = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(false);
-  
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   const getUsers = async () => {
     await fetch("http://localhost:3003/api/user/")
       .then((res) => res.json())
       .then((result) => {
-        result.length > 0 ?  setUsers(result.reverse()) : setError(true);
-       
+        result.length > 0 ? setUsers(result.reverse()) : setError(true);
       });
   };
 
-  const deleteUser = async (id) => {
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  async function deleteUser(id) {
     await fetch("http://localhost:3003/api/user/delete/" + id, {
       method: "DELETE",
-    }).then(() => navigate(0));
-  };
+    }).then(() => {
+      console.log(users);
+      if (users.length < 1) {
+        navigate(0);
+      }
+
+      navigate(0);
+    });
+  }
 
   return (
     <>
@@ -37,13 +44,12 @@ const User = () => {
             <i className="bx bx-menu sidebarBtn"></i>
             <span className="dashboard">Usuarios:</span>
           </div>
-          
         </nav>
 
         <div className="home-content">
           <div className="sales-boxes">
             <div className="recent-sales box">
-              <div className="title">Usuarios:</div>
+              <div className="title">Lista de Usuarios:</div>
               {users.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
@@ -88,7 +94,7 @@ const User = () => {
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register></Error_Not_Register>}
+              {error && <ErrorNotRegister message={message_not_register}></ErrorNotRegister>}
             </div>
           </div>
         </div>

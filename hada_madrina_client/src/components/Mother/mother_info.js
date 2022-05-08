@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const Mother_info = (madre) => {
   const [name, setName] = useState();
@@ -35,26 +35,133 @@ const Mother_info = (madre) => {
 
   return (
     <>
-      <div className="container">
-      <div className="row">
-        <Link to={`/Register/Children/${id}`}>
-          <button className="col-2 btn btn-primary d-inline ">
-            Añadir Niño
-          </button>
-        </Link>
+      <nav>
+        <div className="sidebar-button">
+          <i className="bx bx-menu sidebarBtn"></i>
+          <span className="dashboard">Info Madre</span>
+        </div>
+
+        <div>
+          <Link to={`/Register/Children/${id}`}>
+            <button className="btn btn-primary d-inline ">Añadir Niño</button>
+          </Link>
+        </div>
+      </nav>
+
+      <div className="home-content">
+        <div className="sales-boxes">
+          <div className="recent-sales box">
+            <h1>Datos de la madre:</h1>
+
+            <div className="inputContainer">
+              <input
+                type="text"
+                className="input"
+                placeholder="a"
+                value={name}
+              />
+              <label for="" className="label">
+                Nombre:
+              </label>
+            </div>
+            <div className="inputContainer">
+            <input
+              type="text"
+              className="input"
+              placeholder="a"
+              value={surnames}
+            />
+            <label for="" className="label">
+              Apellidos:
+            </label>
+          </div>
+          <div className="inputContainer">
+            <input
+              type="text"
+              className="input"
+              placeholder="a"
+              value={age}
+            />
+            <label for="" className="label">
+              Edad:
+            </label>
+          </div>
+          <div className="inputContainer">
+            <input
+              type="email"
+              className="input"
+              placeholder="a"
+              value={email}
+            
+              
+            />
+            <label className="label">Email</label>
+          </div>
+
+          <div className="inputContainer">
+            <input
+              type="tel"
+              className="input"
+              placeholder="Teléfono"
+              value={phone}
+              
+              
+            />
+            <label className="label">Teléfono</label>
+          </div>
+          <div className="inputContainer">
+            <input
+              type="text"
+              className="input"
+              placeholder="Dirección"
+              value={address}
+              required
+             
+            />
+            <label className="label">Dirección</label>
+          </div>
+          <div className="inputContainer">
+            <input
+              type="text"
+              className="input"
+              value={nationality}
+              placeholder="a"
+              
+            />
+            <label for="" className="label">
+              Nacionalidad:
+            </label>
+          </div>
+          <div className="inputContainer">
+            
+            <input
+              type="text"              
+              className="input"
+              placeholder="a"
+              value={mother_birth}
+             
+            />
+            <label className="label">Fecha de nacimiento:</label>
+          </div>
+          
+          <div className="inputContainer">
+            
+          <input
+              type="text"              
+              className="input"
+              placeholder="a"
+              value={civil_status}
+             
+            />
+              <label className="label">Estado civil:</label>
+            </div>
+
+
+          
+           
+          </div>
+        </div>
       </div>
-        <h1>Datos de la madre:</h1>
-        <h2>Nombre:{name}</h2>
-        <p>Apellido: {surnames}</p>
-        <p>Direccion: {address}</p>
-        <p>Edad: {age}</p>
-        <p>Email: {email}</p>
-        <p>Teléfono: {phone}</p>
-        <p>Nacionalidad: {nationality}</p>
-        <p>Fecha de nacimiento: {mother_birth}</p>
-        <p>Estado Civil: {civil_status}</p>
-      </div>
-      
     </>
   );
 };

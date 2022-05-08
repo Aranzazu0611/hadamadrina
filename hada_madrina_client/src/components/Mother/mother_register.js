@@ -1,11 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Error_Not_Register from "../Errors/error_not_register";
 
-const Mother_Register =() => {
-
+const Mother_Register = () => {
+  
+  const navigate = useNavigate();
   const tiempoActual = Date.now();
-  const hoy = new Date(tiempoActual)  
-  const mother_entry_date = hoy.toISOString().slice(0, 10)
- 
+  const hoy = new Date(tiempoActual);
+  const mother_entry_date = hoy.toISOString().slice(0, 10);
 
   const [name, setName] = useState();
   const [surnames, setSurnames] = useState();
@@ -16,26 +18,27 @@ const Mother_Register =() => {
   const [nationality, setNationality] = useState();
   const [mother_birth, setMother_birth] = useState();
   const [civil_status, setCivil_status] = useState("soltera");
-  
-  
+  const [error, setError] = useState();
 
 
-  const registerMother = async(credentials) => {
+  const registerMother = async (credentials) => {
     return await fetch("http://localhost:3003/api/mother/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    
-    }).then((data) => data.json()
-    );
-  }
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/mother");
+      }
+      return response.json();
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       await registerMother({
         name,
         surnames,
@@ -46,126 +49,129 @@ const Mother_Register =() => {
         nationality,
         mother_birth,
         civil_status,
-        mother_entry_date
-      }).then(() => {
-        
-        window.location.href = "/mother";
-        
-      });
+        mother_entry_date,
+      }).then((result) =>  setError(result.error))
     } catch (error) {
-      console.log(error);
+     return error;
     }
   };
-  
- 
+
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
-            <h1 className="title-register">Register</h1>
-            <label>Nombre</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Madres:</h1>
+          {error && <Error_Not_Register message={error}></Error_Not_Register>}
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="Name"
-              className="form-control"
-              placeholder="Nombre"
-              value={name}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setName(e.target.value)}
-              
             />
-            <label>Apellidos</label>
+            <label for="" className="label">
+              Nombre:
+            </label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="Surnames"
-              className="form-control"
-              placeholder="Apellidos"
-              value={surnames}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setSurnames(e.target.value)}
-              
             />
+            <label for="" className="label">
+              Apellidos:
+            </label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
-              id="age"
-              className="form-control"
-              placeholder="Edad"
-              value={age}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setAge(e.target.value)}
-              
             />
-            <label>Email</label>
+            <label for="" className="label">
+              Edad:
+            </label>
+          </div>
+
+          <div className="inputContainer">
             <input
-              type="email"
-              id="Email"
-              className="form-control"
-              placeholder="Email"
-              value={email}
-              required
+              type="text"
+              className="input"
+              placeholder="a"
               onChange={(e) => setEmail(e.target.value)}
-              
             />
-             <label>Teléfono</label>
+            <label for="" className="label">
+              Email:
+            </label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="tel"
-              id="phone"
-              className="form-control"
-              placeholder="Teléfono"
-              value={phone}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setPhone(e.target.value)}
-              
             />
-             <label>Dirección</label>
+            <label for="" className="label">
+              Teléfono:
+            </label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
-              id="Address"
-              className="form-control"
-              placeholder="Dirección"             
-              value={address}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setAddress(e.target.value)}
-              
             />
-            <label>Nacionalidad:</label>
+            <label for="" className="label">
+              Dirección:
+            </label>
+          </div>
+          <div className="inputContainer">
             <input
               type="text"
-              id="nationality"
-              className="form-control"
-              placeholder="Nacionalidad"
-              value={nationality}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setNationality(e.target.value)}
             />
-             <label>Fecha de Nacimiento:</label>
+            <label for="" className="label">
+              Nacionalidad:
+            </label>
+          </div>
+          <div className="inputContainer">
+            
             <input
               type="date"
-              id="birth"
-              className="form-control"             
+              id="hygiene_departure_date"
+              className="input"
+              placeholder="a"
               value={mother_birth}
               required
               onChange={(e) => setMother_birth(e.target.value)}
-              
-            />    
-            <div class="form-group">
-              <label for="role">Seleccina estado civil:</label>
-              <select class="form-control" id="role" value={civil_status}  onChange={(e) => setCivil_status(e.target.value)}>
+            />
+            <label className="label">Fecha de nacimiento:</label>
+          </div>
+          <div className="inputContainer">
+            
+          <select class="input" id="role" value={civil_status}  onChange={(e) => setCivil_status(e.target.value)}>
                 <option>Soltera</option>
                 <option>Casada</option>
                 <option>Viuda</option>
                 <option>Divorciada</option>                                
               </select>
-            </div>
-            <button className="btn btn-primary" type="submit">
-              Sign in
-            </button>
-          </form>
-        </div>
+            <label className="label">Estado civil:</label>
+          </div>
+
+          <input type="submit" className="submitBtn" value="Sign up" />
+        </form>
       </div>
     </div>
   );
-}
+};
 
 export default Mother_Register;

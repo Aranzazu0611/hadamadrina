@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error_Not_Register from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
+import { format_date } from "../../format_date";
 
 const Mother = () => {
   const navigate = useNavigate();
@@ -55,11 +56,16 @@ const Mother = () => {
                     <thead>
                       <tr>
                         <th> Id</th>
-                        <th> Categoria</th>
-                        <th> Descripción</th>
-                        <th> Fecha de entrada</th>
-                        <th> Fecha de salida</th>
-                        <th> Action</th>
+                        <th> Nombre</th>
+                        <th> Apellidos</th>
+                        <th> Edad</th>
+                        <th> Email</th>
+                        <th> Teléfono</th>
+                        <th> Dirección</th>
+                        <th> Nacionalidad</th>
+                        <th> Fecha de Nacimiento</th>
+                        <th> Estado civil</th>
+                        <th> Acción</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -73,7 +79,7 @@ const Mother = () => {
                           <td> {mother.phone}</td>
                           <td> {mother.address}</td>
                           <td> {mother.nationality}</td>
-                          <td> {mother.mother_birth}</td>
+                          <td> {format_date(mother.mother_birth)}</td>
                           <td> {mother.civil_status}</td>
 
                           <td>

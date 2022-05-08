@@ -1,5 +1,5 @@
 import "./App.css";
-import { React,  } from "react";
+import { React } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import User from "./components/User/user";
@@ -24,14 +24,12 @@ import Food_Update from "./components/Foods/food_update";
 import Furniture_Update from "./components/Furniture/furniture_update";
 import Hygiene_Update from "./components/Hygiene/Hygiene_Update";
 import Mother_Update from "./components/Mother/mother_update";
-import User_Info from "./components/User/user_info";
+
 import User_Update from "./components/User/user_update";
 import { PrivateRoute } from "./components/PermissionRoutes/PrivateRoute";
 import { Message_denied } from "./components/Not_Access/Message_denied";
 
 function App() {
-
-  
   return (
     <BrowserRouter>
       <Routes>
@@ -49,7 +47,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute admin={"Admin"} user={""}>
-              <Dasboard ></Dasboard>
+              <Dasboard></Dasboard>
             </PrivateRoute>
           }
         />
@@ -61,14 +59,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/User/Info/:id"
-          element={
-            <PrivateRoute admin={"Admin"} user={""}>
-              <User_Info></User_Info>
-            </PrivateRoute>
-          }
-        />
+
         <Route
           path="/Update/User/:id"
           element={

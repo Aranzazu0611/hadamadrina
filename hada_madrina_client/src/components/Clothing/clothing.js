@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error_Not_Register from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
+import { format_date } from "../../format_date";
 
 const Clothing = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const Clothing = () => {
         <div className="home-content">
           <div className="sales-boxes">
             <div className="recent-sales box">
-              <div className="title">Productos de Alimentación:</div>
+              <div className="title">Ropa:</div>
               {clothing.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
@@ -75,8 +76,8 @@ const Clothing = () => {
                       <td> {item.size}</td>
                       <td> {item.gender}</td>
                       <td> {item.age}</td>
-                      <td> {item.clothing_entry_date}</td>
-                      <td> {item.clothing_departure_date}</td>
+                      <td> {format_date(item.clothing_entry_date)}</td>
+                      <td> {format_date(item.clothing_departure_date)}</td>
   
                       <td>
                         <Link to={`/Update/Clothing/${item.id}`}>

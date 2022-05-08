@@ -65,43 +65,32 @@ const Login = () => {
   }
  
   
-  return (    
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form
-            className="baby-login form-signin container_color rounded shadow"
-            onSubmit={handleSubmit}
-          >
-            <h1 className="title-login">ONG Hada Madrina - Login</h1>
+  return ( 
+    <>   
+    <div className="signupFrm">
+    <div className="wrapper">
+    <form action="" className="form"  onSubmit={handleSubmit}>
+      <h1 className="title">Login</h1>
 
-            <input
-              type="email"
-              id="inputEmail"
-              className="form-control"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+      <div className="inputContainer">
+        <input type="text" className="input" placeholder="a"   onChange={(e) => setEmail(e.target.value)}/>
+        <label  className="label">Email</label>
+      </div>      
 
-            <input
-              type="password"
-              id="inputPassword"
-              className="form-control"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button className="btn btn-primary" type="submit">
-              Sign in
-            </button>
-          </form>
-        </div>
-        <a href="/register">Si no estas regisrado, haz click</a>
+      <div className="inputContainer">
+        <input type="password" className="input" placeholder="a"  onChange={(e) => setPassword(e.target.value)}/>
+        <label  className="label">Password</label>
       </div>
+     
+
+      <input type="submit" className="submitBtn" value="Sign up"/>
+     
+      
+    </form>
+    <input type="submit" className="submitBtn" value="Registrate" onClick={() => navigate("/register")}/>
     </div>
+  </div>
+  </>
   );
 };
 

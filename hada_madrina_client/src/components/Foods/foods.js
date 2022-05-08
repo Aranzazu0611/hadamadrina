@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error_Not_Register from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
+import { format_date } from "../../format_date";
 
 const Foods = () => {
   const navigate = useNavigate()
@@ -69,8 +70,8 @@ const Foods = () => {
                           <td>{food.id}</td>
                           <td>{food.food_category}</td>
                           <td>{food.description}</td>
-                          <td> {food.food_entry_date}</td>
-                          <td> {food.food_departure_date}</td>
+                          <td> {format_date(food.food_entry_date)}</td>
+                          <td> {format_date(food.food_departure_date)}</td>
 
                           <td>
                             <Link to={`/Update/Food/${food.id}`}>

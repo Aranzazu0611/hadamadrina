@@ -1,14 +1,15 @@
 import React from 'react';
 
-const Error_Not_Register = ()=> {
+const ErrorNotRegister = ({message})=> {
+  
     return ( 
         <div
-        class="alert alert-danger d-flex justify-content-center"
+        className="alert alert-primary d-flex justify-content-center"
         role="alert"
       >
-        No hay registros
+       {message}
       </div>
      );
 }
 
-export default Error_Not_Register;
+export default ErrorNotRegister;

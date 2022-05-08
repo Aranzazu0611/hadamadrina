@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Error_Not_Register from "../Errors/error_not_register";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -21,11 +21,13 @@ const Register = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    }).then((response) => response.json())
-    .then((actualData) => console.log(actualData))
-    .catch((err) => {
-     console.log(err);
-  });}
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/");
+      }
+      return response.json();
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,105 +41,106 @@ const Register = () => {
         password,
         volunteers_rol,
       })
-    
-      
+        .then((result) => setError(result.message))
+        
     } catch (error) {
-      setError(error)
-      console.log(error)
+      return error.message;
     }
   };
 
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form
-            className="baby-login form-signin container_color rounded shadow"
-            onSubmit={handleSubmit}
-          >
-            <h1 className="title-register">Register</h1>
-            <label>Nombre</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Registrate</h1>
+          {error && <Error_Not_Register message={error}></Error_Not_Register>}
+          <div className="inputContainer">
             <input
               type="text"
-              id="Name"
-              className="form-control"
-              placeholder="Nombre"
-              value={name}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setName(e.target.value)}
             />
-            <div>{error}</div>
-            <label>Apellidos</label>
+            <label for="" className="label">
+              Nombre:
+            </label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="Surnames"
-              className="form-control"
-              placeholder="Apellidos"
-              value={surnames}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setSurnames(e.target.value)}
             />
-           
-            <label>Email</label>
-            <input
-              type="email"
-              id="Email"
-              className="form-control"
-              placeholder="Email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label>Teléfono</label>
-            <input
-              type="tel"
-              id="phone"
-              className="form-control"
-              placeholder="Teléfono"
-              value={phone}
-              required
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <label>Dirección</label>
+            <label for="" className="label">
+              Apellidos:
+            </label>
+          </div>
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="Address"
-              className="form-control"
-              placeholder="Dirección"
-              value={address}
-              required
+              className="input"
+              placeholder="a"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label for="" className="label">
+              Email:
+            </label>
+          </div>
+
+          <div className="inputContainer">
+            <input
+              type="tel"
+              className="input"
+              placeholder="a"
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <label for="" className="label">
+              Teléfono:
+            </label>
+          </div>
+          <div className="inputContainer">
+            <input
+              type="text"
+              className="input"
+              placeholder="a"
               onChange={(e) => setAddress(e.target.value)}
             />
-            <label>Password</label>
+            <label for="" className="label">
+              Dirección:
+            </label>
+          </div>
+          <div className="inputContainer">
             <input
               type="password"
-              id="inputPassword"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              required
+              className="input"
+              placeholder="a"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div class="form-group">
-              <label for="role">Select Role:</label>
-              <select
-                class="form-control"
-                id="role"
-                value={volunteers_rol}
-                onChange={(e) => setVolunteers_rol(e.target.value)}
-              >
-                <option>Administrativo</option>
-                <option>Almacén-ropa</option>
-                <option>Almacén-muebles</option>
-                <option>Almacén-higiene y utensilios</option>
-                <option>Almacén-comida</option>
-              </select>
-            </div>
-            <button className="btn btn-primary" type="submit">
-              Registrar
-            </button>
-          </form>
-        </div>
+            <label for="" className="label">
+              Password:
+            </label>
+          </div>
+          <div className="inputContainer">
+            <label for="role">Select Role:</label>
+            <select
+              class="form-control"
+              id="role"
+              value={volunteers_rol}
+              onChange={(e) => setVolunteers_rol(e.target.value)}
+            >
+              <option>Administrativo</option>
+              <option>Almacén-ropa</option>
+              <option>Almacén-muebles</option>
+              <option>Almacén-higiene y utensilios</option>
+              <option>Almacén-comida</option>
+            </select>
+          </div>
+
+          <input type="submit" className="submitBtn" value="Sign up" />
+        </form>
       </div>
     </div>
   );

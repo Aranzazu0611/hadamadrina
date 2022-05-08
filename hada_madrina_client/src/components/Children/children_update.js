@@ -1,9 +1,11 @@
 import React, {useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { format_date } from "../../format_date";
 
 
 
 const Children_Update =() => {
+  const navigate = useNavigate()
 
   const [name, setName] = useState();
   const [surnames, setSurnames] = useState();
@@ -11,6 +13,7 @@ const Children_Update =() => {
   const [gender, setGender] = useState("Niño");
   const [children_birth, setChildren_birth] = useState();
   const [father_name, setFather_name] = useState();
+  const [mother_id, setMother_id] = useState();
 
   const {id} = useParams();
 
@@ -23,12 +26,15 @@ const Children_Update =() => {
     await fetch(`http://localhost:3003/api/children/${id}`)
       .then((res) => res.json())
       .then((result) => {
-        setName(result.name)
-        setSurnames(result.surnames)
-        setAge(result.age)
-        setGender(result.gender)
-        setChildren_birth(result.children_birth)
-        setFather_name(result.father_name)       
+       
+        setName(result[0].name)       
+        setSurnames(result[0].surnames)
+        setAge(result[0].age)
+        setGender(result[0].gender)
+        setChildren_birth(format_date(result[0].children_birth))
+        setFather_name(result[0].father_name)
+        setMother_id(result[0].mother_id)
+               
         
       });
   };
@@ -61,9 +67,10 @@ const Children_Update =() => {
         children_birth,
         father_name, 
         id
-      }).then((data) => {    
-         
-        window.location.href = `/children/${data.id}`;        
+      }).then(() => {    
+      
+        navigate(`/children/${mother_id}`)
+               
       })
     } catch (error) {
       console.log(error);
@@ -72,80 +79,97 @@ const Children_Update =() => {
   
  
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
-            <h1 className="title-register">Registro de Niños:</h1>
-            <label>Nombre</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Niños:</h1>
+
+          <div className="inputContainer">
+          
             <input
-              type="text"
-              id="Name"
-              className="form-control"
-              placeholder="Nombre"
+              type="text"              
+              className="input"
+              placeholder="a"
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
               
             />
-            <label>Apellidos</label>
-            <input
+            <label className="label">Nombre:</label>
+          </div>
+
+          <div className="inputContainer">
+           
+          <input
               type="text"
               id="Surnames"
-              className="form-control"
-              placeholder="Apellidos"
+              className="input"
+              placeholder="a"
               value={surnames}
               required
               onChange={(e) => setSurnames(e.target.value)}
               
             />
-            <label>Edad:</label>
+            <label className="label">Apellidos:</label>
+          </div>
+          <div className="inputContainer">
+            
+          
+            <input
+              type="text"
+              id="father"
+              className="input"
+              placeholder="a"
+              value={father_name}
+              required
+              onChange={(e) => setFather_name(e.target.value)}
+              
+            />    
+             <label className="label">Padre:</label>        
+          </div>
+
+          <div className="inputContainer">
+         
             <input
               type="text"
               id="age"
-              className="form-control"
-              placeholder="Edad"
+              className="input"
+              placeholder="a"
               value={age}
               required
               onChange={(e) => setAge(e.target.value)}
               
             />
-           <div className="form-group">
-              <label htmlFor="state">Genero:</label>
+            <label className="label">Edad:</label>
+          </div>
+
+         
+          <div className="inputContainer">
+          <label htmlFor="state">Genero:</label>
               <select className="form-control" id="state" value={gender}  onChange={(e) => setGender(e.target.value)}  >             
                 <option>Niño</option>
                 <option>Niña</option>                                           
               </select>
-            </div>    
-            <label>Fecha de Nacimiento:</label>
+            
+           
+          </div>
+          <div className="inputContainer">
+            
             <input
               type="date"
-              id="birth"
-              className="form-control"             
+              id="hygiene_departure_date"
+              className="input"
+              placeholder="a"
               value={children_birth}
               required
               onChange={(e) => setChildren_birth(e.target.value)}
-              
-            />    
-            <label>Padre:</label>
-            <input
-              type="text"
-              id="father"
-              className="form-control"
-              placeholder="Padre"
-              value={father_name}
-              required
-              onChange={(e) => setFather_name(e.target.value)}
-              
-            />           
-           
-           
-            
-            <button className="btn btn-primary" type="submit">
-              Actualizar
-            </button>
-          </form>
-        </div>
+            />
+            <label className="label">Fecha de nacimiento:</label>
+          </div>
+         
+
+          <input type="submit" className="submitBtn" value="Actualizar" />
+        </form>
       </div>
     </div>
   );

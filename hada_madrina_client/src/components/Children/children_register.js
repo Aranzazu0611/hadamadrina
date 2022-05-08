@@ -47,86 +47,102 @@ const Children_Register =() => {
          window.location.href = `/children/${id}`;        
       });
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
   
  
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
-            <h1 className="title-register">Registro de Niños:</h1>
-            <label>Nombre</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Niños:</h1>
+
+          <div className="inputContainer">
+          
             <input
-              type="text"
-              id="Name"
-              className="form-control"
-              placeholder="Nombre"
+              type="text"              
+              className="input"
+              placeholder="a"
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
               
             />
-            <label>Apellidos</label>
-            <input
+            <label className="label">Nombre:</label>
+          </div>
+
+          <div className="inputContainer">
+           
+          <input
               type="text"
               id="Surnames"
-              className="form-control"
-              placeholder="Apellidos"
+              className="input"
+              placeholder="a"
               value={surnames}
               required
               onChange={(e) => setSurnames(e.target.value)}
               
             />
-            <label>Edad:</label>
+            <label className="label">Apellidos:</label>
+          </div>
+          <div className="inputContainer">
+            
+          
+            <input
+              type="text"
+              id="father"
+              className="input"
+              placeholder="a"
+              value={father_name}
+              required
+              onChange={(e) => setFather_name(e.target.value)}
+              
+            />    
+             <label className="label">Padre:</label>        
+          </div>
+
+          <div className="inputContainer">
+         
             <input
               type="text"
               id="age"
-              className="form-control"
-              placeholder="Edad"
+              className="input"
+              placeholder="a"
               value={age}
               required
               onChange={(e) => setAge(e.target.value)}
               
             />
-           <div className="form-group">
-              <label htmlFor="state">Genero:</label>
-              <select className="form-control" id="state" value={gender}  onChange={(e) => setGender(e.target.value)}  >             
+            <label className="label">Edad:</label>
+          </div>
+
+         
+          <div className="inputContainer">
+        
+              <select className="input" id="state" value={gender}  onChange={(e) => setGender(e.target.value)}  >             
                 <option>Niño</option>
                 <option>Niña</option>                                           
               </select>
-            </div>    
-            <label>Fecha de Nacimiento:</label>
+              <label htmlFor="state" className="label">Genero:</label>
+           
+          </div>
+          <div className="inputContainer">
+            
             <input
               type="date"
-              id="birth"
-              className="form-control"             
+                           className="input"
+              placeholder="a"
               value={children_birth}
               required
               onChange={(e) => setChildren_birth(e.target.value)}
-              
-            />    
-            <label>Padre:</label>
-            <input
-              type="text"
-              id="father"
-              className="form-control"
-              placeholder="Padre"
-              value={father_name}
-              required
-              onChange={(e) => setFather_name(e.target.value)}
-              
-            />                 
-           
-           
-            
-            <button className="btn btn-primary" type="submit">
-              Registrar
-            </button>
-          </form>
-        </div>
+            />
+            <label className="label">Fecha de nacimiento:</label>
+          </div>
+         
+
+          <input type="submit" className="submitBtn" value="Registrar" />
+        </form>
       </div>
     </div>
   );

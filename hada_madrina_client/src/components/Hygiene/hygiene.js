@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
+import { format_date, message_not_register } from "../../format_date";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 const Hygiene = () => {
   const navigate = useNavigate()
-  const [hygiene, setHygiene] = useState([]);
+  const [hygiene, setHygiene] = useState("");
   const [error, setError] = useState(false);
+ 
 
   useEffect(() => {
     getHygiene();
@@ -71,8 +73,8 @@ const Hygiene = () => {
                           <td>{item.hygiene_category}</td>
                           <td>{item.description}</td>
                           <td> {item.brand}</td>
-                          <td> {item.hygiene_entry_date}</td>
-                          <td> {item.hygiene_departure_date}</td>
+                          <td> {format_date(item.hygiene_entry_date)}</td>                         
+                          <td> {format_date(item.hygiene_departure_date)}</td>
 
                           <td>
                             <Link to={`/Update/hygiene/${item.id}`}>
@@ -96,7 +98,7 @@ const Hygiene = () => {
                 </div>
               )}
               {error && (
-                <Error_Not_Register></Error_Not_Register>
+                <ErrorNotRegister message={message_not_register}></ErrorNotRegister>
                
               )}
             </div>

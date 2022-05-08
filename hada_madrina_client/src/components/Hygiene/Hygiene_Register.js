@@ -1,15 +1,16 @@
 import React, {useState} from "react";
 import { useNavigate  } from 'react-router-dom';
+import ErrorNotRegister from "../Errors/error_not_register";
+
 
 const Hygiene_Register =() => {
-
+  
   const navigate = useNavigate()
   const [hygiene_category, setHygiene_category] = useState();
-  const [description, setDescription] = useState();
-  const [brand, setBrand] = useState();
-  const [hygiene_entry_date, setHygiene_entry_date] = useState();
-  const [hygiene_departure_date, setHygiene_departure_date] = useState();
-  
+  const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
+  const [hygiene_entry_date, setHygiene_entry_date] = useState("");  
+  const [error, setError] = useState("");
 
   const registerHygiene = async(info) => {
     return  fetch("http://localhost:3003/api/hygiene/register", {
@@ -19,8 +20,12 @@ const Hygiene_Register =() => {
       },
       body: JSON.stringify(info),
     
-    }).then((data) => data.json()
-    );
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/hygiene");
+      }
+      return response.json();
+    });
   }
 
   const handleSubmit = async (e) => {
@@ -31,86 +36,78 @@ const Hygiene_Register =() => {
         hygiene_category,
         description,        
         brand,
-        hygiene_entry_date,
-        hygiene_departure_date       
-      }).then(() => {
-        navigate('/hygiene')  
-           
-        
-      });
+        hygiene_entry_date
+             
+      }).then((result) =>  setError(result.error))
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
   
  
   return (
-    <div className="App">
-      <div className="App-header">
-        <div className="container w-75 ">
-          <form className="baby-login form-signin container_color rounded shadow" onSubmit={handleSubmit}>
-            <h1 className="title-register">Register Hygiene</h1>
-            <label>Categoria:</label>
+    <div className="signupFrm">
+      <div className="wrapper">
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <h1 className="title">Higiene</h1>
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
+
+          <div className="inputContainer">
             <input
               type="text"
-              id="category"
-              className="form-control"
-              placeholder="Categoria"
+              className="input"
+              placeholder="a"
               value={hygiene_category}
               required
               onChange={(e) => setHygiene_category(e.target.value)}
-              
             />
-            <label>Descripción:</label>
+            <label className="label">Categoria:</label>
+          </div>
+
+          <div className="inputContainer">
+           
             <input
               type="text"
               id="description"
-              className="form-control"
-              placeholder="Descripción"
+              className="input"
+              placeholder="a"
               value={description}
               required
               onChange={(e) => setDescription(e.target.value)}
-              
             />
-            <label>Marca:</label>
-            <input
+            <label className="label">Descripción:</label>
+          </div>
+
+          <div className="inputContainer">
+          <input
               type="text"
               id="brand"
-              className="form-control"
+              className="input"
               placeholder="Brand"
               value={brand}
               required
               onChange={(e) => setBrand(e.target.value)}
               
             />
-             <label>Fecha de entrada:</label>
-            <input
-              type="date"
-              id="hygiene_entry_date"
-              className="form-control"
-              placeholder="Fecha de entrada"
-              value={hygiene_entry_date}
-              required
-              onChange={(e) => setHygiene_entry_date(e.target.value)}
-              
-            />
-             <label>Fecha de salida:</label>
+            <label className="label">Marca:</label>
+          </div>
+
+          <div className="inputContainer">
+            
             <input
               type="date"
               id="hygiene_departure_date"
-              className="form-control"
-              placeholder="Dirección"             
-              value={hygiene_departure_date}
+              className="input"
+              placeholder="a"
+              value={hygiene_entry_date}
               required
-              onChange={(e) => setHygiene_departure_date(e.target.value)}
-              
+              onChange={(e) => setHygiene_entry_date(e.target.value)}
             />
-            
-            <button className="btn btn-primary" type="submit">
-              Regitrar
-            </button>
-          </form>
-        </div>
+            <label className="label">Fecha de entrada:</label>
+          </div>        
+
+          <input type="submit" className="submitBtn" value="Registrar" />
+        </form>
       </div>
     </div>
   );

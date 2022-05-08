@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error_Not_Register from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
+import { format_date, message_not_register } from "../../format_date";
 
 const Funiture = () => {
   const navigate = useNavigate();
+
   const [furniture, setFurniture] = useState([]);
   const [error, setError] = useState(false);
  
@@ -28,11 +30,7 @@ const Funiture = () => {
     }).then(() => navigate(0));
   };
 
-  const formatDate = (date) => {
-    var options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(date).toLocaleDateString([], options);
-  };
-
+ 
   return (
     <>
       <Navbar></Navbar>
@@ -75,8 +73,8 @@ const Funiture = () => {
                           <td>{item.furniture_category}</td>
                           <td>{item.description}</td>
                           <td> {item.state}</td>
-                          <td> {formatDate(item.furniture_entry_date)}</td>
-                          <td> {formatDate(item.furniture_departure_date)}</td>
+                          <td> {format_date(item.furniture_entry_date)}</td>
+                          <td> {format_date(item.furniture_departure_date)}</td>
 
                           <td>
                             <Link to={`/Update/Furniture/${item.id}`}>
@@ -96,7 +94,7 @@ const Funiture = () => {
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register></Error_Not_Register>}
+              {error && <Error_Not_Register message={ message_not_register}></Error_Not_Register>}
             </div>
           </div>
         </div>
