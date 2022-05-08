@@ -45,7 +45,8 @@ const select_count_departure_clothing_day_query = 'SELECT COUNT(*) FROM hada_mad
 
 
 ////SELECT BY ID////
-const select_a_children_query = 'SELECT * FROM hada_madrina.children where mother_id = ?';
+const select_a_children_by_mother_id_query = 'SELECT * FROM hada_madrina.children where mother_id = ?';
+const select_a_children_by_id_query = 'SELECT * FROM hada_madrina.children where id = ?';
 const select_an_user_query = 'SELECT * FROM hada_madrina.user WHERE id = ?';
 const select_an_user_whith_param_query = 'SELECT * FROM hada_madrina.user WHERE email = ? AND password = ?';
 const select_a_mother_query = 'SELECT * FROM hada_madrina.mothers WHERE id = ?'
@@ -94,7 +95,8 @@ module.exports = {
     select_all_hygiene_query,
     select_an_user_query,
     select_an_user_whith_param_query,
-    select_a_children_query,
+    select_a_children_by_mother_id_query,
+    select_a_children_by_id_query,
     select_a_food_query,
     select_a_clothing_query,
     select_a_furniture_query,

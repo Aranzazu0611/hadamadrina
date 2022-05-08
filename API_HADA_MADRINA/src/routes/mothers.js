@@ -30,6 +30,7 @@ const {
   message_update_error,
   message_update_not_exist,
 } = require("../utils/utils.js");
+const { stringValidationMother } = require("../utils/validations");
 
 // GET all Mothers
 router.get("/api/mothers/", async (req, res) => {
@@ -130,8 +131,9 @@ router.delete("/api/mother/delete/:id", async (req, res) => {
 // INSERT An mother
 router.post("/api/mother/register", async (req, res) => {
   const info = req.body;
-
+  
   try {
+    await stringValidationMother(info)
     await operation_insert(
       mysqlConnection,
       insert_mother_query,
@@ -151,6 +153,7 @@ router.put("/api/mother/edit/:id", async (req, res) => {
   const update_mother_info = req.body;
  
   try {
+    await stringValidationMother(update_mother_info)
     await operation_update(
       mysqlConnection,
       update_mother_query,

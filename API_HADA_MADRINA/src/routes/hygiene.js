@@ -32,6 +32,7 @@ const {
   message_update_error,
   message_update_not_exist,
 } = require("../utils/utils");
+const { stringValidationHygiene } = require("../utils/validations");
 
 //MONTH Hygiene
 
@@ -191,6 +192,7 @@ router.post("/api/hygiene/register", async (req, res) => {
   const info = req.body;
 
   try {
+    await stringValidationHygiene(info)
     await operation_insert(
       mysqlConnection,
       insert_hygiene_query,
@@ -210,6 +212,7 @@ router.put("/api/hygiene/edit/:id", async (req, res) => {
   const update_hygiene_info = req.body;
   
   try {
+    await stringValidationHygiene(update_hygiene_info)
     await operation_update(
       mysqlConnection,
       update_hygiene_query,

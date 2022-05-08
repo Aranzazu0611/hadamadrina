@@ -1,3 +1,4 @@
+
 const express = require("express");
 const {
   select_all_user_query,
@@ -30,7 +31,7 @@ const {
   operation_update,
   operation_auth,
 } = require("../../models");
-const { stringValidation } = require("../utils/validations");
+const { stringValidationUser } = require("../utils/validations");
 
 router.post("/api/user/auth", async (req, res, next) => {
   const email = req.body.email;
@@ -122,7 +123,7 @@ router.post("/api/user/register", async (req, res) => {
   const info = req.body;
 
   try {
-    stringValidation(info)
+    await stringValidationUser(info)
     await operation_insert(
       mysqlConnection,
       insert_user_query,
@@ -132,8 +133,8 @@ router.post("/api/user/register", async (req, res) => {
       res
     );
   } catch (error) {   
-   console.log(error)
-    return res.status(400).send({message:error})   
+  
+    return res.status(400).send({message:error.message})   
     
   }
 });
@@ -144,6 +145,7 @@ router.put("/api/user/update/:id", async (req, res) => {
   const update_user_info = req.body;
 
   try {
+    await stringValidationUser(update_user_info)
     await operation_update(
       mysqlConnection,
       update_user_query,
@@ -154,8 +156,10 @@ router.put("/api/user/update/:id", async (req, res) => {
       res
     );
   } catch (error) {
-    return res.status(400).json({ error: error.toString() });
+    return res.status(400).send({message:error.message})
   }
 });
 
 module.exports = router;
+
+  

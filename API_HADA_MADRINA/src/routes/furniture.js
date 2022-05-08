@@ -6,6 +6,7 @@ const { operation_delete_By_Id, operation_get_All, operation_get_By_Id,  operati
 
 const mysqlConnection  = require('../database.js');
 const { name_table_furniture, message_delete_error, message_delete_not_exist, furniture_saved, furniture_not_found, furniture_update, message_update_error, message_update_not_exist } = require('../utils/utils.js');
+const { stringValidationFurniture } = require('../utils/validations.js');
 
 
 //MONTH furniture
@@ -159,7 +160,7 @@ router.post('/api/furniture/register', async(req, res) => {
   const info = req.body
   
  try { 
-
+  await stringValidationFurniture(info)
   await operation_insert(mysqlConnection, insert_furniture_query, info, furniture_saved,furniture_not_found, res)
 
 
@@ -178,6 +179,7 @@ router.put('/api/furniture/edit/:id', async(req, res) => {
   const update_furniture_info = req.body;  
   
   try {
+    await stringValidationFurniture(update_furniture_info)
     await operation_update(mysqlConnection,
       update_furniture_query,
       [update_furniture_info, id],

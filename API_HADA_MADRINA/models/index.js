@@ -60,7 +60,7 @@ const operation_insert = (connection, query, param, name_operation,message_not_f
             .status(400)
             .json({ message: message_not_found }) :
             res.status(200).json({ message: name_operation }) :
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ message: {id:"estas dentro"} });
 
     });
 }
