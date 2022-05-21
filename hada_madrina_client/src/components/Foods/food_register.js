@@ -1,41 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorNotRegister from "../Errors/error_not_register";
+import useApiRegister from "../Custom/useApiRegister";
+import { register_Foods_Url, route_foods_info } from "../../utils/url";
 
 
 const Food_Register = () => {
-  const navigate = useNavigate()
-  const [food_category, setFood_category] = useState();
-  const [description, setDescription] = useState();
-  const [food_entry_date, setFood_entry_date] = useState();
-  const [error, setError] = useState(); 
-
-  const registerFoods = async (info) => {
-    return fetch("http://localhost:3003/api/foods/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/foods");
-      }
-      return response.json();
-    });
-  };
+  
+  const registerFoods = useApiRegister(register_Foods_Url, route_foods_info)
+  const [food_category, setFood_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [food_entry_date, setFood_entry_date] = useState("");
+  const [error] = useState(""); 
+  const info_food = {
+    food_category,
+    description,
+    food_entry_date, 
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerFoods({
-        food_category,
-        description,
-        food_entry_date,
-     
-      }).then((result) =>  setError(result.error))
+      await registerFoods(info_food)
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
@@ -58,8 +46,7 @@ const Food_Register = () => {
             <label className="label">Categoria:</label>
           </div>
 
-          <div className="inputContainer">
-            <label className="label">Descripción:</label>
+          <div className="inputContainer">           
             <input
               type="text"
               id="description"

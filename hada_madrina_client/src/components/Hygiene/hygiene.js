@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { format_date, message_not_register } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
 import ErrorNotRegister from "../Errors/error_not_register";
+import useApi from "../Custom/useApiGet";
+import { delete_Hygiene_Url, get_Hygiene_Url, route_register_hygiene, route_update_hygiene_screen } from "../../utils/url";
+import useApiDelete from "../Custom/useApiDelete";
 
 const Hygiene = () => {
-  const navigate = useNavigate()
-  const [hygiene, setHygiene] = useState("");
-  const [error, setError] = useState(false);
- 
+  const { data, loading, error } = useApi(get_Hygiene_Url);
+  const deleteHygiene = useApiDelete();
 
-  useEffect(() => {
-    getHygiene();
-  }, []);
-
-  const getHygiene = async () => {
-    await fetch("http://localhost:3003/api/hygiene/")
-      .then((res) => res.json())
-      .then((result) => {
-        result.length > 0 ? setHygiene(result) : setError(true);
-      });
-  };
-
-  const deleteHygiene = async (id) => {
-    await fetch("http://localhost:3003/api/hygiene/delete/" + id, {
-      method: "DELETE",
-    }).then(() => {
-      navigate(0)
-     
-    });
-  };
+  if (loading) return <h1>Loading</h1>;
 
   return (
     <>
+  
       <Navbar></Navbar>
       <section className="home-section">
         <nav>
@@ -42,7 +25,7 @@ const Hygiene = () => {
           </div>
 
           <div>
-            <Link to="/Register/hygiene">
+            <Link to={route_register_hygiene}>
               <button className="btn btn-primary d-inline ">Añadir item</button>
             </Link>
           </div>
@@ -52,7 +35,7 @@ const Hygiene = () => {
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Productos de higiene:</div>
-              {hygiene.length > 0 && (
+              {data.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
                     <thead>
@@ -67,26 +50,28 @@ const Hygiene = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {hygiene.map((item) => (
+                      {data.map((item) => (
                         <tr key={item.id}>
                           <td>{item.id}</td>
                           <td>{item.hygiene_category}</td>
                           <td>{item.description}</td>
                           <td> {item.brand}</td>
-                          <td> {format_date(item.hygiene_entry_date)}</td>                         
+                          <td> {format_date(item.hygiene_entry_date)}</td>
                           <td> {format_date(item.hygiene_departure_date)}</td>
 
                           <td>
-                            <Link to={`/Update/hygiene/${item.id}`}>
+                            <Link to={`${route_update_hygiene_screen}${item.id}`}>
                               <button className="btn btn-info">
-                                Actualizar{" "}
+                                Actualizar
                               </button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
                               className="btn btn-danger"
-                              onClick={() => deleteHygiene(item.id)}
+                              onClick={() =>
+                                deleteHygiene(delete_Hygiene_Url, item.id)
+                              }
                             >
                               Borrar
                             </button>
@@ -98,8 +83,9 @@ const Hygiene = () => {
                 </div>
               )}
               {error && (
-                <ErrorNotRegister message={message_not_register}></ErrorNotRegister>
-               
+                <ErrorNotRegister
+                  message={message_not_register}
+                ></ErrorNotRegister>
               )}
             </div>
           </div>

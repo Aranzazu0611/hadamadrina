@@ -1,46 +1,31 @@
 import React, {useState} from "react";
-import { useNavigate  } from 'react-router-dom';
+import { register_Hygiene_Url, route_hygiene } from "../../utils/url";
+import useApiRegister from "../Custom/useApiRegister";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 
-const Hygiene_Register =() => {
+const Hygiene_Register =() => {  
   
-  const navigate = useNavigate()
-  const [hygiene_category, setHygiene_category] = useState();
+  const registerHygiene = useApiRegister(register_Hygiene_Url, route_hygiene)
+  const [hygiene_category, setHygiene_category] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [hygiene_entry_date, setHygiene_entry_date] = useState("");  
-  const [error, setError] = useState("");
-
-  const registerHygiene = async(info) => {
-    return  fetch("http://localhost:3003/api/hygiene/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
-    
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/hygiene");
-      }
-      return response.json();
-    });
+  const [error] = useState("");
+  const info_hygiene = {
+    hygiene_category,
+    description,        
+    brand,
+    hygiene_entry_date
+         
   }
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      
-      await registerHygiene({
-        hygiene_category,
-        description,        
-        brand,
-        hygiene_entry_date
-             
-      }).then((result) =>  setError(result.error))
+    try {      
+      await registerHygiene(info_hygiene)
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
   

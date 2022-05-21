@@ -1,64 +1,53 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { format_date } from "../../format_date";
+import { format_date } from "../../utils/format_date";
+import { get_Foods_Url, route_foods_info, update_Foods_Url } from "../../utils/url";
+import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
-
-const Food_Update =() => {
-  const navigate = useNavigate();
+const Food_Update = () => {
+  const { id } = useParams();
+  const url_By_Id = get_Foods_Url + id;
+  const url_update = update_Foods_Url + id;
+  const updateClothing = useApiUpdate(url_update, route_foods_info);
   const [food_category, setFood_category] = useState();
-  const [description, setDescription] = useState();  
+  const [description, setDescription] = useState();
   const [food_entry_date, setFood_entry_date] = useState();
-  const [food_departure_date, setFood_departure_date] = useState();  
-  const {id} = useParams()
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    getFoodByID(id);
-  }, [id]);
-
-  const getFoodByID = async (id) => {
-    await fetch(`http://localhost:3003/api/foods/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-         
-          setFood_category(result[0].food_category)
-          setDescription(result[0].description)        
-          setFood_entry_date(format_date(result[0].food_entry_date))
-          setFood_departure_date(format_date(result[0].food_departure_date))
-      });
+  const [food_departure_date, setFood_departure_date] = useState();
+  const [error] = useState();
+  const info = {
+    food_category,
+    description,
+    food_entry_date,
+    food_departure_date,
   };
 
-  const updateClothing = async (credentials) => {
-    return await fetch(`http://localhost:3003/api/foods/edit/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/foods");
-      }
-      return response.json();
-    })
+  
+
+  useEffect(() => {
+    getFoodByID();
+  }, []);
+
+  const getFoodByID = async () => {
+    await fetch(url_By_Id)
+      .then((res) => res.json())
+      .then((result) => {
+        setFood_category(result[0].food_category);
+        setDescription(result[0].description);
+        setFood_entry_date(format_date(result[0].food_entry_date));
+        setFood_departure_date(format_date(result[0].food_departure_date));
+      });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateClothing({
-        food_category,
-        description,       
-        food_entry_date,
-        food_departure_date    
-      }).then((result) =>  setError(result.error))
+      await updateClothing(info);
     } catch (error) {
-     return error;
+      return error.message;
     }
   };
-  
- 
+
   return (
     <div className="signupFrm">
       <div className="wrapper">
@@ -78,7 +67,6 @@ const Food_Update =() => {
           </div>
 
           <div className="inputContainer">
-          
             <input
               type="text"
               id="description"
@@ -105,14 +93,13 @@ const Food_Update =() => {
           </div>
 
           <div className="inputContainer">
-            
             <input
               type="date"
               id="hygiene_departure_date"
               className="input"
               placeholder="a"
               value={food_departure_date}
-              min = {food_entry_date}
+              min={food_entry_date}
               required
               onChange={(e) => setFood_departure_date(e.target.value)}
             />
@@ -124,6 +111,6 @@ const Food_Update =() => {
       </div>
     </div>
   );
-}
+};
 
 export default Food_Update;

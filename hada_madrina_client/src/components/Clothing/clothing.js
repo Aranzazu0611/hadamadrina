@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
+import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { format_date } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
+import ErrorNotRegister from "../Errors/error_not_register";
+import useApi from "../Custom/useApiGet";
+import { delete_Clothing_Url, get_Clothing_Url, route_register_clothing, route_update_clothing, route_update_clothing_screen } from "../../utils/url";
+import useApiDelete from "../Custom/useApiDelete";
 
 const Clothing = () => {
-  const navigate = useNavigate();
-  const [clothing, setClothing] = useState([]);
-  const [error, setError] = useState(false);
+  const { data, loading, error } = useApi(
+    get_Clothing_Url
+  );
+
+  const deleteInfo = useApiDelete();
+  if (loading) return <h1>Loading</h1>;
+
  
-
-  useEffect(() => {
-    getClothing();
-  }, []);
-
-  const getClothing = async () => {
-    await fetch("http://localhost:3003/api/clothing/")
-      .then((res) => res.json())
-      .then((result) => {
-        result.length > 0 ? setClothing(result.reverse()) : setError(true);
-      });
-  };
-
-  const deleteClothing = async (id) => {
-    await fetch("http://localhost:3003/api/clothing/delete/" + id, {
-      method: "DELETE",
-    }).then(() => navigate(0));
-  };
 
   return (
     <>
@@ -39,7 +28,7 @@ const Clothing = () => {
           </div>
 
           <div>
-            <Link to="/Register/Clothing">
+            <Link to={`${route_register_clothing}`}>
               <button className="btn btn-primary d-inline ">Añadir item</button>
             </Link>
           </div>
@@ -49,7 +38,7 @@ const Clothing = () => {
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Ropa:</div>
-              {clothing.length > 0 && (
+              {data.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
                     <thead>
@@ -67,39 +56,42 @@ const Clothing = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {clothing.map((item) =>  (
-                      <tr key={item.id}>
-                      <td>{item.id}</td>
-                      <td>{item.clothing_category}</td>
-                      <td>{item.description}</td>
-                      <td> {item.colour}</td>
-                      <td> {item.size}</td>
-                      <td> {item.gender}</td>
-                      <td> {item.age}</td>
-                      <td> {format_date(item.clothing_entry_date)}</td>
-                      <td> {format_date(item.clothing_departure_date)}</td>
-  
-                      <td>
-                        <Link to={`/Update/Clothing/${item.id}`}>
-                          <button className="btn btn-info">Update </button>
-                        </Link>
-  
-                        <button
-                          style={{ marginLeft: "10px" }}
-                          className="btn btn-danger"
-                          onClick={() => deleteClothing(item.id)}
-                        >
-                          Borrar
-                        </button>
-                        
-                      </td>
-                    </tr>
+                      {data.map((item) => (
+                        <tr key={item.id}>
+                          <td>{item.id}</td>
+                          <td>{item.clothing_category}</td>
+                          <td>{item.description}</td>
+                          <td> {item.colour}</td>
+                          <td> {item.size}</td>
+                          <td> {item.gender}</td>
+                          <td> {item.age}</td>
+                          <td> {format_date(item.clothing_entry_date)}</td>
+                          <td> {format_date(item.clothing_departure_date)}</td>
+
+                          <td>
+                            <Link to={`${route_update_clothing_screen}${item.id}`}>
+                              <button className="btn btn-info">Update </button>
+                            </Link>
+
+                            <button
+                              style={{ marginLeft: "10px" }}
+                              className="btn btn-danger"
+                              onClick={() => deleteInfo(delete_Clothing_Url,item.id)}
+                            >
+                              Borrar
+                            </button>
+                          </td>
+                        </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register></Error_Not_Register>}
+              {error && (
+                <ErrorNotRegister
+                  message={message_not_register}
+                ></ErrorNotRegister>
+              )}
             </div>
           </div>
         </div>

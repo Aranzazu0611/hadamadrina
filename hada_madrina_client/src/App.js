@@ -28,6 +28,7 @@ import Mother_Update from "./components/Mother/mother_update";
 import User_Update from "./components/User/user_update";
 import { PrivateRoute } from "./components/PermissionRoutes/PrivateRoute";
 import { Message_denied } from "./components/Not_Access/Message_denied";
+import { route_children_info, route_clothing_info, route_dashboard, route_denied, route_foods_info, route_furniture, route_hygiene, route_mother_screen, route_register_children, route_register_clothing, route_register_food, route_register_furniture, route_register_hygiene, route_register_mother, route_update_children, route_update_clothing, route_update_food, route_update_furniture, route_update_hygiene, route_update_mother, route_user, route_user_update } from "./utils/url";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
         <Route path="/register" element={<Register></Register>} />
         <Route path="/" element={<Login></Login>} />
         <Route
-          path="/user"
+          path={route_user}
           element={
             <PrivateRoute admin={"Admin"} user={""}>
               <User></User>
@@ -44,7 +45,7 @@ function App() {
           }
         />
         <Route
-          path="/dashboard"
+          path={route_dashboard}
           element={
             <PrivateRoute admin={"Admin"} user={""}>
               <Dasboard></Dasboard>
@@ -52,7 +53,7 @@ function App() {
           }
         />
         <Route
-          path="/mother"
+          path={route_mother_screen}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Mother></Mother>
@@ -61,7 +62,7 @@ function App() {
         />
 
         <Route
-          path="/Update/User/:id"
+          path={route_user_update}
           element={
             <PrivateRoute admin={"Admin"} user={""}>
               <User_Update></User_Update>
@@ -69,7 +70,7 @@ function App() {
           }
         />
         <Route
-          path="/clothing"
+          path={route_clothing_info}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
               <Clothing></Clothing>
@@ -77,7 +78,7 @@ function App() {
           }
         />
         <Route
-          path="/foods"
+          path={route_foods_info}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-comida"}>
               <Foods></Foods>
@@ -85,7 +86,7 @@ function App() {
           }
         />
         <Route
-          path="/children/:id"
+          path={route_children_info}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Children></Children>
@@ -93,7 +94,7 @@ function App() {
           }
         />
         <Route
-          path="/furniture"
+          path={route_furniture}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
               <Furniture></Furniture>
@@ -101,7 +102,7 @@ function App() {
           }
         />
         <Route
-          path="/hygiene"
+          path={route_hygiene}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
               <Hygiene></Hygiene>
@@ -109,7 +110,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/hygiene"
+          path={route_register_hygiene}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
               <Hygiene_Register></Hygiene_Register>
@@ -117,7 +118,7 @@ function App() {
           }
         />
         <Route
-          path="/Update/hygiene/:id"
+          path={route_update_hygiene}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-higiene y utensilios"}>
               <Hygiene_Update></Hygiene_Update>
@@ -125,7 +126,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/Furniture"
+          path={route_register_furniture}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
               <Furniture_Register></Furniture_Register>
@@ -133,7 +134,7 @@ function App() {
           }
         />
         <Route
-          path="/Update/Furniture/:id"
+          path={route_update_furniture}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-muebles"}>
               <Furniture_Update></Furniture_Update>
@@ -141,7 +142,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/Food"
+          path={route_register_food}
           element={
             <PrivateRoute admin="Admin" user="Almacén-comida">
               <Foods_Register></Foods_Register>
@@ -149,7 +150,7 @@ function App() {
           }
         />
         <Route
-          path="/Update/Food/:id"
+          path={route_update_food}
           element={
             <PrivateRoute admin="Admin" user="Almacén-comida">
               <Food_Update></Food_Update>
@@ -157,7 +158,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/Clothing"
+          path={route_register_clothing}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
               <Clothing_Register></Clothing_Register>
@@ -165,7 +166,7 @@ function App() {
           }
         />
         <Route
-          path="/Update/Clothing/:id"
+          path={route_update_clothing}
           element={
             <PrivateRoute admin={"Admin"} user={"Almacén-ropa"}>
               <Clothing_Update></Clothing_Update>
@@ -173,7 +174,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/Children/:id"
+          path={route_register_children}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Children_Register></Children_Register>
@@ -181,7 +182,7 @@ function App() {
           }
         />
         <Route
-          path="/Register/Mother"
+          path={route_register_mother}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Mother_Register></Mother_Register>
@@ -189,7 +190,7 @@ function App() {
           }
         />
         <Route
-          path="/Update/Mother/:id"
+          path={route_update_mother}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Mother_Update></Mother_Update>
@@ -197,14 +198,14 @@ function App() {
           }
         />
         <Route
-          path="/Update/Children/:id"
+          path={route_update_children}
           element={
             <PrivateRoute admin={"Admin"} user={"Administrativo"}>
               <Children_Update></Children_Update>
             </PrivateRoute>
           }
         />
-        <Route path="/denied" element={<Message_denied></Message_denied>} />
+        <Route path={route_denied} element={<Message_denied></Message_denied>} />
       </Routes>
     </BrowserRouter>
   );

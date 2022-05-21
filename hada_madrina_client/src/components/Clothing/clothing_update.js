@@ -1,24 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { format_date } from "../../format_date";
+import {useParams } from "react-router-dom";
+import { format_date } from "../../utils/format_date";
+import {  
+  get_Clothing_Url,
+  route_clothing_info,
+  update_Clothing_Url,
+} from "../../utils/url";
+import useApiUpdate from "../Custom/useApiUpdate";
 
 const Clothing_Update = () => {
-  const [clothing_category, setClothing_category] = useState();
-  const [description, setDescription] = useState();
-  const [colour, setColour] = useState();
-  const [size, setSize] = useState();
-  const [gender, setGender] = useState();
-  const [age, setAge] = useState();
-  const [clothing_entry_date, setClothing_entry_date] = useState();
-  const [clothing_departure_date, setClothing_departure_date] = useState();
   const { id } = useParams();
+  const url_By_Id = get_Clothing_Url + id;
+  const url_update = update_Clothing_Url + id;
+  const updateClothing = useApiUpdate(url_update, route_clothing_info);
+  const [clothing_category, setClothing_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [colour, setColour] = useState("");
+  const [size, setSize] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [clothing_entry_date, setClothing_entry_date] = useState("");
+  const [clothing_departure_date, setClothing_departure_date] = useState("");
+
+  const info = {
+    clothing_category,
+    description,
+    colour,
+    size,
+    gender,
+    age,
+    clothing_entry_date,
+    clothing_departure_date,
+  };
 
   useEffect(() => {
-    getClothingByID(id);
-  }, [id]);
+    getClothingByID();
+  }, []);
 
-  const getClothingByID = async (id) => {
-    await fetch(`http://localhost:3003/api/clothing/${id}`)
+  const getClothingByID = async () => {
+    await fetch(url_By_Id)
       .then((res) => res.json())
       .then((result) => {
         setClothing_category(result[0].clothing_category);
@@ -34,33 +54,12 @@ const Clothing_Update = () => {
       });
   };
 
-  const updateClothing = async (credentials) => {
-    return await fetch(`http://localhost:3003/api/clothing/edit/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((data) => console.log(data));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateClothing({
-        clothing_category,
-        description,
-        colour,
-        size,
-        gender,
-        age,
-        clothing_entry_date,
-        clothing_departure_date,
-      }).then(() => {
-        window.location.href = `/clothing`;
-      });
+      await updateClothing(url_update, info);
     } catch (error) {
-      console.log(error);
+      return error.message;
     }
   };
 
@@ -179,7 +178,7 @@ const Clothing_Update = () => {
             <label className="label">Fecha de salida:</label>
           </div>
 
-          <input type="submit" className="submitBtn" value="Registrar" />
+          <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
       </div>
     </div>

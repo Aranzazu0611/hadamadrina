@@ -1,34 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
+import React from "react";
+import { Link} from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { format_date } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
+import useApi from "../Custom/useApiGet";
+import ErrorNotRegister from "../Errors/error_not_register";
+import { delete_Foods_Url, get_Foods_Url, route_register_food, route_update_food_screen } from "../../utils/url";
+import useApiDelete from "../Custom/useApiDelete";
 
 const Foods = () => {
-  const navigate = useNavigate()
-  const [foods, setFoods] = useState([]);
-  const [error, setError] = useState(false);
+ 
   
+  const { data, loading, error } = useApi(get_Foods_Url);
+  const deleteFoods = useApiDelete();
 
-  useEffect(() => {
-    getFoods();
-  }, []);
+  if (loading) return <h1>Loading</h1>;
 
-  const getFoods = async () => {
-    await fetch("http://localhost:3003/api/foods/")
-      .then((res) => res.json())
-      .then((result) => {
-        result.length > 0 ? setFoods(result.reverse()) : setError(true);
-
-        
-      });
-  };
-
-  const deleteFoods = async (id) => {
-    await fetch("http://localhost:3003/api/foods/delete/" + id, {
-      method: "DELETE",
-    }).then(() =>  navigate(0));
-  };
+  
 
   return (
     <>
@@ -41,7 +28,7 @@ const Foods = () => {
           </div>
 
           <div>
-            <Link to="/Register/Food">
+            <Link to={route_register_food}>
               <button className="btn btn-primary d-inline ">Añadir item</button>
             </Link>
           </div>
@@ -51,7 +38,7 @@ const Foods = () => {
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Productos de Alimentación:</div>
-              {foods.length > 0 && (
+              {data.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
                     <thead>
@@ -65,7 +52,7 @@ const Foods = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {foods.map((food) => (
+                      {data.map((food) => (
                         <tr key={food.id}>
                           <td>{food.id}</td>
                           <td>{food.food_category}</td>
@@ -74,7 +61,7 @@ const Foods = () => {
                           <td> {format_date(food.food_departure_date)}</td>
 
                           <td>
-                            <Link to={`/Update/Food/${food.id}`}>
+                            <Link to={`${route_update_food_screen}${food.id}`}>
                               <button className="btn btn-info">
                                 Actualizar{" "}
                               </button>
@@ -83,7 +70,7 @@ const Foods = () => {
                             <button
                               style={{ marginLeft: "10px" }}
                               className="btn btn-danger"
-                              onClick={() => deleteFoods(food.id)}
+                              onClick={() => deleteFoods(delete_Foods_Url,food.id)}
                             >
                               Borrar
                             </button>
@@ -94,7 +81,11 @@ const Foods = () => {
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register></Error_Not_Register>}
+              {error && (
+                <ErrorNotRegister
+                  message={message_not_register}
+                ></ErrorNotRegister>
+              )}
             </div>
           </div>
         </div>

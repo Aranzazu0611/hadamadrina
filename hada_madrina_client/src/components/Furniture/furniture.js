@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
+import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { format_date, message_not_register } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
+import useApi from "../Custom/useApiGet";
+import ErrorNotRegister from "../Errors/error_not_register";
+import { delete_Furniture_Url, get_Furniture_Url, route_register_furniture, route_update_furniture_screen } from "../../utils/url";
+import useApiDelete from "../Custom/useApiDelete";
 
 const Funiture = () => {
-  const navigate = useNavigate();
+  
+  const { data, loading, error } = useApi(get_Furniture_Url);
+  const deleteFunitures = useApiDelete();
 
-  const [furniture, setFurniture] = useState([]);
-  const [error, setError] = useState(false);
- 
-
-  useEffect(() => {
-    getFunitures();
-  }, []);
-
-  const getFunitures = async () => {
-    await fetch("http://localhost:3003/api/furniture/")
-      .then((res) => res.json())
-      .then((result) => {
-        result.length > 0 ? setFurniture(result.reverse()) : setError(true);
-        
-      });
-  };
-
-  const deleteFunitures = async (id) => {
-    await fetch("http://localhost:3003/api/furniture/delete/" + id, {
-      method: "DELETE",
-    }).then(() => navigate(0));
-  };
+  if (loading) return <h1>Loading</h1>;
 
  
+
   return (
     <>
       <Navbar></Navbar>
@@ -42,7 +27,7 @@ const Funiture = () => {
           </div>
 
           <div>
-            <Link to="/Register/Furniture">
+            <Link to={route_register_furniture}>
               <button className="btn btn-primary d-inline ">Añadir item</button>
             </Link>
           </div>
@@ -52,7 +37,7 @@ const Funiture = () => {
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Artículos:</div>
-              {furniture.length > 0 && (
+              {data.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
                     <thead>
@@ -67,7 +52,7 @@ const Funiture = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {furniture.map((item) => (
+                      {data.map((item) => (
                         <tr key={item.id}>
                           <td>{item.id}</td>
                           <td>{item.furniture_category}</td>
@@ -77,13 +62,13 @@ const Funiture = () => {
                           <td> {format_date(item.furniture_departure_date)}</td>
 
                           <td>
-                            <Link to={`/Update/Furniture/${item.id}`}>
+                            <Link to={`${route_update_furniture_screen}${item.id}`}>
                               <button className="btn btn-info">Editar </button>
                             </Link>
                             <button
                               style={{ marginLeft: "10px" }}
                               className="btn btn-danger"
-                              onClick={() => deleteFunitures(item.id)}
+                              onClick={() => deleteFunitures(delete_Furniture_Url,item.id)}
                             >
                               Borrar
                             </button>
@@ -94,7 +79,11 @@ const Funiture = () => {
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register message={ message_not_register}></Error_Not_Register>}
+              {error && (
+                <ErrorNotRegister
+                  message={message_not_register}
+                ></ErrorNotRegister>
+              )}
             </div>
           </div>
         </div>

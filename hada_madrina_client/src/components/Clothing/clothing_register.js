@@ -1,42 +1,36 @@
 import React, { useState } from "react";
+import { register_Clothing_Url, route_clothing_info } from "../../utils/url";
+import useApiRegister from "../Custom/useApiRegister";
+
 
 const Clothing_Register = () => {
-  const [clothing_category, setClothing_category] = useState();
-  const [description, setDescription] = useState();
-  const [colour, setColour] = useState();
-  const [size, setSize] = useState();
-  const [gender, setGender] = useState();
-  const [age, setAge] = useState();
-  const [clothing_entry_date, setClothing_entry_date] = useState();
-
-
-  const registerClothing = async (info) => {
-    return fetch("http://localhost:3003/api/clothing/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
-    }).then((data) => data.json());
-  };
+  const [clothing_category, setClothing_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [colour, setColour] = useState("");
+  const [size, setSize] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [clothing_entry_date, setClothing_entry_date] = useState("");  
+  
+  const registerClothing = useApiRegister(register_Clothing_Url, route_clothing_info);
+  const info = {
+    clothing_category,
+    description,
+    colour,
+    size,
+    gender,
+    age,
+    clothing_entry_date
+    
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerClothing({
-        clothing_category,
-        description,
-        colour,
-        size,
-        gender,
-        age,
-        clothing_entry_date
-        
-      }).then(() => {
-        window.location.href = "/clothing";
-      });
+      await registerClothing(info)
+      
     } catch (error) {
-      console.log(error);
+      return error.message;
     }
   };
 
@@ -48,8 +42,7 @@ const Clothing_Register = () => {
 
           <div className="inputContainer">
             <input
-              type="text"
-              id="category"
+              type="text"              
               className="input"
               placeholder="a"
               value={clothing_category}
@@ -60,10 +53,10 @@ const Clothing_Register = () => {
           </div>
 
           <div className="inputContainer">
-            <label className="label">Descripción:</label>
+            
             <input
               type="text"
-              id="description"
+             
               className="input"
               placeholder="a"
               value={description}
@@ -76,7 +69,7 @@ const Clothing_Register = () => {
           <div className="inputContainer">
             <input
               type="text"
-              id="colour"
+             
               className="input"
               placeholder="a"
               value={colour}
@@ -88,7 +81,7 @@ const Clothing_Register = () => {
           <div className="inputContainer">
             <input
               type="text"
-              id="age"
+             
               className="input"
               placeholder="a"
               value={age}
@@ -101,7 +94,7 @@ const Clothing_Register = () => {
             <label htmlFor="state">Genero:</label>
             <select
               className="form-control"
-              id="state"
+             
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
@@ -114,7 +107,7 @@ const Clothing_Register = () => {
             <label htmlFor="state">Selecciona Talla:</label>
             <select
               className="form-control"
-              id="state"
+             
               value={size}
               onChange={(e) => setSize(e.target.value)}
             >
@@ -131,15 +124,14 @@ const Clothing_Register = () => {
           </div>
           <div className="inputContainer">
             <input
-              type="date"
-              id="clothing_departure_date"
+              type="date"             
               className="input"
               placeholder="a"
               value={clothing_entry_date}
               required
               onChange={(e) => setClothing_entry_date(e.target.value)}
             />
-            <label className="label">Fecha de salida:</label>
+            <label className="label">Fecha de entrada:</label>
           </div>
 
           <input type="submit" className="submitBtn" value="Registrar" />

@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Error_Not_Register from "../Errors/error_not_register";
+import React from "react";
+import { Link} from "react-router-dom";
 import Navbar from "../Navbar/navbar";
-import { format_date } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
+import useApi from "../Custom/useApiGet";
+import ErrorNotRegister from "../Errors/error_not_register";
+import { delete_Mother_Url, get_Mother_Url, route_children_info, route_mother_info_screen, route_register_mother, route_update_mother, route_update_mother_screen } from "../../utils/url";
+import useApiDelete from "../Custom/useApiDelete";
 
 const Mother = () => {
-  const navigate = useNavigate();
-  const [mothers, setMothers] = useState([]);
-  const [error, setError] = useState(false);
+  const { data, loading, error } = useApi(get_Mother_Url);
 
-  useEffect(() => {
-    getMothers();
-  }, []);
-
-  const getMothers = async () => {
-    await fetch("http://localhost:3003/api/mothers/")
-      .then((res) => res.json())
-      .then((result) => {
-        result.length > 0 ? setMothers(result.reverse()) : setError(true);
-      });
-  };
-
-  const deleteMothers = async (id) => {
-    await fetch("http://localhost:3003/api/mother/delete/" + id, {
-      method: "DELETE",
-    }).then(() => navigate(0));
-  };
+  const deleteMothers = useApiDelete();
+  if (loading) return <h1>Loading</h1>;
 
   return (
     <>
@@ -38,7 +24,7 @@ const Mother = () => {
           </div>
 
           <div>
-            <Link to="/Register/Mother">
+            <Link to={route_register_mother}>
               <button className="btn btn-primary d-inline ">
                 Añadir Madre
               </button>
@@ -50,7 +36,7 @@ const Mother = () => {
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Madres Registradas:</div>
-              {mothers.length > 0 && (
+              {data.length > 0 && (
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
                     <thead>
@@ -69,7 +55,7 @@ const Mother = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {mothers.map((mother) => (
+                      {data.map((mother) => (
                         <tr key={mother.id}>
                           <td>{mother.id}</td>
                           <td>{mother.name}</td>
@@ -83,18 +69,20 @@ const Mother = () => {
                           <td> {mother.civil_status}</td>
 
                           <td>
-                            <Link to={`/Update/Mother/${mother.id}`}>
+                            <Link to={`${route_update_mother_screen}${mother.id}`}>
                               <button className="btn btn-info">Edit</button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
                               className="btn btn-danger"
-                              onClick={() => deleteMothers(mother.id)}
+                              onClick={() =>
+                                deleteMothers(delete_Mother_Url, mother.id)
+                              }
                             >
                               Borrar
                             </button>
-                            <Link to={`/children/${mother.id}`}>
+                            <Link to={`${route_mother_info_screen}${mother.id}`}>
                               <button
                                 style={{ marginLeft: "10px" }}
                                 className="btn btn-info"
@@ -109,7 +97,11 @@ const Mother = () => {
                   </table>
                 </div>
               )}
-              {error && <Error_Not_Register></Error_Not_Register>}
+              {error && (
+                <ErrorNotRegister
+                  message={message_not_register}
+                ></ErrorNotRegister>
+              )}
             </div>
           </div>
         </div>

@@ -1,49 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import Mother_info from "../Mother/mother_info";
-import Error_Not_Register from "../Errors/error_not_register";
+import React from "react";
+import { Link, useParams} from "react-router-dom";
+
 import Navbar from "../Navbar/navbar";
-import { format_date, message_not_register } from "../../format_date";
+import { format_date, message_not_register } from "../../utils/format_date";
+import ErrorNotRegister from "../Errors/error_not_register";
+import useApi from "../Custom/useApiGet";
+import MotherInfo from "../Mother/mother_info";
+import useApiDelete from "../Custom/useApiDelete";
+import { delete_Children_Url, get_Children_Url, route_update_children, route_update_children_screen } from "../../utils/url";
 
 const Children = () => {
-  const navigate = useNavigate()
-  const [childrens, setChildrens] = useState([]);
-  const [error, setError] = useState(false);
-
-
+ 
   const { id } = useParams();
-
-  useEffect(() => {
-    getChildrenById(id);
-  }, [id]);
-
-  const getChildrenById = async (id) => {
-    await fetch(`http://localhost:3003/api/children/mother/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-       
-        result.length > 0 ? setChildrens(result.reverse()) : setError(true);
-      })
-     
-  };
-
-  const deleteChildren = async (id) => {
-    await fetch("http://localhost:3003/api/childrens/delete/" + id, {
-      method: "DELETE",
-    }).then(() =>  navigate(0));
-  };
+  const deleteChildren = useApiDelete();
+  const url = get_Children_Url + id
+  
+  const {data, loading, error} = useApi(
+    url
+  ); 
+  
+    if(loading) return <h1>Loading</h1>  
 
   return (
     <>
       <Navbar></Navbar>
       <section className="home-section">
-        <Mother_info id={id}></Mother_info>
+        <MotherInfo id={id}></MotherInfo>
       <div className="table-children">
         <div className="home-content">
           <div className="sales-boxes">
             <div className="recent-sales box">
               <div className="title">Hijos:</div>
-              {childrens.length > 0 &&  (
+              {data.length > 0 &&  (
              
                 <div className="sales-details">
                   <table className="table table-striped table-bordered">
@@ -61,7 +49,7 @@ const Children = () => {
                     <tbody>
                    
         <>
-          {childrens.map(children => (
+          {data.map(children => (
             <tr key={children.id}>
                 <td>{children.id}</td>
                 <td>{children.name}</td>
@@ -73,7 +61,7 @@ const Children = () => {
 
                 <td>
                   <Link
-                    to={`/Update/Children/${children.id}`}
+                    to={`${route_update_children_screen}${children.id}`}
 
                   >
                     <button className="btn btn-info">Update </button>
@@ -81,7 +69,7 @@ const Children = () => {
                   <button
                     style={{ marginLeft: "10px" }}
                     className="btn btn-danger"
-                    onClick={() => deleteChildren(children.id)}
+                    onClick={() => deleteChildren(delete_Children_Url,children.id)}
                   >
                     Borrar
                   </button>
@@ -95,7 +83,7 @@ const Children = () => {
         </table>
       </div>
               )}
-      {error && <Error_Not_Register message={message_not_register}></Error_Not_Register>}
+      {error && <ErrorNotRegister message={message_not_register}></ErrorNotRegister>}
         </div>
         </div>
         </div>

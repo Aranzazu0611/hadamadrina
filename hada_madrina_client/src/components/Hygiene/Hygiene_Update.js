@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { format_date } from "../../format_date";
+import { format_date } from "../../utils/format_date";
+import { get_Hygiene_Url, route_hygiene, update_Hygiene_Url } from "../../utils/url";
+import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 const Hygiene_Update = () => {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const url_By_Id = get_Hygiene_Url + id;
+  const url_update = update_Hygiene_Url + id;
+  const updateHygiene = useApiUpdate(url_update, route_hygiene);
   const [hygiene_category, setHygiene_category] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [hygiene_entry_date, setHygiene_entry_date] = useState("");
   const [hygiene_departure_date, setHygiene_departure_date] = useState("");
-  const [error, setError] = useState("");
-  const { id } = useParams();
+  const [error] = useState("");
+  const info_hygiene = {
+    hygiene_category,
+    description,
+    brand,
+    hygiene_entry_date,
+    hygiene_departure_date,
+  }
+  
 
-  const getHygieneByID = async (id) => {
-    await fetch(`http://localhost:3003/api/hygiene/${id}`)
+  const getHygieneByID = async () => {
+    await fetch(url_By_Id)
       .then((res) => res.json())
       .then((result) => {
         setHygiene_category(result[0].hygiene_category);
@@ -28,34 +40,14 @@ const Hygiene_Update = () => {
   };
 
   useEffect(() => {
-    getHygieneByID(id);
+    getHygieneByID();
   });
 
-  const updateHygiene = async (credentials) => {
-    return await fetch(`http://localhost:3003/api/hygiene/edit/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/hygiene");
-      }
-      return response.json();
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateHygiene({
-        hygiene_category,
-        description,
-        brand,
-        hygiene_entry_date,
-        hygiene_departure_date,
-      }).then((result) => setError(result.error));
+      await updateHygiene(info_hygiene)
     } catch (error) {
       return error;
     }

@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { message_not_register } from "../../format_date";
+import { useParams } from "react-router-dom";
+import { message_not_register } from "../../utils/format_date";
+import { get_User_Url, route_user, update_User_Url } from "../../utils/url";
+import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 const User_Update = () => {
-  const navigate = useNavigate();
-
-  const [name, setName] = useState();
-  const [surnames, setSurnames] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [password, setPassword] = useState();
-  const [address, setAddress] = useState();
-  const [volunteers_rol, setVolunteers_rol] = useState();
-  const [error, setError] = useState();
-
   const { id } = useParams();
+  const url_By_Id = get_User_Url + id;
+  const url_update = update_User_Url + id;
+  const updateUser = useApiUpdate(url_update, route_user);
+  const [name, setName] = useState("");
+  const [surnames, setSurnames] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [volunteers_rol, setVolunteers_rol] = useState("");
+  const [error] = useState("");
+
+  const info_user = {
+    name,
+    surnames,
+    email,
+    phone,
+    address,
+    password,
+    volunteers_rol,
+  }
+
+  
 
   useEffect(() => {
-    getUserByID(id);
-  }, [id]);
+    getUserByID();
+  }, []);
 
-  const getUserByID = async (id) => {
-    await fetch(`http://localhost:3003/api/user/${id}`)
+  const getUserByID = async () => {
+    await fetch(url_By_Id)
       .then((res) => res.json())
       .then((result) => {
         setName(result[0].name);
@@ -35,35 +49,14 @@ const User_Update = () => {
       });
   };
 
-  const updateUser = async (credentials) => {
-    return await fetch(`http://localhost:3003/api/user/update/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/user");
-      }
-      return response.json();
-    });
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateUser({
-        name,
-        surnames,
-        email,
-        phone,
-        address,
-        password,
-        volunteers_rol,
-      }).then((result) => setError(result.message));
+      await updateUser(info_user)
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
@@ -81,7 +74,7 @@ const User_Update = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <label for="" className="label">
+            <label  className="label">
               Nombre:
             </label>
           </div>
@@ -94,7 +87,7 @@ const User_Update = () => {
               value={surnames}
               onChange={(e) => setSurnames(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Apellidos:
             </label>
           </div>
@@ -107,7 +100,7 @@ const User_Update = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Email:
             </label>
           </div>
@@ -120,7 +113,7 @@ const User_Update = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Teléfono:
             </label>
           </div>
@@ -132,7 +125,7 @@ const User_Update = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Dirección:
             </label>
           </div>
@@ -144,14 +137,14 @@ const User_Update = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Password:
             </label>
           </div>
           <div className="inputContainer">
-            <label for="role">Select Role:</label>
+            <label htmlFor="role">Select Role:</label>
             <select
-              class="form-control"
+              className="form-control"
               id="role"
               value={volunteers_rol}
               onChange={(e) => setVolunteers_rol(e.target.value)}

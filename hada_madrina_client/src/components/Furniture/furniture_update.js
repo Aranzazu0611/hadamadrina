@@ -1,26 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { format_date } from "../../format_date";
+import { format_date } from "../../utils/format_date";
+import { get_Furniture_Url, route_furniture, update_Furniture_Url } from "../../utils/url";
+import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 
 const Furniture_Update = () => {
-  const navigate = useNavigate()
   
-  const [furniture_category, setFurniture_category] = useState();
-  const [description, setDescription] = useState();
-  const [state, setState] = useState("Nuevo");
-  const [furniture_entry_date, setFurniture_entry_date] = useState();
-  const [furniture_departure_date, setFurniture_departure_date] = useState();
-  const [error, setError] = useState();
+  
   const { id } = useParams();
+ 
+  const url_By_Id = get_Furniture_Url + id
+  const url_update = update_Furniture_Url + id; 
+  const updateFurniture =useApiUpdate(url_update,route_furniture)
+  
+  const [furniture_category, setFurniture_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [state, setState] = useState("Nuevo");
+  const [furniture_entry_date, setFurniture_entry_date] = useState("");
+  const [furniture_departure_date, setFurniture_departure_date] = useState("");
+  const [error] = useState("");
+  
+  
+  const info_furniture = {
+    furniture_category,
+    description,
+    state,
+    furniture_entry_date,
+    furniture_departure_date,
+  }
 
   useEffect(() => {
-    getFurnitureByID(id);
-  }, [id]);
+    getFurnitureByID();
+  }, []);
 
-  const getFurnitureByID = async (id) => {
-    await fetch(`http://localhost:3003/api/furniture/${id}`)
+  const getFurnitureByID = async () => {
+    await fetch(url_By_Id)
       .then((res) => res.json())
       .then((result) => {
         setFurniture_category(result[0].furniture_category);
@@ -31,33 +47,14 @@ const Furniture_Update = () => {
       });
   };
 
-  const updateFurniture = async (credentials) => {
-    return await fetch(`http://localhost:3003/api/furniture/edit/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/hygiene");
-      }
-      return response.json();
-    });
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateFurniture({
-        furniture_category,
-        description,
-        state,
-        furniture_entry_date,
-        furniture_departure_date,
-      }).then((result) =>  setError(result.error))
+      await updateFurniture(info_furniture)
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
