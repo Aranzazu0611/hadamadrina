@@ -1,54 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { get_Info_Departure_Clothing_week, get_Info_Departure_Food_week, get_Info_Departure_Furniture_week, get_Info_Departure_Hygiene_week } from "../../utils/url";
+import useApiInfoDates from "../Custom/useApiInfoDates";
 import "./../../App.css";
 
 const Info_Departure_Dates_Week = () => {
-  const [foodWeek, setFoodWeek] = useState();
-  const [furnitureWeek, setFurnitureWeek] = useState();
-  const [hygieneWeek, setHigieneWeek] = useState();
-  const [clothingWeek, setClothingWeek] = useState();
-
-  useEffect(() => {
-    getFoodsWeek();
-    getFurnitureWeek();
-    getHygieneWeek();
-    getClothingWeek();
-  }, []);
-
-  const getFoodsWeek = async () => {
-    await fetch("http://localhost:3003/api/foods/departure/week")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFoodWeek(data[0]);
-      });
-  };
-
-  const getFurnitureWeek = async () => {
-    await fetch("http://localhost:3003/api/furniture/departure/week")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFurnitureWeek(data[0]);
-      });
-  };
-
-  const getHygieneWeek = async () => {
-    await fetch("http://localhost:3003/api/hygiene/departure/week")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setHigieneWeek(data[0]);
-      });
-  };
-
-  const getClothingWeek = async () => {
-    await fetch("http://localhost:3003/api/clothing/departure/week")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setClothingWeek(data[0]);
-      });
-  };
+  const foodWeek = useApiInfoDates(get_Info_Departure_Food_week)
+  const furnitureWeek = useApiInfoDates(get_Info_Departure_Furniture_week)
+  const hygieneWeek = useApiInfoDates(get_Info_Departure_Hygiene_week)
+  const clothingWeek = useApiInfoDates(get_Info_Departure_Clothing_week)
 
   return (
     <>

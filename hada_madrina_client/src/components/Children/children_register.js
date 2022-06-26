@@ -1,36 +1,41 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { register_Children_Url, route_mother_info_screen } from "../../utils/url";
+import {
+  register_Children_Url,
+  route_mother_info_screen,
+} from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 const Children_Register = () => {
   const mother_id = useParams();
   const { id } = mother_id;
- 
+
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("Niño");
   const [children_birth, setChildren_birth] = useState("");
   const [father_name, setFather_name] = useState("");
-  const route_children = route_mother_info_screen + id
+  const route_children = route_mother_info_screen + id;
 
-  const info = {
-    name,
-    surnames,
-    age,
-    gender,
-    children_birth,
-    father_name,
-    mother_id: id,
-  };
-
-  const registerChildren = useApiRegister(register_Children_Url,  route_children);
+  const {register, error} = useApiRegister(
+    register_Children_Url,
+    route_children
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerChildren(info)
+      await register({
+        name,
+        surnames,
+        age,
+        gender,
+        children_birth,
+        father_name,
+        mother_id: id,
+      });
     } catch (error) {
       return error.message;
     }
@@ -41,7 +46,7 @@ const Children_Register = () => {
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Niños:</h1>
-
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"

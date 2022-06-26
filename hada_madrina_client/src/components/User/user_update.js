@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { message_not_register } from "../../utils/format_date";
+
 import { get_User_Url, route_user, update_User_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
@@ -9,7 +9,7 @@ const User_Update = () => {
   const { id } = useParams();
   const url_By_Id = get_User_Url + id;
   const url_update = update_User_Url + id;
-  const updateUser = useApiUpdate(url_update, route_user);
+  const  {update, error} = useApiUpdate(url_update, route_user);
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [email, setEmail] = useState("");
@@ -17,17 +17,7 @@ const User_Update = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [volunteers_rol, setVolunteers_rol] = useState("");
-  const [error] = useState("");
-
-  const info_user = {
-    name,
-    surnames,
-    email,
-    phone,
-    address,
-    password,
-    volunteers_rol,
-  }
+  
 
   
 
@@ -54,7 +44,15 @@ const User_Update = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateUser(info_user)
+      await update({
+        name,
+        surnames,
+        email,
+        phone,
+        address,
+        password,
+        volunteers_rol,
+      })
     } catch (error) {
       return error.message;
     }
@@ -65,7 +63,7 @@ const User_Update = () => {
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Modificar</h1>
-          {error && <ErrorNotRegister message={message_not_register}></ErrorNotRegister>}
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"

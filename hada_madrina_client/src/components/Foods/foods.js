@@ -62,15 +62,15 @@ const Foods = () => {
 
                           <td>
                             <Link to={`${route_update_food_screen}${food.id}`}>
-                              <button className="btn btn-info">
-                                Actualizar{" "}
+                              <button className="badge rounded-pill bg-success">
+                               Editar
                               </button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
-                              onClick={() => deleteFoods(delete_Foods_Url,food.id)}
+                              className="badge rounded-pill bg-danger"
+                              onClick={() => deleteFoods(`${delete_Foods_Url}${food.id}`)}
                             >
                               Borrar
                             </button>

@@ -1,22 +1,25 @@
 import React from "react";
 import "./../../App.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {
   route_clothing_info,
   route_dashboard,
   route_foods_info,
   route_furniture,
+  route_login,
   route_mother_screen,
   route_user,
 } from "../../utils/url";
 
 const NavbarDashboard = () => {
-  const navigate = useNavigate();
+ 
 
   const logout = () => {
     localStorage.clear();
-    navigate("/");
+   
   };
+
+  
   return (
     <>
       <div className="sidebar">
@@ -66,12 +69,14 @@ const NavbarDashboard = () => {
           </li>
           <li></li>
           <li className="log_out">
-            <a href="#">
+          <li>
+            <Link to={route_login}>
               <i className="bx bx-log-out"></i>
-              <span className="links_name" onClick={() => logout()}>
-                Log out
-              </span>
-            </a>
+              <span className="links_name" onClick={() => logout()}>Log out</span>
+            </Link>
+          </li>          
+             
+           
           </li>
         </ul>
       </div>

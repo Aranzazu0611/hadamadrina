@@ -1,52 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { get_Info_Day_Mother, get_Info_Month_Mother, get_Info_Week_Mother } from "../../utils/url";
+import useApiInfoDates from "../Custom/useApiInfoDates";
 import "./../../App.css";
 import Info_Deparuture_Dates from "./info_deparutere._dates";
 import Info_Entry_Dates_Day from "./info_entry_dates_day";
 
 
 const Mother_Dasboard = () => {
-  const [mother_month, setMother_month] = useState();
-  const [mother_day, setMother_day] = useState();
-  const [mother_week, setMother_week] = useState();
     
- 
-  useEffect(() => {
-    getMother_month();
-    getMother_day();
-    getMother_week();
-
-  }, []);
-
-  const getMother_month = async () => {
-    await fetch("http://localhost:3003/api/mothers/month")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0])      
-        setMother_month(data[0]);
-      });
-  };
-
-  const getMother_day = async () => {
-    await fetch("http://localhost:3003/api/mothers/day")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0])      
-        setMother_day(data[0]);
-      });
-  };
-
-  const getMother_week = async () => {
-    await fetch("http://localhost:3003/api/mothers/week")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0])      
-        setMother_week(data[0]);
-      });
-  };
-
-
-
-
+  const mother_month = useApiInfoDates(get_Info_Month_Mother)
+  const mother_week = useApiInfoDates(get_Info_Week_Mother)
+  const mother_day = useApiInfoDates(get_Info_Day_Mother)
+  
 
   return (
     <>

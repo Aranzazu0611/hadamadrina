@@ -13,7 +13,7 @@ const Mother_Update = () => {
   const { id } = useParams();
   const url_By_Id = get_By_Id_Mother_Url + id;
   const url_update = update_Mother_Url + id;
-  const updateMother = useApiUpdate(url_update, route_mother_screen);
+  const{update, error} = useApiUpdate(url_update, route_mother_screen);
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [age, setAge] = useState("");
@@ -23,19 +23,7 @@ const Mother_Update = () => {
   const [nationality, setNationality] = useState("");
   const [mother_birth, setMother_birth] = useState("");
   const [civil_status, setCivil_status] = useState("");
-  const [error] = useState();
-
-  const info_hygiene = {
-    name,
-    surnames,
-    age,
-    email,
-    phone,
-    address,
-    nationality,
-    mother_birth,
-    civil_status,
-  };
+  
 
   useEffect(() => {
     getMotherByID();
@@ -59,8 +47,19 @@ const Mother_Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   
     try {
-      await updateMother(info_hygiene);
+      await update( {
+        name,
+        surnames,
+        age,
+        email,
+        phone,
+        address,
+        nationality,
+        mother_birth,
+        civil_status,
+      });
     } catch (error) {
       return error.message;
     }
@@ -179,7 +178,7 @@ const Mother_Update = () => {
             <label className="label">Estado civil:</label>
           </div>
 
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary" type="Modificar">
             Actualizar
           </button>
         </form>

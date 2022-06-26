@@ -5,24 +5,22 @@ import ErrorNotRegister from "../Errors/error_not_register";
 
 const Furniture_Register = () => {
   
-  const registerFurniture = useApiRegister(register_Furniture_Url, route_furniture);
+  const {register,error} = useApiRegister(register_Furniture_Url, route_furniture);
   const [furniture_category, setFurniture_category] = useState("");
   const [description, setDescription] = useState("");
   const [state, setState] = useState("Nuevo");
   const [furniture_entry_date, setFurniture_entry_date] = useState("");
-  const [error] = useState("");
-
-  const info_furniture = {
-    furniture_category,
-    description,
-    state,
-    furniture_entry_date,
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerFurniture(info_furniture)
+      await register({
+        furniture_category,
+        description,
+        state,
+        furniture_entry_date,
+      })
     } catch (error) {
       return error.message;
     }

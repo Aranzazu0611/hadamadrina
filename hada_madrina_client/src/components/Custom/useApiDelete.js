@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 const useApiDelete = () => {
   const navigate = useNavigate();
   
-  function deleteInfo(url, id) {
-    fetch(url + id, {
+  function deleteInfo(url) {
+    console.log(url)
+    fetch(url, {
       method: "DELETE",
-    }).then((data) => {
-
+    }).then((data) => {       
       if (data.status === 200) {
         navigate(0);
       }
-
-    });
+     return data.json()
+    })
   }
 
   return deleteInfo;

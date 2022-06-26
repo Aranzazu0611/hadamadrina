@@ -1,59 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { get_Info_Entry_Clothing, get_Info_Entry_Clothing_day, get_Info_Entry_Food, get_Info_Entry_Food_day, get_Info_Entry_Furniture, get_Info_Entry_Furniture_day, get_Info_Entry_Hygiene, get_Info_Entry_Hygiene_day } from "../../utils/url";
+import useApiInfoDates from "../Custom/useApiInfoDates";
 import "./../../App.css";
 import Info_Entry_Dates_Month from "./info_entry_dates_month";
 import Info_Entry_Dates_Week from "./info_entry_dates_week";
 
 const Info_Entry_Dates_Day = () => {
-  const [foodDay, setFoodDay] = useState();
-  const [furnitureDay, setFurnitureDay] = useState();
-  const [HygieneDay, setHigieneDay] = useState();
-  const [clothingDay, setClothingDay] = useState();
+
+  const foodDay = useApiInfoDates(get_Info_Entry_Food_day)
+  const furnitureDay = useApiInfoDates(get_Info_Entry_Furniture_day)
+  const HygieneDay = useApiInfoDates(get_Info_Entry_Hygiene_day)
+  const clothingDay = useApiInfoDates(get_Info_Entry_Clothing_day)
+
   
-
-  useEffect(() => {
-    getFoodsDay();
-    getFurnitureDay();
-    getHygieneDay();
-    getClothingDay();
-
-  }, []);
-
-  const getFoodsDay = async () => {
-    await fetch("http://localhost:3003/api/foods/entry/day")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFoodDay(data[0]);
-      });
-  };
-
-    const getFurnitureDay = async () => {
-      await fetch("http://localhost:3003/api/furniture/entry/day")
-        .then((res) => res.json())
-        .then((result) => {
-          const data = Object.values(result[0]);
-          setFurnitureDay(data[0]);
-        });
-    };
-
-    const getHygieneDay = async () => {
-      await fetch("http://localhost:3003/api/hygiene/entry/day")
-        .then((res) => res.json())
-        .then((result) => {
-          const data = Object.values(result[0]);
-          setHigieneDay(data[0]);
-        });
-    };
-
-    const getClothingDay = async () => {
-        await fetch("http://localhost:3003/api/clothing/entry/day")
-          .then((res) => res.json())
-          .then((result) => {
-            const data = Object.values(result[0]);
-            setClothingDay(data[0]);
-          });
-      };
-
   return (
     <>
     

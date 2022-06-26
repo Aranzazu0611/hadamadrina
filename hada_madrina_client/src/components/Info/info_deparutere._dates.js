@@ -1,58 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { get_Info_Departure_Clothing_day, get_Info_Departure_Food_day, get_Info_Departure_Furniture_day, get_Info_Departure_Hygiene_day } from "../../utils/url";
+import useApiInfoDates from "../Custom/useApiInfoDates";
 import "./../../App.css";
 import Info_Departure_Dates_Month from "./info_deparutere_dates_month";
 import Info_Departure_Dates_Week from "./info_deparutere_dates_week";
 
 const Info_Deparuture_Dates = () => {
-  const [foodDay, setFoodDay] = useState();
-  const [furnitureDay, setFurnitureDay] = useState();
-  const [HygieneDay, setHigieneDay] = useState();
-  const [clothingDay, setClothingDay] = useState();
-  
+  const foodDay = useApiInfoDates(get_Info_Departure_Food_day)
+  const furnitureDay = useApiInfoDates(get_Info_Departure_Furniture_day)
+  const hygieneDay = useApiInfoDates(get_Info_Departure_Hygiene_day)
+  const clothingDay = useApiInfoDates(get_Info_Departure_Clothing_day)
 
-  useEffect(() => {
-    getFoodsDay();
-    getFurnitureDay();
-    getHygieneDay();
-    getClothingDay();
-
-  }, []);
-
-  const getFoodsDay = async () => {
-    await fetch("http://localhost:3003/api/foods/departure/day")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFoodDay(data[0]);
-      });
-  };
-
-    const getFurnitureDay = async () => {
-      await fetch("http://localhost:3003/api/furniture/departure/day")
-        .then((res) => res.json())
-        .then((result) => {
-          const data = Object.values(result[0]);
-          setFurnitureDay(data[0]);
-        });
-    };
-
-    const getHygieneDay = async () => {
-      await fetch("http://localhost:3003/api/hygiene/departure/day")
-        .then((res) => res.json())
-        .then((result) => {
-          const data = Object.values(result[0]);
-          setHigieneDay(data[0]);
-        });
-    };
-
-    const getClothingDay = async () => {
-        await fetch("http://localhost:3003/api/clothing/departure/day")
-          .then((res) => res.json())
-          .then((result) => {
-            const data = Object.values(result[0]);
-            setClothingDay(data[0]);
-          });
-      };
   return (
     <div className="home-content">
       <div className="sales-boxes">
@@ -81,7 +39,7 @@ const Info_Deparuture_Dates = () => {
               <a href="#">
                 <span className="product">Almacén - Higiene</span>
               </a>
-              <span className="price">{HygieneDay}</span>
+              <span className="price">{hygieneDay}</span>
             </li>
           </ul>
         </div>

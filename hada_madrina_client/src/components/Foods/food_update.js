@@ -1,48 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
-import { get_Foods_Url, route_foods_info, update_Foods_Url } from "../../utils/url";
+import {
+  get_Foods_Url,
+  route_foods_info,
+  update_Foods_Url,
+} from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 const Food_Update = () => {
   const { id } = useParams();
-  const url_By_Id = get_Foods_Url + id;
-  const url_update = update_Foods_Url + id;
-  const updateClothing = useApiUpdate(url_update, route_foods_info);
+  const url__food_By_Id = `${get_Foods_Url}${id}`
+  const url_food_update = `${update_Foods_Url}${id}`
+  const {update, error} = useApiUpdate(url_food_update, route_foods_info);
   const [food_category, setFood_category] = useState();
   const [description, setDescription] = useState();
   const [food_entry_date, setFood_entry_date] = useState();
   const [food_departure_date, setFood_departure_date] = useState();
-  const [error] = useState();
-  const info = {
-    food_category,
-    description,
-    food_entry_date,
-    food_departure_date,
-  };
-
-  
+ 
 
   useEffect(() => {
+    const getFoodByID = async () => {
+      await fetch(url__food_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setFood_category(result[0].food_category);
+          setDescription(result[0].description);
+          setFood_entry_date(format_date(result[0].food_entry_date));
+          setFood_departure_date(format_date(result[0].food_departure_date));
+        });
+    };
     getFoodByID();
-  }, []);
+  }, [url__food_By_Id]);
 
-  const getFoodByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setFood_category(result[0].food_category);
-        setDescription(result[0].description);
-        setFood_entry_date(format_date(result[0].food_entry_date));
-        setFood_departure_date(format_date(result[0].food_departure_date));
-      });
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateClothing(info);
+      await update({
+        food_category,
+        description,
+        food_entry_date,
+        food_departure_date,
+      });
     } catch (error) {
       return error.message;
     }
@@ -106,7 +108,7 @@ const Food_Update = () => {
             <label className="label">Fecha de salida:</label>
           </div>
 
-          <input type="submit" className="submitBtn" value="Registrar" />
+          <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
       </div>
     </div>

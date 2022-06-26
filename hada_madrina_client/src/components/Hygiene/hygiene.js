@@ -61,16 +61,16 @@ const Hygiene = () => {
 
                           <td>
                             <Link to={`${route_update_hygiene_screen}${item.id}`}>
-                              <button className="btn btn-info">
-                                Actualizar
+                              <button className="badge rounded-pill bg-success">
+                                Editar
                               </button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
-                              onClick={() =>
-                                deleteHygiene(delete_Hygiene_Url, item.id)
+                              className="badge rounded-pill bg-danger"
+                              onClick={() => 
+                                deleteHygiene(`${delete_Hygiene_Url}${item.id}`)
                               }
                             >
                               Borrar

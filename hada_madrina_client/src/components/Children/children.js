@@ -1,22 +1,21 @@
 import React from "react";
 import { Link, useParams} from "react-router-dom";
-
 import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import ErrorNotRegister from "../Errors/error_not_register";
 import useApi from "../Custom/useApiGet";
 import MotherInfo from "../Mother/mother_info";
 import useApiDelete from "../Custom/useApiDelete";
-import { delete_Children_Url, get_Children_Url, route_update_children, route_update_children_screen } from "../../utils/url";
+import { delete_Children_Url, get_Children_Url, route_update_children_screen } from "../../utils/url";
 
 const Children = () => {
  
   const { id } = useParams();
   const deleteChildren = useApiDelete();
-  const url = get_Children_Url + id
+  const url_children = get_Children_Url + id
   
   const {data, loading, error} = useApi(
-    url
+    url_children
   ); 
   
     if(loading) return <h1>Loading</h1>  
@@ -64,12 +63,13 @@ const Children = () => {
                     to={`${route_update_children_screen}${children.id}`}
 
                   >
-                    <button className="btn btn-info">Update </button>
+                    <button style={{ marginLeft: "10px" }}
+                              className="badge rounded-pill bg-success">Editar </button>
                   </Link>
                   <button
-                    style={{ marginLeft: "10px" }}
-                    className="btn btn-danger"
-                    onClick={() => deleteChildren(delete_Children_Url,children.id)}
+                   style={{ marginLeft: "10px" }}
+                   className="badge rounded-pill bg-danger"
+                    onClick={() => deleteChildren(`${delete_Children_Url}${children.id}`)}
                   >
                     Borrar
                   </button>

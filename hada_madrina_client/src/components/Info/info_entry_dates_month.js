@@ -1,54 +1,18 @@
 import React, { useEffect, useState } from "react";
+import {
+  get_Info_Entry_Clothing_Month,
+  get_Info_Entry_Food_Month,
+  get_Info_Entry_Furniture_Month,
+  get_Info_Entry_Hygiene_Month,
+} from "../../utils/url";
+import useApiInfoDates from "../Custom/useApiInfoDates";
 import "./../../App.css";
 
 const Info_Entry_Dates_Month = () => {
-  const [foodMonth, setFoodMonth] = useState();
-  const [furnitureMonth, setFurnitureMonth] = useState();
-  const [hygieneMonth, setHigieneMonth] = useState();
-  const [clothingMonth, setClothingMonth] = useState();
-
-  useEffect(() => {
-    getFoodsWeek();
-    getFurnitureWeek();
-    getHygieneWeek();
-    getClothingWeek();
-  }, []);
-
-  const getFoodsWeek = async () => {
-    await fetch("http://localhost:3003/api/foods/entry/month")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFoodMonth(data[0]);
-      });
-  };
-
-  const getFurnitureWeek = async () => {
-    await fetch("http://localhost:3003/api/furniture/entry/month")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setFurnitureMonth(data[0]);
-      });
-  };
-
-  const getHygieneWeek = async () => {
-    await fetch("http://localhost:3003/api/hygiene/entry/month")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setHigieneMonth(data[0]);
-      });
-  };
-
-  const getClothingWeek = async () => {
-    await fetch("http://localhost:3003/api/clothing/entry/month")
-      .then((res) => res.json())
-      .then((result) => {
-        const data = Object.values(result[0]);
-        setClothingMonth(data[0]);
-      });
-  };
+  const foodMonth = useApiInfoDates(get_Info_Entry_Food_Month);
+  const furnitureMonth = useApiInfoDates(get_Info_Entry_Furniture_Month);
+  const hygieneMonth = useApiInfoDates(get_Info_Entry_Hygiene_Month);
+  const clothingMonth = useApiInfoDates(get_Info_Entry_Clothing_Month);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { format_date } from "../../utils/format_date";
 import { get_By_Id_Mother_Url, route_register_children_screen } from "../../utils/url";
 
 const MotherInfo = (madre) => {
@@ -17,7 +18,7 @@ const MotherInfo = (madre) => {
 
   useEffect(() => {
     getMotherById();
-  }, []);
+  });
 
   const getMotherById = async () => {
     await fetch(url_By_Id)
@@ -30,7 +31,7 @@ const MotherInfo = (madre) => {
         setPhone(result[0].phone);
         setAddress(result[0].address);
         setNationality(result[0].nationality);
-        setMother_birth(result[0].mother_birth);
+        setMother_birth(format_date(result[0].mother_birth));
         setCivil_status(result[0].civil_status);
       });
   };
@@ -60,7 +61,8 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="a"
-                defaultValue={name}
+                value={name}
+                readOnly
               />
               <label className="label">Nombre:</label>
             </div>
@@ -69,7 +71,8 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="a"
-                defaultValue={surnames}
+                value={surnames}
+                readOnly
               />
               <label className="label">Apellidos:</label>
             </div>
@@ -78,7 +81,8 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="a"
-                defaultValue={age}
+                value={age}
+                readOnly
               />
               <label className="label">Edad:</label>
             </div>
@@ -87,7 +91,9 @@ const MotherInfo = (madre) => {
                 type="email"
                 className="input"
                 placeholder="a"
-                defaultValue={email}
+                value={email}
+                readOnly
+                
               />
               <label className="label">Email</label>
             </div>
@@ -97,7 +103,8 @@ const MotherInfo = (madre) => {
                 type="tel"
                 className="input"
                 placeholder="Teléfono"
-                defaultValue={phone}
+                value={phone}
+                readOnly
               />
               <label className="label">Teléfono</label>
             </div>
@@ -106,8 +113,9 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="Dirección"
-                defaultValue={address}
-                required
+                value={address}
+                readOnly
+              
               />
               <label className="label">Dirección</label>
             </div>
@@ -115,8 +123,9 @@ const MotherInfo = (madre) => {
               <input
                 type="text"
                 className="input"
-                defaultValue={nationality}
+                value={nationality}
                 placeholder="a"
+                readOnly
               />
               <label className="label">Nacionalidad:</label>
             </div>
@@ -125,7 +134,8 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="a"
-                defaultValue={mother_birth}
+                value={mother_birth}
+                readOnly
               />
               <label className="label">Fecha de nacimiento:</label>
             </div>
@@ -135,7 +145,8 @@ const MotherInfo = (madre) => {
                 type="text"
                 className="input"
                 placeholder="a"
-                defaultValue={civil_status}
+                value={civil_status}
+                readOnly
               />
               <label className="label">Estado civil:</label>
             </div>

@@ -1,27 +1,23 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ErrorNotRegister from "../Errors/error_not_register";
 import useApiRegister from "../Custom/useApiRegister";
 import { register_Foods_Url, route_foods_info } from "../../utils/url";
 
-
 const Food_Register = () => {
-  
-  const registerFoods = useApiRegister(register_Foods_Url, route_foods_info)
+  const {register, error} = useApiRegister(register_Foods_Url, route_foods_info);
   const [food_category, setFood_category] = useState("");
   const [description, setDescription] = useState("");
   const [food_entry_date, setFood_entry_date] = useState("");
-  const [error] = useState(""); 
-  const info_food = {
-    food_category,
-    description,
-    food_entry_date, 
-  }
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerFoods(info_food)
+      await register({
+        food_category,
+        description,
+        food_entry_date,
+      });
     } catch (error) {
       return error.message;
     }
@@ -46,7 +42,7 @@ const Food_Register = () => {
             <label className="label">Categoria:</label>
           </div>
 
-          <div className="inputContainer">           
+          <div className="inputContainer">
             <input
               type="text"
               id="description"
@@ -70,7 +66,7 @@ const Food_Register = () => {
               onChange={(e) => setFood_entry_date(e.target.value)}
             />
             <label className="label">Fecha de entrada:</label>
-          </div>          
+          </div>
 
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>

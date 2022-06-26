@@ -12,7 +12,7 @@ const useApiGet = (url) => {
       .then((response) => {
         return response.json();
       })
-      .then((data) => {
+      .then((data) => {        
         setLoading(false);
         setData(data);
         data.length > 0 ? setError(false) : setError(true);

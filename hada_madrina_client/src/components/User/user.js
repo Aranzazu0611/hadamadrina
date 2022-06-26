@@ -5,8 +5,11 @@ import useApiGet from "../../components/Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
 import Navbar from "../Navbar/navbar";
 import useApiDelete from "../../components/Custom/useApiDelete";
-import { delete_User_Url, get_User_Url,route_user_update_sreen } from "../../utils/url";
-
+import {
+  delete_User_Url,
+  get_User_Url,
+  route_user_update_sreen,
+} from "../../utils/url";
 
 const User = () => {
   const { data, loading, error } = useApiGet(get_User_Url);
@@ -56,17 +59,16 @@ const User = () => {
                           <td> {user.volunteers_rol}</td>
                           <td>
                             <Link to={`${route_user_update_sreen}${user.id}`}>
-                              <button className="btn btn-info">Editar</button>
+                              <button className="badge rounded-pill bg-success">
+                                Editar
+                              </button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
+                              className="badge rounded-pill bg-danger"
                               onClick={() =>
-                                deleteUser(
-                                  delete_User_Url,
-                                  user.id
-                                )
+                                deleteUser(`${delete_User_Url}${user.id}`)
                               }
                             >
                               Borrar

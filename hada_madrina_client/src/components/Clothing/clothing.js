@@ -4,7 +4,7 @@ import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import ErrorNotRegister from "../Errors/error_not_register";
 import useApi from "../Custom/useApiGet";
-import { delete_Clothing_Url, get_Clothing_Url, route_register_clothing, route_update_clothing, route_update_clothing_screen } from "../../utils/url";
+import { delete_Clothing_Url, get_Clothing_Url, route_register_clothing, route_update_clothing_screen } from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
 
 const Clothing = () => {
@@ -70,13 +70,13 @@ const Clothing = () => {
 
                           <td>
                             <Link to={`${route_update_clothing_screen}${item.id}`}>
-                              <button className="btn btn-info">Update </button>
+                              <button className="badge rounded-pill bg-success">Editar</button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
-                              onClick={() => deleteInfo(delete_Clothing_Url,item.id)}
+                              className="badge rounded-pill bg-danger"
+                              onClick={() => deleteInfo(`${delete_Clothing_Url}${item.id}`)}
                             >
                               Borrar
                             </button>

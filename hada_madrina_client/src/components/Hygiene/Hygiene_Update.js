@@ -1,55 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
-import { get_Hygiene_Url, route_hygiene, update_Hygiene_Url } from "../../utils/url";
+import {get_Hygiene_Url,route_hygiene,update_Hygiene_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 const Hygiene_Update = () => {
   const { id } = useParams();
-  const url_By_Id = get_Hygiene_Url + id;
-  const url_update = update_Hygiene_Url + id;
-  const updateHygiene = useApiUpdate(url_update, route_hygiene);
+  const url_hygiene_By_Id = `${get_Hygiene_Url}${id}`
+  const url_hygiene_update =`${update_Hygiene_Url}${id}`
+  const {update, error} = useApiUpdate(url_hygiene_update, route_hygiene);
+ 
   const [hygiene_category, setHygiene_category] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [hygiene_entry_date, setHygiene_entry_date] = useState("");
   const [hygiene_departure_date, setHygiene_departure_date] = useState("");
-  const [error] = useState("");
-  const info_hygiene = {
-    hygiene_category,
-    description,
-    brand,
-    hygiene_entry_date,
-    hygiene_departure_date,
-  }
   
+  
+  useEffect(() => {    
+       fetch(url_hygiene_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setHygiene_category(result[0].hygiene_category)
+          setDescription(result[0].description)
+          setBrand(result[0].brand)
+          setHygiene_entry_date(format_date(result[0].hygiene_entry_date))
+        });   
+  
+  }, [url_hygiene_By_Id]);
 
-  const getHygieneByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setHygiene_category(result[0].hygiene_category);
-        setDescription(result[0].description);
-        setBrand(result[0].brand);
-        setHygiene_entry_date(format_date(result[0].hygiene_entry_date));
-        setHygiene_departure_date(
-          format_date(result[0].hygiene_departure_date)
-        );
-      });
-  };
-
-  useEffect(() => {
-    getHygieneByID();
-  });
-
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateHygiene(info_hygiene)
+      await update({
+        hygiene_category,
+        description,
+        brand,
+        hygiene_entry_date,
+        hygiene_departure_date,
+      });
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 

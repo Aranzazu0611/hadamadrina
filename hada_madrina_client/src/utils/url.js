@@ -1,3 +1,5 @@
+const url_login = "http://localhost:3003/api/user/auth"
+const url_register_User ="http://localhost:3003/api/user/register"
 const get_User_Url = "http://localhost:3003/api/user/"
 const get_Mother_Url = "http://localhost:3003/api/mothers/"
 const get_Hygiene_Url = "http://localhost:3003/api/hygiene/"
@@ -7,6 +9,40 @@ const get_Clothing_Url = "http://localhost:3003/api/clothing/"
 const get_Children_Url = `http://localhost:3003/api/children/mother/`
 const get_By_Id_Chlidren =`http://localhost:3003/api/children/`
 const get_By_Id_Mother_Url = "http://localhost:3003/api/mother/"
+
+const get_Info_Month_Mother = "http://localhost:3003/api/mothers/month"
+const get_Info_Week_Mother = "http://localhost:3003/api/mothers/week"
+const get_Info_Day_Mother = "http://localhost:3003/api/mothers/day"
+
+const get_Info_Entry_Food_Month = "http://localhost:3003/api/foods/entry/week"
+const get_Info_Entry_Furniture_Month = "http://localhost:3003/api/furniture/entry/week"
+const get_Info_Entry_Hygiene_Month = "http://localhost:3003/api/hygiene/entry/week"
+const get_Info_Entry_Clothing_Month = "http://localhost:3003/api/clothing/entry/week"
+
+const get_Info_Entry_Food_Week = "http://localhost:3003/api/foods/entry/week"
+const get_Info_Entry_Furniture_Week = "http://localhost:3003/api/furniture/entry/week"
+const get_Info_Entry_Hygiene_Week = "http://localhost:3003/api/hygiene/entry/week"
+const get_Info_Entry_Clothing_Week = "http://localhost:3003/api/clothing/entry/week"
+
+const get_Info_Entry_Food_day = "http://localhost:3003/api/foods/entry/day"
+const get_Info_Entry_Furniture_day = "http://localhost:3003/api/furniture/entry/day"
+const get_Info_Entry_Hygiene_day = "http://localhost:3003/api/hygiene/entry/day"
+const get_Info_Entry_Clothing_day = "http://localhost:3003/api/clothing/entry/day"
+
+const get_Info_Departure_Food_day = "http://localhost:3003/api/foods/departure/day"
+const get_Info_Departure_Furniture_day = "http://localhost:3003/api/furniture/departure/day"
+const get_Info_Departure_Hygiene_day = "http://localhost:3003/api/hygiene/departure/day"
+const get_Info_Departure_Clothing_day = "http://localhost:3003/api/clothing/departure/day"
+
+const get_Info_Departure_Food_week = "http://localhost:3003/api/foods/departure/week"
+const get_Info_Departure_Furniture_week = "http://localhost:3003/api/furniture/departure/week"
+const get_Info_Departure_Hygiene_week = "http://localhost:3003/api/hygiene/departure/week"
+const get_Info_Departure_Clothing_week = "http://localhost:3003/api/clothing/departure/week"
+
+const get_Info_Departure_Food_month = "http://localhost:3003/api/foods/departure/month"
+const get_Info_Departure_Furniture_month = "http://localhost:3003/api/furniture/departure/month"
+const get_Info_Departure_Hygiene_month = "http://localhost:3003/api/hygiene/departure/month"
+const get_Info_Departure_Clothing_month = "http://localhost:3003/api/clothing/departure/month"
 
 
 const delete_User_Url = "http://localhost:3003/api/user/delete/"
@@ -42,6 +78,7 @@ const route_foods_info = `/foods`
 const route_furniture = `/furniture` 
 const route_hygiene = "/hygiene"
 const route_user = "/user"
+const route_login = "/"
 const route_user_update = "/update/User/:id"
 const route_user_update_sreen = "/update/User/"
 const route_dashboard = "/dashboard" 
@@ -69,6 +106,7 @@ const route_denied = "/denied"
 
 
 module.exports = {
+    url_login,
     get_User_Url,
     get_Mother_Url,
     get_Hygiene_Url,
@@ -77,7 +115,34 @@ module.exports = {
     get_Clothing_Url,
     get_Children_Url,
     get_By_Id_Chlidren, 
-    get_By_Id_Mother_Url,  
+    get_By_Id_Mother_Url, 
+    get_Info_Month_Mother, 
+    get_Info_Week_Mother,
+    get_Info_Day_Mother,
+    get_Info_Entry_Food_day,
+    get_Info_Entry_Furniture_day,
+    get_Info_Entry_Hygiene_day,
+    get_Info_Entry_Clothing_day,
+    get_Info_Entry_Food_Month,
+    get_Info_Entry_Furniture_Month,
+    get_Info_Entry_Hygiene_Month,
+    get_Info_Entry_Clothing_Month,
+    get_Info_Entry_Food_Week,
+    get_Info_Entry_Furniture_Week,
+    get_Info_Entry_Hygiene_Week,
+    get_Info_Entry_Clothing_Week,
+    get_Info_Departure_Food_day,
+    get_Info_Departure_Furniture_day,
+    get_Info_Departure_Hygiene_day,
+    get_Info_Departure_Clothing_day,
+    get_Info_Departure_Food_week,
+    get_Info_Departure_Furniture_week,
+    get_Info_Departure_Hygiene_week,
+    get_Info_Departure_Clothing_week,
+    get_Info_Departure_Food_month,
+    get_Info_Departure_Furniture_month,
+    get_Info_Departure_Hygiene_month,
+    get_Info_Departure_Clothing_month,
     delete_User_Url,    
     delete_Mother_Url,
     delete_Hygiene_Url,
@@ -129,7 +194,9 @@ module.exports = {
     route_register_children_screen,
     route_update_food_screen,
     route_update_clothing_screen,
-    route_update_children_screen
+    route_update_children_screen,
+    route_login,
+    url_register_User
      
 
 }

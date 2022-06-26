@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { route_login, url_register_User } from "../../utils/url";
+import useApiRegister from "../Custom/useApiRegister";
+
 import Error_Not_Register from "../Errors/error_not_register";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const { register, error } = useApiRegister(url_register_User, route_login);
 
   const [name, setName] = useState();
   const [surnames, setSurnames] = useState();
@@ -12,27 +14,11 @@ const Register = () => {
   const [address, setAddress] = useState();
   const [password, setPassword] = useState();
   const [volunteers_rol, setVolunteers_rol] = useState();
-  const [error, setError] = useState();
-
-  const registerUser = async (credentials) => {
-    return await fetch("http://localhost:3003/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/");
-      }
-      return response.json();
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerUser({
+      await register({
         name,
         surnames,
         email,
@@ -40,9 +26,7 @@ const Register = () => {
         address,
         password,
         volunteers_rol,
-      })
-        .then((result) => setError(result.message))
-        
+      });
     } catch (error) {
       return error.message;
     }
@@ -134,7 +118,7 @@ const Register = () => {
               <option>Administrativo</option>
               <option>Almacén-ropa</option>
               <option>Almacén-muebles</option>
-              <option>Almacén-higiene y utensilios</option>
+              <option>Almacén-higiene</option>
               <option>Almacén-comida</option>
             </select>
           </div>

@@ -63,12 +63,12 @@ const Funiture = () => {
 
                           <td>
                             <Link to={`${route_update_furniture_screen}${item.id}`}>
-                              <button className="btn btn-info">Editar </button>
+                              <button className="badge rounded-pill bg-success">Editar </button>
                             </Link>
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
-                              onClick={() => deleteFunitures(delete_Furniture_Url,item.id)}
+                              className="badge rounded-pill bg-danger"
+                              onClick={() => deleteFunitures(`${delete_Furniture_Url}${item.id}`)}
                             >
                               Borrar
                             </button>

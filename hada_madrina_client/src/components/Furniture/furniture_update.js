@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import { get_Furniture_Url, route_furniture, update_Furniture_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
@@ -11,48 +11,49 @@ const Furniture_Update = () => {
   
   const { id } = useParams();
  
-  const url_By_Id = get_Furniture_Url + id
-  const url_update = update_Furniture_Url + id; 
-  const updateFurniture =useApiUpdate(url_update,route_furniture)
+  const url_furniture_By_Id = `${get_Furniture_Url}${id}`
+  
+  const url_furniture_update =`${update_Furniture_Url}${id}`  
+  
+  const {update, error} =useApiUpdate(url_furniture_update,route_furniture)
   
   const [furniture_category, setFurniture_category] = useState("");
   const [description, setDescription] = useState("");
   const [state, setState] = useState("Nuevo");
   const [furniture_entry_date, setFurniture_entry_date] = useState("");
   const [furniture_departure_date, setFurniture_departure_date] = useState("");
-  const [error] = useState("");
-  
-  
-  const info_furniture = {
-    furniture_category,
-    description,
-    state,
-    furniture_entry_date,
-    furniture_departure_date,
-  }
+ 
+   
 
   useEffect(() => {
+    const getFurnitureByID = async () => {
+      await fetch(url_furniture_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setFurniture_category(result[0].furniture_category);
+          setDescription(result[0].description);
+          setState(result[0].state);
+          setFurniture_entry_date(format_date(result[0].furniture_entry_date));
+          setFurniture_departure_date(format_date(result[0].furniture_departure_date));
+        });
+    };
+  
     getFurnitureByID();
-  }, []);
+  }, [url_furniture_By_Id]);
 
-  const getFurnitureByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setFurniture_category(result[0].furniture_category);
-        setDescription(result[0].description);
-        setState(result[0].state);
-        setFurniture_entry_date(format_date(result[0].furniture_entry_date));
-        setFurniture_departure_date(format_date(result[0].furniture_departure_date));
-      });
-  };
-
+  
   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateFurniture(info_furniture)
+      await update({
+        furniture_category,
+        description,
+        state,
+        furniture_entry_date,
+        furniture_departure_date,
+      })
     } catch (error) {
       return error.message;
     }
@@ -128,7 +129,7 @@ const Furniture_Update = () => {
             <label className="label">Fecha de salida:</label>
           </div>
 
-          <input type="submit" className="submitBtn" value="Registrar" />
+          <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
       </div>
     </div>

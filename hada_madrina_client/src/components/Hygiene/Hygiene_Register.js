@@ -6,24 +6,24 @@ import ErrorNotRegister from "../Errors/error_not_register";
 
 const Hygiene_Register =() => {  
   
-  const registerHygiene = useApiRegister(register_Hygiene_Url, route_hygiene)
+  const {register, error} = useApiRegister(register_Hygiene_Url, route_hygiene)
   const [hygiene_category, setHygiene_category] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [hygiene_entry_date, setHygiene_entry_date] = useState("");  
-  const [error] = useState("");
-  const info_hygiene = {
-    hygiene_category,
-    description,        
-    brand,
-    hygiene_entry_date
-         
-  }
+ 
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {      
-      await registerHygiene(info_hygiene)
+      await register({
+        hygiene_category,
+        description,        
+        brand,
+        hygiene_entry_date
+             
+      })
     } catch (error) {
       return error.message;
     }

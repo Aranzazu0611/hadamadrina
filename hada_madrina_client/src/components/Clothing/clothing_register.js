@@ -1,45 +1,46 @@
 import React, { useState } from "react";
 import { register_Clothing_Url, route_clothing_info } from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 
 const Clothing_Register = () => {
+  const {register, error} = useApiRegister(register_Clothing_Url, route_clothing_info);
   const [clothing_category, setClothing_category] = useState("");
   const [description, setDescription] = useState("");
   const [colour, setColour] = useState("");
   const [size, setSize] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [clothing_entry_date, setClothing_entry_date] = useState("");  
-  
-  const registerClothing = useApiRegister(register_Clothing_Url, route_clothing_info);
-  const info = {
-    clothing_category,
-    description,
-    colour,
-    size,
-    gender,
-    age,
-    clothing_entry_date
-    
-  }
-
+  const [clothing_entry_date, setClothing_entry_date] = useState("");
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerClothing(info)
-      
+      await register({
+        clothing_category,
+        description,
+        colour,
+        size,
+        gender,
+        age,
+        clothing_entry_date
+        
+      });
     } catch (error) {
       return error.message;
     }
   };
+ 
 
+  
+  
   return (
     <div className="signupFrm">
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Ropa:</h1>
-
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"              
@@ -88,7 +89,7 @@ const Clothing_Register = () => {
               required
               onChange={(e) => setAge(e.target.value)}
             />
-            <label className="label">Age:</label>
+            <label className="label">Edad:</label>
           </div>
           <div className="inputContainer">
             <label htmlFor="state">Genero:</label>

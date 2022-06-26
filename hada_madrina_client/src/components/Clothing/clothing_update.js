@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
-import {  
+import {
   get_Clothing_Url,
   route_clothing_info,
   update_Clothing_Url,
 } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 const Clothing_Update = () => {
   const { id } = useParams();
-  const url_By_Id = get_Clothing_Url + id;
-  const url_update = update_Clothing_Url + id;
-  const updateClothing = useApiUpdate(url_update, route_clothing_info);
+  const url_clothing_update = `${update_Clothing_Url}${id}`
+  const url_clothing_By_Id =  `${get_Clothing_Url}${id}`
+  
+  const {update, error} = useApiUpdate(url_clothing_update, route_clothing_info);
+  
   const [clothing_category, setClothing_category] = useState("");
   const [description, setDescription] = useState("");
   const [colour, setColour] = useState("");
@@ -21,43 +24,39 @@ const Clothing_Update = () => {
   const [age, setAge] = useState("");
   const [clothing_entry_date, setClothing_entry_date] = useState("");
   const [clothing_departure_date, setClothing_departure_date] = useState("");
-
-  const info = {
-    clothing_category,
-    description,
-    colour,
-    size,
-    gender,
-    age,
-    clothing_entry_date,
-    clothing_departure_date,
-  };
-
+  
   useEffect(() => {
+    const getClothingByID = async () => {
+      await fetch(url_clothing_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setClothing_category(result[0].clothing_category);
+          setDescription(result[0].description);
+          setColour(result[0].colour);
+          setSize(result[0].size);
+          setGender(result[0].gender);
+          setAge(result[0].age);
+          setClothing_entry_date(format_date(result[0].clothing_entry_date));
+        });
+    };
     getClothingByID();
-  }, []);
+  }, [url_clothing_By_Id]);
 
-  const getClothingByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setClothing_category(result[0].clothing_category);
-        setDescription(result[0].description);
-        setColour(result[0].colour);
-        setSize(result[0].size);
-        setGender(result[0].gender);
-        setAge(result[0].age);
-        setClothing_entry_date(format_date(result[0].clothing_entry_date));
-        setClothing_departure_date(
-          format_date(result[0].clothing_departure_date)
-        );
-      });
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateClothing(url_update, info);
+      await update({
+        clothing_category,
+        description,
+        colour,
+        size,
+        gender,
+        age,
+        clothing_entry_date,
+        clothing_departure_date,
+      });
     } catch (error) {
       return error.message;
     }
@@ -68,7 +67,7 @@ const Clothing_Update = () => {
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Ropa:</h1>
-
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"

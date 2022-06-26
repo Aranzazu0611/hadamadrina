@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import { get_By_Id_Chlidren, route_mother_info_screen, update_Children_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 const Children_Update = () => {
   
   const { id } = useParams();  
-  const url_By_Id = get_By_Id_Chlidren + id;
-  const url_update = update_Children_Url + id;
- 
-
+  const url_children_By_Id = `${get_By_Id_Chlidren}${id}`
+  const url_children_update = `${update_Children_Url}${id}`
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [age, setAge] = useState("");
@@ -19,40 +18,39 @@ const Children_Update = () => {
   const [father_name, setFather_name] = useState("");
   const [mother_id, setMother_id] = useState("");
   const route_update = route_mother_info_screen + mother_id
-  const updateChildren = useApiUpdate(url_update, route_update);
-  const info = {
-    name,
-    surnames,
-    age,
-    gender,
-    children_birth,
-    father_name,
-    id,
-  };
-
-  async function getChildrenById() {
+  const {update, error}= useApiUpdate(url_children_update, route_update);
     
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setName(result[0].name);
-        setSurnames(result[0].surnames);
-        setAge(result[0].age);
-        setGender(result[0].gender);
-        setChildren_birth(format_date(result[0].children_birth));
-        setFather_name(result[0].father_name);
-        setMother_id(result[0].mother_id);
-      });
-  }
 
   useEffect(() => {
-    getChildrenById(id);
-  }, [id]);
+    const getChildrenById = async() => {
+    
+      await fetch(url_children_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setName(result[0].name);
+          setSurnames(result[0].surnames);
+          setAge(result[0].age);
+          setGender(result[0].gender);
+          setChildren_birth(format_date(result[0].children_birth));
+          setFather_name(result[0].father_name);
+          setMother_id(result[0].mother_id);
+        });
+    }
+    getChildrenById();
+  }, [url_children_By_Id]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await updateChildren( info)
+      await update({
+        name,
+        surnames,
+        age,
+        gender,
+        children_birth,
+        father_name,
+        id,
+      })
     } catch (error) {
       return error.message;
     }
@@ -63,7 +61,7 @@ const Children_Update = () => {
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Niños:</h1>
-
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"

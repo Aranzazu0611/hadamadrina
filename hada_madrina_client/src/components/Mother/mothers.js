@@ -4,7 +4,7 @@ import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import useApi from "../Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
-import { delete_Mother_Url, get_Mother_Url, route_children_info, route_mother_info_screen, route_register_mother, route_update_mother, route_update_mother_screen } from "../../utils/url";
+import { delete_Mother_Url, get_Mother_Url,route_mother_info_screen, route_register_mother, route_update_mother_screen } from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
 
 const Mother = () => {
@@ -69,27 +69,28 @@ const Mother = () => {
                           <td> {mother.civil_status}</td>
 
                           <td>
+                          <Link to={`${route_mother_info_screen}${mother.id}`}>
+                              <button
+                                style={{ marginLeft: "10px" }}
+                                className="badge rounded-pill bg-success"
+                              >
+                                Vista
+                              </button>
+                            </Link>
                             <Link to={`${route_update_mother_screen}${mother.id}`}>
-                              <button className="btn btn-info">Edit</button>
+                              <button style={{ marginLeft: "10px" }} className="badge rounded-pill bg-primary">Editar</button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
-                              className="btn btn-danger"
+                              className="badge rounded-pill bg-danger"
                               onClick={() =>
-                                deleteMothers(delete_Mother_Url, mother.id)
+                                deleteMothers(`${delete_Mother_Url}${mother.id}`)
                               }
                             >
                               Borrar
                             </button>
-                            <Link to={`${route_mother_info_screen}${mother.id}`}>
-                              <button
-                                style={{ marginLeft: "10px" }}
-                                className="btn btn-info"
-                              >
-                                View
-                              </button>
-                            </Link>
+                           
                           </td>
                         </tr>
                       ))}
