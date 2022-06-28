@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import {
@@ -14,10 +15,10 @@ const Food_Update = () => {
   const url__food_By_Id = `${get_Foods_Url}${id}`
   const url_food_update = `${update_Foods_Url}${id}`
   const {update, error} = useApiUpdate(url_food_update, route_foods_info);
-  const [food_category, setFood_category] = useState();
-  const [description, setDescription] = useState();
-  const [food_entry_date, setFood_entry_date] = useState();
-  const [food_departure_date, setFood_departure_date] = useState();
+  const [food_category, setFood_category] = useState("");
+  const [description, setDescription] = useState("");
+  const [food_entry_date, setFood_entry_date] = useState("");
+  const [food_departure_date, setFood_departure_date] = useState("");
  
 
   useEffect(() => {
@@ -53,6 +54,9 @@ const Food_Update = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_foods_info}>
+          <button className="btn btn-primary d-inline">Volver a Comida</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Alimentos</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
@@ -110,6 +114,7 @@ const Food_Update = () => {
 
           <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
+      
       </div>
     </div>
   );

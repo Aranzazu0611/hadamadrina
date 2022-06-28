@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import {
@@ -66,6 +67,9 @@ const Clothing_Update = () => {
     <div className="signupFrm">
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
+        <Link to={route_clothing_info}>
+          <button className="btn btn-primary d-inline">Ir a Ropa</button>
+        </Link>
           <h1 className="title">Ropa:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
@@ -179,6 +183,7 @@ const Clothing_Update = () => {
 
           <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
+       
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link} from "react-router-dom";
 import { register_Furniture_Url, route_furniture } from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
 import ErrorNotRegister from "../Errors/error_not_register";
@@ -29,6 +30,9 @@ const Furniture_Register = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_furniture}>
+          <button className="btn btn-primary d-inline">Volver a Muebles</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Ropa:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
@@ -84,6 +88,7 @@ const Furniture_Register = () => {
 
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>
+       
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams} from "react-router-dom";
+import { Link} from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import { get_By_Id_Chlidren, route_mother_info_screen, update_Children_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
@@ -17,7 +18,7 @@ const Children_Update = () => {
   const [children_birth, setChildren_birth] = useState("");
   const [father_name, setFather_name] = useState("");
   const [mother_id, setMother_id] = useState("");
-  const route_update = route_mother_info_screen + mother_id
+  const route_update = `${route_mother_info_screen}${mother_id}`
   const {update, error}= useApiUpdate(url_children_update, route_update);
     
 
@@ -59,7 +60,11 @@ const Children_Update = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={`${route_mother_info_screen}${mother_id}`}>
+          <button className="btn btn-primary d-inline">Volver a Madre</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
+      
           <h1 className="title">Niños:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
@@ -138,7 +143,7 @@ const Children_Update = () => {
           </div>
 
           <input type="submit" className="submitBtn" value="Actualizar" />
-        </form>
+        </form>       
       </div>
     </div>
   );

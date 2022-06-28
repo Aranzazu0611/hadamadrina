@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import useApi from "../Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
 import { delete_Furniture_Url, get_Furniture_Url, route_register_furniture, route_update_furniture_screen } from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 const Funiture = () => {
   
@@ -18,7 +18,7 @@ const Funiture = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">

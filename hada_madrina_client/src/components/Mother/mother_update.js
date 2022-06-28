@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import {
   get_By_Id_Mother_Url,
@@ -13,7 +14,7 @@ const Mother_Update = () => {
   const { id } = useParams();
   const url_By_Id = get_By_Id_Mother_Url + id;
   const url_update = update_Mother_Url + id;
-  const{update, error} = useApiUpdate(url_update, route_mother_screen);
+  const { update, error } = useApiUpdate(url_update, route_mother_screen);
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [age, setAge] = useState("");
@@ -23,33 +24,33 @@ const Mother_Update = () => {
   const [nationality, setNationality] = useState("");
   const [mother_birth, setMother_birth] = useState("");
   const [civil_status, setCivil_status] = useState("");
-  
 
   useEffect(() => {
+    const getMotherByID = async () => {
+      await fetch(url_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setName(result[0].name);
+          setSurnames(result[0].surnames);
+          setAge(result[0].age);
+          setEmail(result[0].email);
+          setPhone(result[0].phone);
+          setAddress(result[0].address);
+          setNationality(result[0].nationality);
+          setMother_birth(format_date(result[0].mother_birth));
+          setCivil_status(result[0].civil_status);
+        });
+    };
     getMotherByID();
-  }, []);
+  }, [url_By_Id]);
 
-  const getMotherByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setName(result[0].name);
-        setSurnames(result[0].surnames);
-        setAge(result[0].age);
-        setEmail(result[0].email);
-        setPhone(result[0].phone);
-        setAddress(result[0].address);
-        setNationality(result[0].nationality);
-        setMother_birth(format_date(result[0].mother_birth));
-        setCivil_status(result[0].civil_status);
-      });
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     try {
-      await update( {
+      await update({
         name,
         surnames,
         age,
@@ -69,6 +70,13 @@ const Mother_Update = () => {
     <div className="signupFrm">
       <div className="wrapper">
         <form className="form" onSubmit={handleSubmit}>
+          <Link to={route_mother_screen}>
+            <input
+              type="submit"
+              className="btn btn-primary d-inline"
+              value="Volver a Madres"
+            />
+          </Link>
           <h1 className="title-register">Madre</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">

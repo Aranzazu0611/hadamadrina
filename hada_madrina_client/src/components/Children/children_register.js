@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {
   register_Children_Url,
   route_mother_info_screen,
@@ -44,7 +45,11 @@ const Children_Register = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_children}>
+          <button className="btn btn-primary d-inline">Volver a Madre</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
+       
           <h1 className="title">Niños:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
@@ -125,6 +130,7 @@ const Children_Register = () => {
 
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>
+       
       </div>
     </div>
   );

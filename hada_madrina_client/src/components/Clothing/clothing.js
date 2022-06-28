@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import ErrorNotRegister from "../Errors/error_not_register";
 import useApi from "../Custom/useApiGet";
 import { delete_Clothing_Url, get_Clothing_Url, route_register_clothing, route_update_clothing_screen } from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 const Clothing = () => {
   const { data, loading, error } = useApi(
@@ -19,7 +19,7 @@ const Clothing = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+     <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">

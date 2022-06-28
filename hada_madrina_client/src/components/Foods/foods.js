@@ -1,11 +1,11 @@
 import React from "react";
 import { Link} from "react-router-dom";
-import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import useApi from "../Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
 import { delete_Foods_Url, get_Foods_Url, route_register_food, route_update_food_screen } from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 const Foods = () => {
  
@@ -19,7 +19,7 @@ const Foods = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+     <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">

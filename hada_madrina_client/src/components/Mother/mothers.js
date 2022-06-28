@@ -1,11 +1,17 @@
 import React from "react";
-import { Link} from "react-router-dom";
-import Navbar from "../Navbar/navbar";
+import { Link } from "react-router-dom";
 import { format_date, message_not_register } from "../../utils/format_date";
 import useApi from "../Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
-import { delete_Mother_Url, get_Mother_Url,route_mother_info_screen, route_register_mother, route_update_mother_screen } from "../../utils/url";
+import {
+  delete_Mother_Url,
+  get_Mother_Url,
+  route_mother_info_screen,
+  route_register_mother,
+  route_update_mother_screen,
+} from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 const Mother = () => {
   const { data, loading, error } = useApi(get_Mother_Url);
@@ -15,7 +21,7 @@ const Mother = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">
@@ -69,7 +75,9 @@ const Mother = () => {
                           <td> {mother.civil_status}</td>
 
                           <td>
-                          <Link to={`${route_mother_info_screen}${mother.id}`}>
+                            <Link
+                              to={`${route_mother_info_screen}${mother.id}`}
+                            >
                               <button
                                 style={{ marginLeft: "10px" }}
                                 className="badge rounded-pill bg-success"
@@ -77,20 +85,28 @@ const Mother = () => {
                                 Vista
                               </button>
                             </Link>
-                            <Link to={`${route_update_mother_screen}${mother.id}`}>
-                              <button style={{ marginLeft: "10px" }} className="badge rounded-pill bg-primary">Editar</button>
+                            <Link
+                              to={`${route_update_mother_screen}${mother.id}`}
+                            >
+                              <button
+                                style={{ marginLeft: "10px" }}
+                                className="badge rounded-pill bg-primary"
+                              >
+                                Editar
+                              </button>
                             </Link>
 
                             <button
                               style={{ marginLeft: "10px" }}
                               className="badge rounded-pill bg-danger"
                               onClick={() =>
-                                deleteMothers(`${delete_Mother_Url}${mother.id}`)
+                                deleteMothers(
+                                  `${delete_Mother_Url}${mother.id}`
+                                )
                               }
                             >
                               Borrar
                             </button>
-                           
                           </td>
                         </tr>
                       ))}
@@ -103,6 +119,7 @@ const Mother = () => {
                   message={message_not_register}
                 ></ErrorNotRegister>
               )}
+             
             </div>
           </div>
         </div>

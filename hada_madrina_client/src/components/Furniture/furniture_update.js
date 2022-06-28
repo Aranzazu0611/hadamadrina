@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import { get_Furniture_Url, route_furniture, update_Furniture_Url } from "../../utils/url";
@@ -62,6 +63,9 @@ const Furniture_Update = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_furniture}>
+          <button className="btn btn-primary d-inline">Volver a Muebles</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Ropa:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
@@ -131,6 +135,7 @@ const Furniture_Update = () => {
 
           <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
+    
       </div>
     </div>
   );

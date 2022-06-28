@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { format_date } from "../../utils/format_date";
 import {get_Hygiene_Url,route_hygiene,update_Hygiene_Url } from "../../utils/url";
@@ -49,7 +50,11 @@ const Hygiene_Update = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_hygiene}>
+          <button className="btn btn-primary d-inline">Volver a Higiene</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
+      
           <h1 className="title">Higiene</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
@@ -114,6 +119,7 @@ const Hygiene_Update = () => {
 
           <input type="submit" className="submitBtn" value="Actualizar" />
         </form>
+        
       </div>
     </div>
   );

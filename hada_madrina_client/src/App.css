@@ -31,6 +31,7 @@ body {
 .title {
   font-size: 50px;
   margin-bottom: 50px;
+  text-align: center;
 }
 .table-children{
   margin-top: -150px;
@@ -87,6 +88,8 @@ body {
   font-size: 16px;
   margin-top: 30px;
 }
+
+
 
 .submitBtn:hover {
   background-color: #9867c5;
@@ -172,6 +175,12 @@ body {
   background: #081d45;
 }
 .sidebar .nav-links li i {
+  min-width: 60px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+.itemnav {
   min-width: 60px;
   text-align: center;
   font-size: 18px;

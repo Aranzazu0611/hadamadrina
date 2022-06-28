@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link} from "react-router-dom";
 import { register_Mother_Url, route_mother_screen } from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
 import ErrorNotRegister from "../Errors/error_not_register";
@@ -46,7 +47,11 @@ const Mother_Register = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+     
         <form action="" className="form" onSubmit={handleSubmit}>
+        <Link to={route_mother_screen}>
+          <input type="submit" className="btn btn-primary d-inline" value="Volver a Madres" />  
+          </Link>
           <h1 className="title">Madre:</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
@@ -141,11 +146,15 @@ const Mother_Register = () => {
             </select>
             <label className="label">Estado civil:</label>
           </div>
-
+       
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>
+        
+     
+       
       </div>
     </div>
+    
   );
 };
 

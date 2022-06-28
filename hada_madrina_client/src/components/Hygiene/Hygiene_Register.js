@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Link} from "react-router-dom";
 import { register_Hygiene_Url, route_hygiene } from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
 import ErrorNotRegister from "../Errors/error_not_register";
@@ -33,7 +34,11 @@ const Hygiene_Register =() => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_hygiene}>
+          <button className="btn btn-primary d-inline">Volver a Higiene</button>
+        </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
+        
           <h1 className="title">Higiene</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
 
@@ -93,7 +98,9 @@ const Hygiene_Register =() => {
 
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>
+        
       </div>
+   
     </div>
   );
 }

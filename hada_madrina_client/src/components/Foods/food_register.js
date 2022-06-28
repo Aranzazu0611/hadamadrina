@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ErrorNotRegister from "../Errors/error_not_register";
+import { Link} from "react-router-dom";
 import useApiRegister from "../Custom/useApiRegister";
 import { register_Foods_Url, route_foods_info } from "../../utils/url";
 
@@ -27,6 +28,9 @@ const Food_Register = () => {
     <div className="signupFrm">
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
+        <Link to={route_foods_info}>
+          <button className="btn btn-primary d-inline">Ir a Comida</button>
+        </Link>
           <h1 className="title">Alimentos</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
 
@@ -70,6 +74,7 @@ const Food_Register = () => {
 
           <input type="submit" className="submitBtn" value="Registrar" />
         </form>
+       
       </div>
     </div>
   );

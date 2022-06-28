@@ -1,22 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar/navbar";
 import { format_date, message_not_register } from "../../utils/format_date";
 import ErrorNotRegister from "../Errors/error_not_register";
 import useApi from "../Custom/useApiGet";
-import { delete_Hygiene_Url, get_Hygiene_Url, route_register_hygiene, route_update_hygiene_screen } from "../../utils/url";
+import {
+  delete_Hygiene_Url,
+  get_Hygiene_Url,
+  route_register_hygiene,
+  route_update_hygiene_screen,
+} from "../../utils/url";
 import useApiDelete from "../Custom/useApiDelete";
+import NavbarDashboard from "../Navbar/navbarDashboard";
+
 
 const Hygiene = () => {
-  const { data, loading, error } = useApi(get_Hygiene_Url);
+  const { data, loading, error } = useApi(get_Hygiene_Url); 
   const deleteHygiene = useApiDelete();
 
   if (loading) return <h1>Loading</h1>;
+ 
 
   return (
     <>
-  
-      <Navbar></Navbar>
+      <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">
@@ -60,7 +66,9 @@ const Hygiene = () => {
                           <td> {format_date(item.hygiene_departure_date)}</td>
 
                           <td>
-                            <Link to={`${route_update_hygiene_screen}${item.id}`}>
+                            <Link
+                              to={`${route_update_hygiene_screen}${item.id}`}
+                            >
                               <button className="badge rounded-pill bg-success">
                                 Editar
                               </button>
@@ -69,7 +77,7 @@ const Hygiene = () => {
                             <button
                               style={{ marginLeft: "10px" }}
                               className="badge rounded-pill bg-danger"
-                              onClick={() => 
+                              onClick={() =>
                                 deleteHygiene(`${delete_Hygiene_Url}${item.id}`)
                               }
                             >
@@ -88,6 +96,7 @@ const Hygiene = () => {
                 ></ErrorNotRegister>
               )}
             </div>
+           
           </div>
         </div>
       </section>

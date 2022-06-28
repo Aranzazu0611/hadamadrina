@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import { get_User_Url, route_user, update_User_Url } from "../../utils/url";
 import useApiUpdate from "../Custom/useApiUpdate";
 import ErrorNotRegister from "../Errors/error_not_register";
 
 const User_Update = () => {
   const { id } = useParams();
-  const url_By_Id = get_User_Url + id;
-  const url_update = update_User_Url + id;
-  const  {update, error} = useApiUpdate(url_update, route_user);
+  const url_user_By_Id = get_User_Url + id;
+  const url_user_update = update_User_Url + id;
+  const  {update, error} = useApiUpdate(url_user_update, route_user);
   const [name, setName] = useState("");
   const [surnames, setSurnames] = useState("");
   const [email, setEmail] = useState("");
@@ -19,25 +19,23 @@ const User_Update = () => {
   const [volunteers_rol, setVolunteers_rol] = useState("");
   
 
-  
 
   useEffect(() => {
+    const getUserByID = async () => {
+      await fetch(url_user_By_Id)
+        .then((res) => res.json())
+        .then((result) => {
+          setName(result[0].name);
+          setSurnames(result[0].surnames);
+          setEmail(result[0].email);
+          setPhone(result[0].phone);
+          setPassword(result[0].password);
+          setAddress(result[0].address);
+          setVolunteers_rol(result[0].volunteers_rol);
+        });
+    };
     getUserByID();
-  }, []);
-
-  const getUserByID = async () => {
-    await fetch(url_By_Id)
-      .then((res) => res.json())
-      .then((result) => {
-        setName(result[0].name);
-        setSurnames(result[0].surnames);
-        setEmail(result[0].email);
-        setPhone(result[0].phone);
-        setPassword(result[0].password);
-        setAddress(result[0].address);
-        setVolunteers_rol(result[0].volunteers_rol);
-      });
-  };
+  }, [url_user_By_Id]);  
 
  
 
@@ -61,7 +59,15 @@ const User_Update = () => {
   return (
     <div className="signupFrm">
       <div className="wrapper">
+      <Link to={route_user}>
+            <input
+              type="submit"
+              className="btn btn-primary d-inline"
+              value="Volver a Voluntarios"
+            />
+          </Link>
         <form action="" className="form" onSubmit={handleSubmit}>
+   
           <h1 className="title">Modificar</h1>
           {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">

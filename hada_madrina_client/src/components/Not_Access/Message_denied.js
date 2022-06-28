@@ -1,13 +1,14 @@
 import React from "react";
-import Navbar from "../Navbar/navbar";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 export const Message_denied = () => {
   return (
-      <><Navbar></Navbar><section className="home-section">
+      <><NavbarDashboard></NavbarDashboard>
+      <section className="home-section">
           <div className="home-content">
               <div className="sales-boxes">
                   <div className="recent-sales box">
-                      <div className="title">No tiene permiso para estar aquí</div>
+                      <div className="title">No tienes permiso de Admin</div>
                   </div>
               </div>
           </div>

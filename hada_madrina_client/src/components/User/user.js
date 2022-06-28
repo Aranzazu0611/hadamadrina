@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { message_not_register } from "../../utils/format_date";
 import useApiGet from "../../components/Custom/useApiGet";
 import ErrorNotRegister from "../Errors/error_not_register";
-import Navbar from "../Navbar/navbar";
 import useApiDelete from "../../components/Custom/useApiDelete";
 import {
   delete_User_Url,
   get_User_Url,
   route_user_update_sreen,
 } from "../../utils/url";
+import NavbarDashboard from "../Navbar/navbarDashboard";
 
 const User = () => {
   const { data, loading, error } = useApiGet(get_User_Url);
@@ -19,7 +19,7 @@ const User = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+     <NavbarDashboard></NavbarDashboard>
       <section className="home-section">
         <nav>
           <div className="sidebar-button">

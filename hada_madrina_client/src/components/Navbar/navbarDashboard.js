@@ -6,6 +6,7 @@ import {
   route_dashboard,
   route_foods_info,
   route_furniture,
+  route_hygiene,
   route_login,
   route_mother_screen,
   route_user,
@@ -30,54 +31,52 @@ const NavbarDashboard = () => {
           </Link>
         </div>
         <ul className="nav-links">
-          <li>
-            <Link to={route_mother_screen}>
-              <i className="bx bx-grid-alt"></i>
+        {localStorage.getItem("role") === "Admin" && (
+          <><div><li>
+            
+              <Link to={route_mother_screen}>
+                <i className="bx bx-grid-alt"></i>
 
-              <span className="links_name">Madres</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={route_clothing_info}>
-              <i className="bx bx-box"></i>
-              <span className="links_name">Ropa</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={route_foods_info}>
-              <i className="bx bx-list-ul"></i>
-              <span className="links_name">Comida</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={route_furniture}>
-              <i className="bx bx-pie-chart-alt-2"></i>
-              <span className="links_name">Muebles</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/hygiene`}>
-              <i className="bx bx-coin-stack"></i>
-              <span className="links_name">Higiene</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={route_user}>
-              <i className="bx bx-book-alt"></i>
-              <span className="links_name">Voluntarios</span>
-            </Link>
-          </li>
-          <li></li>
+                <span className="links_name">Madres</span>
+              </Link>
+             
+            </li><li>
+                <Link to={route_clothing_info}>
+                  <i className="bx bx-box"></i>
+                  <span className="links_name">Ropa</span>
+                </Link>
+              </li><li>
+                <Link to={route_foods_info}>
+                  <i className="bx bx-list-ul"></i>
+                  <span className="links_name">Comida</span>
+                </Link>
+              </li><li>
+                <Link to={route_furniture}>
+                  <i className="bx bx-pie-chart-alt-2"></i>
+                  <span className="links_name">Muebles</span>
+                </Link>
+              </li><li>
+                <Link to={route_hygiene}>
+                  <i className="bx bx-coin-stack"></i>
+                  <span className="links_name">Higiene</span>
+                </Link>
+              </li><li>
+                <Link to={route_user}>
+                  <i className="bx bx-book-alt"></i>
+                  <span className="links_name">Voluntarios</span>
+                </Link>
+              </li> </div></>
+          )}
+          <div>          
           <li className="log_out">
-          <li>
             <Link to={route_login}>
               <i className="bx bx-log-out"></i>
               <span className="links_name" onClick={() => logout()}>Log out</span>
             </Link>
-          </li>          
-             
+          </li>        
            
-          </li>
+          
+          </div>
         </ul>
       </div>
     </>

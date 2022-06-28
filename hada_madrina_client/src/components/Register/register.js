@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { route_login, url_register_User } from "../../utils/url";
 import useApiRegister from "../Custom/useApiRegister";
-
-import Error_Not_Register from "../Errors/error_not_register";
+import ErrorNotRegister from "../Errors/error_not_register";
 
 const Register = () => {
   const { register, error } = useApiRegister(url_register_User, route_login);
@@ -37,7 +36,7 @@ const Register = () => {
       <div className="wrapper">
         <form action="" className="form" onSubmit={handleSubmit}>
           <h1 className="title">Registrate</h1>
-          {error && <Error_Not_Register message={error}></Error_Not_Register>}
+          {error && <ErrorNotRegister message={error}></ErrorNotRegister>}
           <div className="inputContainer">
             <input
               type="text"
@@ -45,7 +44,7 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setName(e.target.value)}
             />
-            <label for="" className="label">
+            <label  className="label">
               Nombre:
             </label>
           </div>
@@ -57,7 +56,7 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setSurnames(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Apellidos:
             </label>
           </div>
@@ -69,7 +68,7 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label for="" className="label">
+            <label  className="label">
               Email:
             </label>
           </div>
@@ -81,7 +80,7 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setPhone(e.target.value)}
             />
-            <label for="" className="label">
+            <label  className="label">
               Teléfono:
             </label>
           </div>
@@ -92,7 +91,7 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setAddress(e.target.value)}
             />
-            <label for="" className="label">
+            <label  className="label">
               Dirección:
             </label>
           </div>
@@ -103,14 +102,14 @@ const Register = () => {
               placeholder="a"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <label for="" className="label">
+            <label className="label">
               Password:
             </label>
           </div>
           <div className="inputContainer">
-            <label for="role">Select Role:</label>
+            <label htmlFor="role">Select Role:</label>
             <select
-              class="form-control"
+              className="form-control"
               id="role"
               value={volunteers_rol}
               onChange={(e) => setVolunteers_rol(e.target.value)}
