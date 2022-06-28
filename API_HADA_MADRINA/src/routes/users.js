@@ -1,24 +1,24 @@
-
 const express = require("express");
+
 const {
   select_all_user_query,
   select_an_user_query,
   delete_user_query,
   insert_user_query,
   update_user_query,
-  select_an_user_whith_param_query,
-} = require("../../models/querys");
+  select_an_user_query_param,
+} = require("../utils/querys");
 const {
   user_saved,
   name_table_user,
   user_updated,
   message_delete_not_exist,
   message_delete_error,
-  user_not_found,
   message_update_not_exist,
   message_update_error,
   user_login,
   message_user_bad_credentials,
+  user_exist,
 } = require("../utils/utils");
 const router = express.Router();
 const mysqlConnection = require("../database.js");
@@ -30,44 +30,51 @@ const {
   operation_insert,
   operation_update,
   operation_auth,
-} = require("../../models");
+} = require("../routes/index");
 const { stringValidationUser } = require("../utils/validations");
 
-router.post("/api/user/auth", async (req, res, next) => {
+/**
+ * Authenticate an user with his/her email and a password
+ *
+ */
+router.post("/api/user/auth", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
- 
+
   try {
-   await operation_auth(
+    await operation_auth(
       mysqlConnection,
-      select_an_user_whith_param_query,
+      select_an_user_query_param,
       [email, password],
       user_login,
       message_user_bad_credentials,
       res
     );
-    
   } catch (error) {
     return res.status(400).json({ error: error.toString() });
   }
-
-  
-  
 });
 
-router.get("/api/user/auth", async (req, res, next) => {
-  if (req.session.email) {
-    res.send({ loggedIn: true, email: req.session.email });
+router.get("/api/user/auth", async (req, res) => {
+  if (req.body.email) {
+    res.send({ loggedIn: true, email: req.body.email });
   } else {
     res.send({ loggedIn: false });
   }
 });
-// Logout user
+
+/**
+ * Logout of application
+ *
+ */
 router.get("/api/user/logout", function (req, res) {
   req.session.destroy();
 });
 
-// GET all User
+/**
+ * Get All users
+ *
+ */
 router.get("/api/user/", async (req, res) => {
   try {
     await operation_get_All(
@@ -82,7 +89,10 @@ router.get("/api/user/", async (req, res) => {
   }
 });
 
-// GET An User
+/**
+ * Get an user by Id
+ *
+ */
 router.get("/api/user/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -99,7 +109,10 @@ router.get("/api/user/:id", async (req, res) => {
   }
 });
 
-// DELETE An User
+/**
+ * Delete an user by Id
+ *
+ */
 router.delete("/api/user/delete/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -118,34 +131,53 @@ router.delete("/api/user/delete/:id", async (req, res) => {
   }
 });
 
-// INSERT An user
+/**
+ * Register an user
+ *
+ */
 router.post("/api/user/register", async (req, res) => {
   const info = req.body;
+  const { name, surnames, email, phone, address, password, volunteers_rol } =
+    info;
 
   try {
-    await stringValidationUser(info)
+    /**
+     * Validation of user info
+     *
+     */
+    await stringValidationUser(info);
     await operation_insert(
       mysqlConnection,
       insert_user_query,
-      info,
+      [
+        [name, surnames, email, phone, address, password, volunteers_rol],
+        name,
+        surnames,
+        email,
+        phone,
+        address,
+        password,
+        volunteers_rol,
+      ],
       user_saved,
-      user_not_found,
+      user_exist,
       res
     );
-  } catch (error) {   
-  
-    return res.status(400).send({message:error.message})   
-    
+  } catch (error) {
+    return res.status(400).send({ message: error.message });
   }
 });
 
-//UPDATE AN USER
+/**
+ * Update an user by Id
+ *
+ */
 router.put("/api/user/update/:id", async (req, res) => {
   const { id } = req.params;
   const update_user_info = req.body;
 
   try {
-    await stringValidationUser(update_user_info)
+    await stringValidationUser(update_user_info);
     await operation_update(
       mysqlConnection,
       update_user_query,
@@ -156,10 +188,8 @@ router.put("/api/user/update/:id", async (req, res) => {
       res
     );
   } catch (error) {
-    return res.status(400).send({message:error.message})
+    return res.status(400).send({ message: error.message });
   }
 });
 
 module.exports = router;
-
-  

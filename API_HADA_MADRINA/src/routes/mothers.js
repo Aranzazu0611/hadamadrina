@@ -9,7 +9,7 @@ const {
   select_count_mothers_month_query,
   select_count_mothers_day_query,
   select_count_mothers_week_query,
-} = require("../../models/querys");
+} = require("../utils/querys");
 const router = express.Router();
 const {
   operation_delete_By_Id,
@@ -17,7 +17,7 @@ const {
   operation_get_By_Id,
   operation_insert,
   operation_update,
-} = require("../../models");
+} = require("../routes/index");
 
 const mysqlConnection = require("../database.js");
 const {
@@ -29,10 +29,14 @@ const {
   mother_update,
   message_update_error,
   message_update_not_exist,
+  mother_exist,
 } = require("../utils/utils.js");
 const { stringValidationMother } = require("../utils/validations");
 
-// GET all Mothers
+/**
+ * Get All mothers
+ *
+ */
 router.get("/api/mothers/", async (req, res) => {
   try {
     await operation_get_All(
@@ -47,7 +51,11 @@ router.get("/api/mothers/", async (req, res) => {
   }
 });
 
-//Count Mothers for month
+/**
+ * Counted Mothers for month
+ *
+ *  
+*/
 router.get("/api/mothers/month", async (req, res) => {
   try {
     await operation_get_All(
@@ -62,7 +70,11 @@ router.get("/api/mothers/month", async (req, res) => {
   }
 });
 
-//Count Mothers for day
+/**
+ * Counted Mothers for day
+ *
+ *  
+*/
 router.get("/api/mothers/day", async (req, res) => {
   try {
     await operation_get_All(
@@ -77,7 +89,11 @@ router.get("/api/mothers/day", async (req, res) => {
   }
 });
 
-//Count Mothers for week
+/**
+ * Counted Mothers for week
+ *
+ *  
+*/
 router.get("/api/mothers/week", async (req, res) => {
   try {
     await operation_get_All(
@@ -92,7 +108,10 @@ router.get("/api/mothers/week", async (req, res) => {
   }
 });
 
-// GET A Mother
+/**
+ * Get info a mother by Id
+ *
+ */
 router.get("/api/mother/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -109,7 +128,10 @@ router.get("/api/mother/:id", async (req, res) => {
   }
 });
 
-// DELETE A Mother
+/**
+ * Delete a mother by Id
+ *
+ */
 router.delete("/api/mother/delete/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -128,18 +150,60 @@ router.delete("/api/mother/delete/:id", async (req, res) => {
   }
 });
 
-// INSERT An mother
+/**
+ * Register a mother
+ *
+ */
 router.post("/api/mother/register", async (req, res) => {
   const info = req.body;
-  
+  const {
+    name,
+    surnames,
+    age,
+    email,
+    phone,
+    address,
+    nationality,
+    mother_birth,
+    civil_status,
+    mother_entry_date,
+  } = info;
+
   try {
-    await stringValidationMother(info)
+    /**
+     * Validation of mother info
+     *
+     */
+    await stringValidationMother(info);
     await operation_insert(
       mysqlConnection,
       insert_mother_query,
-      info,
+      [
+        [
+          name,
+          surnames,
+          age,
+          email,
+          phone,
+          address,
+          nationality,
+          mother_birth,
+          civil_status,
+          mother_entry_date,
+        ],
+        name,
+        surnames,
+        age,
+        email,
+        phone,
+        address,
+        nationality,
+        mother_birth,
+        civil_status,
+        mother_entry_date,
+      ],
       mother_saved,
-      mother_not_found,
+      mother_exist,
       res
     );
   } catch (error) {
@@ -147,13 +211,16 @@ router.post("/api/mother/register", async (req, res) => {
   }
 });
 
-//UPDATE A Mother
+/**
+ * Update a mother by Id
+ *
+ */
 router.put("/api/mother/edit/:id", async (req, res) => {
   const { id } = req.params;
   const update_mother_info = req.body;
- 
+
   try {
-    await stringValidationMother(update_mother_info)
+    await stringValidationMother(update_mother_info);
     await operation_update(
       mysqlConnection,
       update_mother_query,

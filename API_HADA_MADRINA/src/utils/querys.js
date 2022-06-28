@@ -1,4 +1,3 @@
-const create_database_query = 'CREATE DATABASE IF NOT EXISTS hada_madrina';
 
 ////SELECT ALL ////
 const select_all_user_query = 'SELECT * FROM hada_madrina.user';
@@ -47,8 +46,8 @@ const select_count_departure_clothing_day_query = 'SELECT COUNT(*) FROM hada_mad
 ////SELECT BY ID////
 const select_a_children_by_mother_id_query = 'SELECT * FROM hada_madrina.children where mother_id = ?';
 const select_a_children_by_id_query = 'SELECT * FROM hada_madrina.children where id = ?';
-const select_an_user_query = 'SELECT * FROM hada_madrina.user WHERE id = ?';
-const select_an_user_whith_param_query = 'SELECT * FROM hada_madrina.user WHERE email = ? AND password = ?';
+const select_an_user_query = 'SELECT * FROM hada_madrina.user WHERE id = ?'; 
+const select_an_user_query_param = 'SELECT * FROM hada_madrina.user WHERE email = ? AND password = ?'; 
 const select_a_mother_query = 'SELECT * FROM hada_madrina.mothers WHERE id = ?'
 const select_a_clothing_query = 'SELECT * FROM hada_madrina.clothing WHERE id = ?';
 const select_a_food_query = 'SELECT * FROM hada_madrina.foods WHERE id = ?';
@@ -57,8 +56,9 @@ const select_a_hygiene_query ='SELECT * FROM hada_madrina.hygiene WHERE id = ?'
 
 
 /////INSERT///////
-const insert_user_query = "INSERT INTO hada_madrina.user SET ?"
-const insert_mother_query = "INSERT INTO hada_madrina.mothers SET ?" 
+
+const insert_user_query = 'INSERT INTO hada_madrina.user (`name` , `surnames` , `email` , `phone` , `address` , `password`, `volunteers_rol`) SELECT ? FROM dual WHERE NOT EXISTS (SELECT * FROM hada_madrina.user WHERE `name` = ? AND `surnames` = ?  AND `email` = ? AND `phone` = ? AND `address` = ? AND `password` = ? AND `volunteers_rol`= ?)'
+const insert_mother_query = 'INSERT INTO hada_madrina.mothers (`name` , `surnames` , `age`, `email` , `phone` , `address` , `nationality`, `mother_birth`, `civil_status`, `mother_entry_date`) SELECT ? FROM dual WHERE NOT EXISTS (SELECT * FROM hada_madrina.mothers WHERE `name` = ? AND `surnames` = ?  AND `age` = ? AND `email` = ? AND `phone` = ? AND `address` = ? AND `nationality`= ? AND `mother_birth` = ? AND `civil_status` = ? AND `mother_entry_date` = ?)'
 const insert_clothing_query = "INSERT INTO hada_madrina.clothing SET ?"
 const insert_children_query = "INSERT INTO hada_madrina.children SET ?"
 const insert_food_query = "INSERT INTO hada_madrina.foods SET ?"
@@ -86,17 +86,17 @@ const delete_hygiene_query = 'DELETE FROM  hada_madrina.hygiene WHERE id = ?'
 
 
 module.exports = {
-    create_database_query,  
+    
     select_all_user_query,
     select_all_children_query,
     select_all_clothing_query,
     select_all_foods_query,
     select_all_furniture_query,
     select_all_hygiene_query,
-    select_an_user_query,
-    select_an_user_whith_param_query,
+    select_an_user_query,   
     select_a_children_by_mother_id_query,
     select_a_children_by_id_query,
+    select_an_user_query_param,
     select_a_food_query,
     select_a_clothing_query,
     select_a_furniture_query,

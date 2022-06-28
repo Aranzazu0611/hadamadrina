@@ -6,7 +6,7 @@ const {
   operation_get_By_Id,
   operation_insert,
   operation_update,
-} = require("../../models");
+} = require("../routes/index");
 const {
   select_all_hygiene_query,
   select_a_hygiene_query,
@@ -19,7 +19,7 @@ const {
   select_count_departure_hygiene_day_query,
   select_count_departure_hygiene_month_query,
   select_count_departure_hygiene_week_query,
-} = require("../../models/querys");
+} = require('../utils/querys');
 
 const mysqlConnection = require("../database.js");
 const {
@@ -34,8 +34,12 @@ const {
 } = require("../utils/utils");
 const { stringValidationHygiene } = require("../utils/validations");
 
-//MONTH Hygiene
 
+/**
+ * Counted Hygiene item entry in month
+ *
+ *  
+*/
 router.get("/api/hygiene/entry/month", async (req, res) => {
   
   try {
@@ -52,11 +56,13 @@ router.get("/api/hygiene/entry/month", async (req, res) => {
 });
 
 
-
-
-//Count entry Hygiene for day
+/**
+ * Counted Hygiene item entry in day
+ *
+ *  
+*/
 router.get("/api/hygiene/entry/day", async (req, res) => {
-  select_count_hygiene_day_query
+
   try {
     await operation_get_All(
       mysqlConnection,
@@ -70,7 +76,11 @@ router.get("/api/hygiene/entry/day", async (req, res) => {
   }
 });
 
-//Count entry Hygiene for week
+/**
+ * Counted Hygiene item entry in week
+ *
+ *  
+*/
 router.get("/api/hygiene/entry/week", async (req, res) => {
  
   try {
@@ -86,7 +96,11 @@ router.get("/api/hygiene/entry/week", async (req, res) => {
   }
 });
 
-//Count departure Hygiene for month
+/**
+ * Counted Hygiene item departure in month
+ *
+ *  
+*/
 router.get("/api/hygiene/departure/month", async (req, res) => {
   try {
     await operation_get_All(
@@ -101,7 +115,11 @@ router.get("/api/hygiene/departure/month", async (req, res) => {
   }
 });
 
-//Count departure Hygiene for day
+/**
+ * Counted Hygiene item departure in day
+ *
+ *  
+*/
 router.get("/api/hygiene/departure/day", async (req, res) => {
  
   try {
@@ -117,7 +135,11 @@ router.get("/api/hygiene/departure/day", async (req, res) => {
   }
 });
 
-//Count departure Hygiene for week
+/**
+ * Counted Hygiene item departure in week
+ *
+ *  
+*/
 router.get("/api/hygiene/departure/week", async (req, res) => {
  
   try {
@@ -133,7 +155,10 @@ router.get("/api/hygiene/departure/week", async (req, res) => {
   }
 });
 
-// GET all hygiene
+/**
+ * Get all info hygiene 
+ *
+ */
 router.get("/api/hygiene/", async (req, res) => {
  
 
@@ -150,7 +175,10 @@ router.get("/api/hygiene/", async (req, res) => {
   }
 });
 
-// GET A hygiene
+/**
+ * Get info a hygiene item by Id
+ *
+ */
 router.get("/api/hygiene/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -168,7 +196,10 @@ router.get("/api/hygiene/:id", async (req, res) => {
   }
 });
 
-// DELETE A hygiene
+/**
+ * Delete a hygiene item by Id
+ *
+ */
 router.delete("/api/hygiene/delete/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -187,7 +218,10 @@ router.delete("/api/hygiene/delete/:id", async (req, res) => {
   }
 });
 
-// INSERT An hygiene
+/**
+ * Register a hygiene item
+ *
+ */
 router.post("/api/hygiene/register", async (req, res) => {
   const info = req.body;
 
@@ -206,12 +240,19 @@ router.post("/api/hygiene/register", async (req, res) => {
   }
 });
 
-//UPDATE A hygiene
+/**
+ * Update a hygiene item
+ *
+ */
 router.put("/api/hygiene/edit/:id", async (req, res) => {
   const { id } = req.params;
   const update_hygiene_info = req.body;
   
   try {
+    /**
+     * Validation of hygiene info
+     *
+     */
     await stringValidationHygiene(update_hygiene_info)
     await operation_update(
       mysqlConnection,

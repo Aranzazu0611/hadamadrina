@@ -1,4 +1,5 @@
 const name_database = "hada_madrina";
+const error_auth = "Error al autenticar";
 const created_database = "Created database => ";
 const selected_database = "Selected database => ";
 const selected_all = "Selected All => ";
@@ -13,7 +14,7 @@ const name_table_clothing = "Clothing";
 const user_saved = 'User Saved';
 const user_login = 'User logged ';
 const user_deleted = 'User Deleted';
-const user_not_found = 'User not found'
+const user_exist = 'User exist'
 const message_user_bad_credentials = "Incorrecto email or password"
 const message_delete_not_exist = " not exist"
 const message_delete_error = "Error to delete"
@@ -23,7 +24,7 @@ const user_updated = "User Updated";
 const mother_deleted = 'Mother Deleted';
 const mother_saved = 'Mother Saved';
 const mother_update = 'Mother Updated';
-const mother_not_found = 'Mother not found'
+const mother_exist = 'Mother exist'
 const clothing_deleted = 'Clothing Deleted';
 const clothing_saved = 'Clothing Saved';
 const clothing_update = 'Clothing Updated';
@@ -66,11 +67,11 @@ module.exports = {
     message_delete_error,
     message_delete_not_exist,
     user_updated,
-    user_not_found,
+    user_exist,
     mother_deleted,
     mother_saved,
     mother_update,
-    mother_not_found,
+    mother_exist,
     clothing_deleted,
     clothing_saved,
     clothing_update,
@@ -93,7 +94,8 @@ module.exports = {
     children_not_found,
     message_update_error,
     message_update_not_exist,
-    message_user_bad_credentials
+    message_user_bad_credentials,
+    error_auth
 
 
 
